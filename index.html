@@ -538,5 +538,59 @@ function saveCookiePreferences() {
 document.addEventListener('DOMContentLoaded', checkAndShowBanner);
 </script>
 
+
+    <style>
+        #nova-trigger { position: fixed; bottom: 20px; right: 20px; width: 65px; height: 65px; background: #00ff41; border-radius: 50%; cursor: pointer; z-index: 2147483647 !important; display: flex; align-items: center; justify-content: center; font-size: 30px; box-shadow: 0 0 20px rgba(0,255,65,0.6); border: 2px solid #000; }
+        #nova-ui { display: none; position: fixed; bottom: 100px; right: 20px; width: 320px; height: 450px; background: #0a0a0a; border: 2px solid #00ff41; z-index: 2147483647 !important; border-radius: 12px; flex-direction: column; font-family: sans-serif; box-shadow: 0 0 60px rgba(0,0,0,0.9); }
+        .n-h { background: #000; padding: 15px; color: #00ff41; font-weight: bold; border-bottom: 1px solid #333; display: flex; justify-content: space-between; }
+        .n-b { flex: 1; padding: 15px; overflow-y: auto; color: #ccc; font-size: 13px; }
+        .n-m { margin-bottom: 10px; padding: 8px; border-radius: 6px; }
+        .n-r { background: #1a1a1a; border-left: 3px solid #00ff41; }
+        .n-u { background: #005500; text-align: right; color: white; }
+        .n-f { padding: 10px; border-top: 1px solid #333; display: flex; }
+        .n-f input { flex: 1; background: #000; border: 1px solid #333; color: white; padding: 8px; }
+    </style>
+    
+    <div id="nova-trigger" onclick="toggleN()">🧠</div>
+    <div id="nova-ui">
+        <div class="n-h"><span>NOVA (NovaSuite)</span><span onclick="toggleN()" style="cursor:pointer">x</span></div>
+        <div class="n-b" id="n-log"><div class="n-m n-r">Initialisation...<br>Je suis l'Agent Nova. Posez une question sur nos Audits, le RAG ou la Loi 25.</div></div>
+        <div class="n-f"><input id="n-i" placeholder="Question..." onkeypress="if(event.key==='Enter') sendN()"><button onclick="sendN()" style="color:#00ff41;background:none;border:none;font-weight:bold;">></button></div>
+    </div>
+
+    <script>
+        // TUEUR DE BOUTON BLEU
+        window.addEventListener('load', function() {
+            setInterval(function(){
+                var all = document.querySelectorAll('div, a, button');
+                for (var i = 0; i < all.length; i++) {
+                    var el = all[i];
+                    var s = window.getComputedStyle(el);
+                    if (s.position === 'fixed' && parseInt(s.bottom) < 120 && parseInt(s.right) < 120) {
+                        if (el.id !== 'nova-trigger' && el.id !== 'nova-ui') { el.style.display = 'none'; }
+                    }
+                }
+            }, 1000);
+        });
+
+        function toggleN() { var u=document.getElementById('nova-ui'); u.style.display=u.style.display==='flex'?'none':'flex'; }
+        function sendN() {
+            var i=document.getElementById('n-i'); var t=i.value.toLowerCase(); if(!t)return;
+            document.getElementById('n-log').innerHTML += `<div class='n-m n-u'>${i.value}</div>`;
+            i.value='';
+            setTimeout(function(){
+                var r = "Je notifie l'administration.";
+                if(t.includes('bonjour')) r="Prêt pour l'audit de souveraineté.";
+                else if(t.includes('prix') || t.includes('cout')) r="<a href='mailto:yarrowmartin3@gmail.com' style='color:#00ff41'>Demander un devis audit.</a>";
+                else if(t.includes('loi')) r="Scan Loi 25 : Vérification des registres en cours.";
+                else if(t.includes('rag')) r="Nos Agents RAG sécurisent vos données en local.";
+                else if(t.includes('undrip')) r="Conformité UNDRIP : Analyse des traités ancestraux.";
+                
+                document.getElementById('n-log').innerHTML += `<div class='n-m n-r'>${r}</div>`;
+                document.getElementById('n-log').scrollTop = 9999;
+            }, 800);
+        }
+    </script>
+    
 </body>
 </html>

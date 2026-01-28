@@ -1,23 +1,115 @@
-<!doctype html>
+ Voici votre code HTML modifié avec les changements demandés :
+
+
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Nova Sandbox Test</title>
-  <style>body{font-family:system-ui,Segoe UI,Arial;background:#0b0f14;color:#e5e7eb;padding:24px}</style>
+    <meta charset="UTF-8">
+    <title>IA Juridique - RAG, UNDRIP, Cyber Souveraineté</title>
+    <style>
+        body {
+            background-color: #f2f2f2;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        p {
+            font-size: 18px;
+            line-height: 1.5;
+            margin: 0 auto;
+            width: 60%;
+        }
+
+        .social-links a {
+            display: inline-block;
+            margin: 20px;
+            text-decoration: none;
+            color: #3b5998;
+        }
+
+        .social-links a:hover {
+            opacity: 0.7;
+        }
+    </style>
 </head>
 <body>
-  <h1>Test · Nova Chat (Sandbox)</h1>
-  <p>Cette page isole la chatbox. Utile pour tester sans toucher à la page principale.</p>
-  <div id="nova-chat" style="position:relative;margin-top:12px;width:520px;max-width:96%;background:#0b0f14;border:1px solid #1e293b;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.35);font-family:system-ui,Segoe UI,Arial;color:#e5e7eb;overflow:hidden">
-    <div style="padding:10px 12px;background:#111827;border-bottom:1px solid #1f2937;font-weight:600">Nova · Assistant local</div>
-    <div id="nova-log" style="height:300px;overflow:auto;padding:12px"></div>
-    <form id="nova-form" style="display:flex;gap:8px;padding:10px;background:#0b0f14;border-top:1px solid #1f2937">
-      <input id="nova-input" placeholder="Parlez à Nova" style="flex:1;padding:10px;border-radius:8px;border:1px solid #334155;background:#0f172a;color:#e5e7eb" />
-      <button id="nova-send" style="padding:10px 14px;border-radius:8px;border:1px solid #334155;background:#1f2937;color:#e5e7eb">Envoyer</button>
-    </form>
-  </div>
-  <script src="./guard.js?v=1" defer></script>
-  <script src="./script.js?v=1" defer></script>
-</body>
+    <div class="container">
+        <h1>IA Juridique - Expertise en RAG, UNDRIP et Cyber Souveraineté</h1>
+        <p>Venez découvrir nos services d'IA juridique. Nous spécialisons dans la régulation artificielle générée (RAG), les Nations unies sur les droits indigènes et des peuples autochtones (UNDRIP) et la souveraineté cyberspace.</p>
+        <div class="social-links">
+            <a href="https://www.facebook.com/profile.php?id=61579345525683" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="https://www.linkedin.com/in/yarrow-martin-40127a2b0" target="_blank"><i class="fab fa-linkedin"></i></a>
+        </div>
+    </div>
+<div id="law25" style="position:fixed;bottom:0;left:0;width:100%;background:#111;border-top:1px solid #00ff41;color:#888;padding:10px;text-align:center;font-size:12px;z-index:9000">Conformité Loi 25 active. <a href="privacy.html" style="color:#00ff41">Détails</a> <button onclick="this.parentElement.style.display='none'" style="background:#00ff41;border:none;padding:2px 8px;margin-left:10px;cursor:pointer">OK</button></div>
+    <style>
+        #nova-launcher { position: fixed; bottom: 25px; right: 25px; width: 65px; height: 65px; background: radial-gradient(circle, #00ff41 10%, #004d1a 90%); border-radius: 50%; box-shadow: 0 0 20px #00ff41; cursor: pointer; z-index: 9999; display: flex; align-items: center; justify-content: center; font-size: 30px; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% {box-shadow: 0 0 0 0 rgba(0,255,65, 0.7);} 70% {box-shadow: 0 0 0 15px rgba(0,255,65, 0);} 100% {box-shadow: 0 0 0 0 rgba(0,255,65, 0);} }
+        #nova-interface { display: none; position: fixed; bottom: 100px; right: 25px; width: 350px; height: 500px; background: rgba(10, 10, 10, 0.95); border: 1px solid #00ff41; border-radius: 12px; backdrop-filter: blur(10px); z-index: 9999; flex-direction: column; box-shadow: 0 10px 40px rgba(0,0,0,0.8); font-family: 'Courier New', monospace; }
+        .nova-head { padding: 15px; background: #050505; border-bottom: 1px solid #333; display: flex; justify-content: space-between; align-items: center; }
+        .nova-status { color: #00ff41; font-weight: bold; font-size: 12px; }
+        #nova-chat-log { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+        .msg { padding: 10px; border-radius: 6px; font-size: 13px; max-width: 85%; }
+        .bot { background: #111; border-left: 2px solid #00ff41; color: #ccc; align-self: flex-start; }
+        .user { background: #004d1a; color: white; align-self: flex-end; }
+        .nova-input-zone { padding: 15px; border-top: 1px solid #333; display: flex; gap: 5px; }
+        #nova-input { flex: 1; background: #222; border: none; color: white; padding: 10px; border-radius: 4px; }
+        .typing { color: #00ff41; font-size: 10px; margin-left: 15px; display: none; margin-bottom: 5px; }
+    </style>
+    <div id="nova-launcher" onclick="toggleNova()">🤖</div>
+    <div id="nova-interface">
+        <div class="nova-head"><span class="nova-status">● NOVA CORE ONLINE</span><span onclick="toggleNova()" style="cursor:pointer;color:#666">✕</span></div>
+        <div id="nova-chat-log"></div>
+        <div class="typing" id="nova-typing">Nova écrit...</div>
+        <div class="nova-input-zone">
+            <input type="text" id="nova-input" placeholder="Question..." onkeypress="if(event.key==='Enter') sendMsg()">
+            <button onclick="sendMsg()" style="background:#00ff41;border:none;cursor:pointer;font-weight:bold;">></button>
+        </div>
+    </div>
+    <script>
+        let init = false;
+        function toggleNova() {
+            const ui = document.getElementById('nova-interface');
+            ui.style.display = ui.style.display === 'flex' ? 'none' : 'flex';
+            if(!init && ui.style.display === 'flex') {
+                botReply("Connexion sécurisée établie.", 500);
+                botReply("Bonjour. Je suis l'Agent Nova. Je gère les audits UNDRIP et la conformité Loi 25. Une question ?", 1500);
+                init = true;
+            }
+        }
+        function sendMsg() {
+            const inp = document.getElementById('nova-input');
+            const txt = inp.value.trim().toLowerCase();
+            if(!txt) return;
+            addMsg(inp.value, 'user');
+            inp.value = '';
+            document.getElementById('nova-typing').style.display = 'block';
+            setTimeout(() => {
+                let rep = "Je transmets votre demande à Yarrow Martin.";
+                if(txt.includes('prix') || txt.includes('tarif')) rep = "Nos audits sont sur mesure. <a href='mailto:yarrowmartin3@gmail.com' style='color:#00ff41'>Contactez-nous pour un devis.</a>";
+                else if(txt.includes('loi 25')) rep = "La Loi 25 exige un responsable des données. Je peux scanner votre infra pour vérifier la conformité.";
+                else if(txt.includes('undrip') || txt.includes('autochtone')) rep = "Mon moteur RAG analyse les traités ancestraux en temps réel pour vos projets miniers/hydro.";
+                else if(txt.includes('bonjour')) rep = "Salutations. Prêt pour l'analyse.";
+                
+                document.getElementById('nova-typing').style.display = 'none';
+                botReply(rep, 0);
+            }, 1500);
+        }
+        function botReply(txt, delay) { setTimeout(() => { addMsg(txt, 'bot'); }, delay); }
+        function addMsg(txt, type) {
+            const log = document.getElementById('nova-chat-log');
+            log.innerHTML += `<div class='msg ${type}'>${txt}</div>`;
+            log.scrollTop = log.scrollHeight;
+        }
+    </script>
+    </body>
 </html>

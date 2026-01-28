@@ -1,0 +1,201 @@
+<html><head>
+  
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>NovaSuite • Accueil</title>
+  <meta name="description" content="Découvrez NovaSuite : Audit IA Express, Cybersécurité, et Intégration Nova (LM Studio/Ollama) pour votre projet web."/>
+  <meta property="og:title" content="NovaSuite • Accueil"/>
+  <meta property="og:description" content="La solution clé en main pour l'IA et la sécurité web."/>
+  <meta property="og:image" content="assets/banner-novasuite.webp"/> 
+  <meta property="og:url" content="https://novasuite.ca/index.html"/>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.webp"/> 
+  <link rel="stylesheet" href="assets/nova.css?v=20251116"/>
+
+<meta http-equiv="Content-Security-Policy" content="
+default-src 'self';
+script-src 'self' https://www.googletagmanager.com https://www.google-analytics.com 'unsafe-inline';
+img-src 'self' https://www.google-analytics.com https://www.googletagmanager.com data:;
+connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://novasuite.onrender.com https://region1.google-analytics.com;
+style-src 'self' 'unsafe-inline';
+frame-src https://www.googletagmanager.com;">
+
+  <style>
+    /* ===== Styles de la page (Hero et Formules) - Maintenus ===== */
+    .ns-hero{position:relative;border-radius:12px;overflow:hidden;margin-top:10px;
+             box-shadow:0 6px 25px rgba(0,0,0,.4)}
+    .ns-hero::before{
+      content:"";position:absolute;inset:0;
+      /* CORRECTION: Assurez-vous que le nom du fichier est correct */
+      background-image:url('assets/banner-novasuite.webp'); 
+      background-size:cover;background-position:center;
+      filter:brightness(.65)
+    }
+    .ns-hero__inner{
+      position:relative;min-height:380px;
+      display:flex;flex-direction:column;justify-content:center;align-items:center;
+      text-align:center;padding:20px
+    }
+    .ns-hero h2{margin:0 0 10px;font-size:clamp(1.8rem,3vw,2.4rem);color:#fff;
+                text-shadow:0 2px 8px rgba(0,0,0,.5)}
+    .ns-hero p{max-width:640px;margin:0 0 18px;color:#e2e8f0;
+               text-shadow:0 2px 6px rgba(0,0,0,.6)}
+    .ns-hero__actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+    .ns-btn{display:inline-flex;align-items:center;justify-content:center;
+            padding:12px 16px;border-radius:12px;font-weight:800;text-decoration:none}
+    .ns-btn--primary{background:linear-gradient(180deg,#1ea7ff,#1293ee);color:#031425;border:0}
+    .ns-btn--gold{background:linear-gradient(180deg,#ffe08a,#ffc233);color:#3b2a00;border:0}
+    .ns-btn:hover{filter:brightness(1.05)}
+    @media (max-width:700px){
+      .ns-hero__inner{min-height:460px;padding:16px}
+      .ns-btn{min-width:180px;padding:10px 14px}
+    }
+    
+    /* Styles du Chat Nova */
+    .nova-fab{
+      position:fixed; 
+      right:16px; /* Position par défaut à droite */
+      bottom:16px; 
+      z-index:9999; 
+      padding:12px 16px; border-radius:999px; font-weight:800; text-decoration:none;
+      background:linear-gradient(180deg,#1ea7ff,#1293ee); color:#031425; border:none;
+      box-shadow:0 10px 28px rgba(0,0,0,.35);
+      -webkit-tap-highlight-color: transparent;
+      cursor:pointer;
+      transition: opacity 0.3s ease-in-out; 
+    }
+    .nova-box{
+      position:fixed; right:16px; bottom:65px; z-index:9998; 
+      width:300px; height:400px; background-color:#1e293b; border-radius:12px;
+      box-shadow:0 10px 28px rgba(0,0,0,.5);
+      display:none; /* C'est le CSS qui gère le masquage par défaut */
+      flex-direction:column;
+    }
+    .nova-head{
+      padding:10px 15px; background-color:#0f172a; color:#fff;
+      border-top-left-radius:12px; border-top-right-radius:12px; font-weight:bold;
+    }
+    .nova-log{
+      flex-grow:1; padding:15px; overflow-y:auto; color:#fff; font-size:0.9em;
+    }
+    .nova-bar{
+      display:flex; padding:10px; background-color:#0f172a;
+      border-bottom-left-radius:12px; border-bottom-right-radius:12px;
+    }
+    .nova-bar input{
+      flex-grow:1; padding:8px; border:none; border-radius:6px; margin-right:8px;
+      background-color:#334155; color:#fff;
+    }
+    .nova-bar button{
+      padding:8px 12px; border:none; border-radius:66px; cursor:pointer;
+      background-color:#1ea7ff; color:#031425; font-weight:bold;
+    }
+    @media (max-width:600px){
+      .nova-fab{ padding:11px 15px; right:14px; bottom:16px; }
+      .nova-box{ width:90%; height:70%; right:5%; bottom:65px; }
+    }
+
+    /* ===== NOUVEAU STYLE DE BANDEAU DE CONSENTEMENT (LATÉRAL COMPACT) ===== */
+    #cookie-banner {
+      position: fixed !important;
+      bottom: 20px !important; 
+      right: 20px !important; 
+      width: 320px !important; 
+      max-width: 90% !important; 
+      background-color: #0f172a; 
+      color: #cde6dc; 
+      padding: 15px; 
+      z-index: 99999 !important;
+      display: flex; 
+      flex-direction: column; 
+      align-items: flex-start;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      border: 1px solid #124736;
+      border-radius: 12px; 
+    }
+    #cookie-banner p { 
+      margin: 0 0 10px 0; 
+      font-size: 0.9rem; 
+      flex-grow: 1;
+      padding-right: 0; 
+    }
+    #cookie-banner a { 
+      color: #72ffcb; 
+      text-decoration: underline; 
+      font-weight: 600; 
+      margin-right: 0; 
+      display: block; 
+      margin-bottom: 10px;
+    }
+    .cookie-buttons { 
+      display: flex; 
+      gap: 10px; 
+      width: 100%; 
+      justify-content: flex-end; 
+    }
+    .cookie-buttons button {
+      padding: 8px 12px; border: none; border-radius: 6px; cursor: pointer;
+      font-weight: 700; font-size: 0.85rem; transition: background-color 0.2s;
+      flex-shrink: 0;
+    }
+    #accept-cookies { background-color: #72ffcb; color: #0a0f0d; }
+    #settings-cookies { background-color: #124736; color: #72ffcb; border: 1px solid #72ffcb; }
+    
+    @media (max-width: 600px) {
+      #cookie-banner { 
+        width: 100% !important; 
+        right: 0 !important; 
+        left: 0 !important; 
+        bottom: 0 !important; 
+        border-radius: 12px 12px 0 0; 
+      }
+      .cookie-buttons {
+          justify-content: space-between; 
+      }
+      .nova-fab {
+        right: 16px; 
+        left: auto;
+      }
+    }
+
+    /* Autres styles */
+    .card .badge-blue {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background-color: #1ea7ff;
+        color: #031425;
+        padding: 4px 8px;
+        border-radius: 6px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        box-shadow: 0 2px 4px rgba(0,0,0,.2);
+    }
+    .about-us-summary{
+      text-align: center; 
+      padding: 40px 20px; 
+      background-color: #0f172a; 
+      border-top: 1px solid #124736;
+      border-bottom: 1px solid #124736;
+      margin-top: 20px;
+    }
+    .about-us-summary h2{
+      color: #72ffcb; 
+      margin-bottom: 15px;
+      font-size: 1.8rem;
+    }
+    .about-us-summary p{
+      font-size: 1.1em; 
+      max-width: 800px; 
+      margin: 0 auto 15px auto;
+      color: #cde6dc;
+    }
+  </style>
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="shortcut icon" href="/assets/favicon.ico"> 
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"> 
+</head><body style="background:#050505;color:#ccc;font-family:sans-serif;padding:40px">
+    <a href="index.html" style="color:#00ff41">&larr; Retour</a>
+    <h1 style="color:white;margin-top:20px">Politique Loi 25</h1>
+    <p>Responsable: Yarrow Martin (yarrowmartin3@gmail.com).</p>
+    <p>Données hébergées localement. Droit à l'oubli garanti.</p></body></html>

@@ -1,628 +1,145 @@
 <!doctype html>
 <html lang="fr">
 <head>
-  
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>NovaSuite • Accueil</title>
-  <meta name="description" content="Découvrez NovaSuite : Audit IA Express, Cybersécurité, et Intégration Nova (LM Studio/Ollama) pour votre projet web."/>
-  <meta property="og:title" content="NovaSuite • Accueil"/>
-  <meta property="og:description" content="La solution clé en main pour l'IA et la sécurité web."/>
-  <meta property="og:image" content="assets/banner-novasuite.webp"/> 
-  <meta property="og:url" content="https://novasuite.ca/index.html"/>
-  <link rel="icon" type="image/svg+xml" href="assets/favicon.webp"/> 
-  <link rel="stylesheet" href="assets/nova.css?v=20251116"/>
-
-<meta http-equiv="Content-Security-Policy" content="
-default-src 'self';
-script-src 'self' https://www.googletagmanager.com https://www.google-analytics.com 'unsafe-inline';
-img-src 'self' https://www.google-analytics.com https://www.googletagmanager.com data:;
-connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://novasuite.onrender.com https://region1.google-analytics.com;
-style-src 'self' 'unsafe-inline';
-frame-src https://www.googletagmanager.com;">
-
+  <title>NovaSuite Technologies • Cybersécurité & IA</title>
+  <meta name="description" content="Protégez votre entreprise avec NovaSuite : Audit de conformité Loi 25, Cybersécurité éthique et Agents IA souverains."/>
+  <link rel="stylesheet" href="assets/nova.css?v=20260128"/>
+  
   <style>
-    /* ===== Styles de la page (Hero et Formules) - Maintenus ===== */
-    .ns-hero{position:relative;border-radius:12px;overflow:hidden;margin-top:10px;
-             box-shadow:0 6px 25px rgba(0,0,0,.4)}
-    .ns-hero::before{
-      content:"";position:absolute;inset:0;
-      /* CORRECTION: Assurez-vous que le nom du fichier est correct */
-      background-image:url('assets/banner-novasuite.webp'); 
-      background-size:cover;background-position:center;
-      filter:brightness(.65)
-    }
-    .ns-hero__inner{
-      position:relative;min-height:380px;
-      display:flex;flex-direction:column;justify-content:center;align-items:center;
-      text-align:center;padding:20px
-    }
-    .ns-hero h2{margin:0 0 10px;font-size:clamp(1.8rem,3vw,2.4rem);color:#fff;
-                text-shadow:0 2px 8px rgba(0,0,0,.5)}
-    .ns-hero p{max-width:640px;margin:0 0 18px;color:#e2e8f0;
-               text-shadow:0 2px 6px rgba(0,0,0,.6)}
-    .ns-hero__actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
-    .ns-btn{display:inline-flex;align-items:center;justify-content:center;
-            padding:12px 16px;border-radius:12px;font-weight:800;text-decoration:none}
-    .ns-btn--primary{background:linear-gradient(180deg,#1ea7ff,#1293ee);color:#031425;border:0}
-    .ns-btn--gold{background:linear-gradient(180deg,#ffe08a,#ffc233);color:#3b2a00;border:0}
-    .ns-btn:hover{filter:brightness(1.05)}
-    @media (max-width:700px){
-      .ns-hero__inner{min-height:460px;padding:16px}
-      .ns-btn{min-width:180px;padding:10px 14px}
-    }
+    :root { --cyber-green: #00ff41; --deep-dark: #0a0f0d; --nova-blue: #1ea7ff; }
     
-    /* Styles du Chat Nova */
-    .nova-fab{
-      position:fixed; 
-      right:16px; /* Position par défaut à droite */
-      bottom:16px; 
-      z-index:9999; 
-      padding:12px 16px; border-radius:999px; font-weight:800; text-decoration:none;
-      background:linear-gradient(180deg,#1ea7ff,#1293ee); color:#031425; border:none;
-      box-shadow:0 10px 28px rgba(0,0,0,.35);
-      -webkit-tap-highlight-color: transparent;
-      cursor:pointer;
-      transition: opacity 0.3s ease-in-out; 
+    .ns-hero {
+      position: relative; border-radius: 12px; overflow: hidden; margin-top: 10px;
+      box-shadow: 0 6px 25px rgba(0,0,0,.6); background: #000;
     }
-    .nova-box{
-      position:fixed; right:16px; bottom:65px; z-index:9998; 
-      width:300px; height:400px; background-color:#1e293b; border-radius:12px;
-      box-shadow:0 10px 28px rgba(0,0,0,.5);
-      display:none; /* C'est le CSS qui gère le masquage par défaut */
-      flex-direction:column;
+    .ns-hero__inner {
+      position: relative; min-height: 450px; display: flex; flex-direction: column;
+      justify-content: center; align-items: center; text-align: center; padding: 40px 20px;
+      background: linear-gradient(rgba(10,15,13,0.8), rgba(10,15,13,0.8)), url('assets/banner-novasuite.webp') center/cover;
     }
-    .nova-head{
-      padding:10px 15px; background-color:#0f172a; color:#fff;
-      border-top-left-radius:12px; border-top-right-radius:12px; font-weight:bold;
-    }
-    .nova-log{
-      flex-grow:1; padding:15px; overflow-y:auto; color:#fff; font-size:0.9em;
-    }
-    .nova-bar{
-      display:flex; padding:10px; background-color:#0f172a;
-      border-bottom-left-radius:12px; border-bottom-right-radius:12px;
-    }
-    .nova-bar input{
-      flex-grow:1; padding:8px; border:none; border-radius:6px; margin-right:8px;
-      background-color:#334155; color:#fff;
-    }
-    .nova-bar button{
-      padding:8px 12px; border:none; border-radius:66px; cursor:pointer;
-      background-color:#1ea7ff; color:#031425; font-weight:bold;
-    }
-    @media (max-width:600px){
-      .nova-fab{ padding:11px 15px; right:14px; bottom:16px; }
-      .nova-box{ width:90%; height:70%; right:5%; bottom:65px; }
-    }
-
-    /* ===== NOUVEAU STYLE DE BANDEAU DE CONSENTEMENT (LATÉRAL COMPACT) ===== */
-    #cookie-banner {
-      position: fixed !important;
-      bottom: 20px !important; 
-      right: 20px !important; 
-      width: 320px !important; 
-      max-width: 90% !important; 
-      background-color: #0f172a; 
-      color: #cde6dc; 
-      padding: 15px; 
-      z-index: 99999 !important;
-      display: flex; 
-      flex-direction: column; 
-      align-items: flex-start;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-      border: 1px solid #124736;
-      border-radius: 12px; 
-    }
-    #cookie-banner p { 
-      margin: 0 0 10px 0; 
-      font-size: 0.9rem; 
-      flex-grow: 1;
-      padding-right: 0; 
-    }
-    #cookie-banner a { 
-      color: #72ffcb; 
-      text-decoration: underline; 
-      font-weight: 600; 
-      margin-right: 0; 
-      display: block; 
-      margin-bottom: 10px;
-    }
-    .cookie-buttons { 
-      display: flex; 
-      gap: 10px; 
-      width: 100%; 
-      justify-content: flex-end; 
-    }
-    .cookie-buttons button {
-      padding: 8px 12px; border: none; border-radius: 6px; cursor: pointer;
-      font-weight: 700; font-size: 0.85rem; transition: background-color 0.2s;
-      flex-shrink: 0;
-    }
-    #accept-cookies { background-color: #72ffcb; color: #0a0f0d; }
-    #settings-cookies { background-color: #124736; color: #72ffcb; border: 1px solid #72ffcb; }
+    .ns-hero h2 { font-size: clamp(2rem, 5vw, 3rem); color: var(--cyber-green); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; }
+    .ns-hero p { max-width: 750px; font-size: 1.2rem; color: #cde6dc; margin-bottom: 30px; line-height: 1.6; }
     
-    @media (max-width: 600px) {
-      #cookie-banner { 
-        width: 100% !important; 
-        right: 0 !important; 
-        left: 0 !important; 
-        bottom: 0 !important; 
-        border-radius: 12px 12px 0 0; 
-      }
-      .cookie-buttons {
-          justify-content: space-between; 
-      }
-      .nova-fab {
-        right: 16px; 
-        left: auto;
-      }
+    /* Focus Audit Challenge */
+    .audit-challenge-box {
+      background: rgba(0, 255, 65, 0.1); border: 2px solid var(--cyber-green);
+      padding: 20px; border-radius: 12px; margin-bottom: 30px; animation: pulse-border 2s infinite;
     }
+    @keyframes pulse-border { 0% { box-shadow: 0 0 0 0 rgba(0,255,65,0.4); } 70% { box-shadow: 0 0 0 15px rgba(0,255,65,0); } 100% { box-shadow: 0 0 0 0 rgba(0,255,65,0); } }
 
-    /* Autres styles */
-    .card .badge-blue {
-        position: absolute;
-        top: 15px;
-        right: 15px;
-        background-color: #1ea7ff;
-        color: #031425;
-        padding: 4px 8px;
-        border-radius: 6px;
-        font-size: 0.8rem;
-        font-weight: 700;
-        box-shadow: 0 2px 4px rgba(0,0,0,.2);
+    .ns-btn { 
+      padding: 15px 30px; border-radius: 8px; font-weight: 800; text-decoration: none; 
+      transition: 0.3s; display: inline-block; text-transform: uppercase;
     }
-    .about-us-summary{
-      text-align: center; 
-      padding: 40px 20px; 
-      background-color: #0f172a; 
-      border-top: 1px solid #124736;
-      border-bottom: 1px solid #124736;
-      margin-top: 20px;
-    }
-    .about-us-summary h2{
-      color: #72ffcb; 
-      margin-bottom: 15px;
-      font-size: 1.8rem;
-    }
-    .about-us-summary p{
-      font-size: 1.1em; 
-      max-width: 800px; 
-      margin: 0 auto 15px auto;
-      color: #cde6dc;
-    }
+    .ns-btn--main { background: var(--cyber-green); color: #000; box-shadow: 0 0 20px rgba(0,255,65,0.5); }
+    .ns-btn--main:hover { transform: scale(1.05); background: #fff; }
+
+    /* Cards Pricing */
+    .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 40px; }
+    .card { background: #111; border: 1px solid #222; padding: 30px; border-radius: 12px; transition: 0.3s; position: relative; }
+    .card:hover { border-color: var(--nova-blue); transform: translateY(-5px); }
+    .card h3 { color: var(--nova-blue); font-size: 1.5rem; margin-bottom: 15px; }
+    .price { font-size: 2rem; font-weight: 900; color: #fff; margin-bottom: 20px; display: block; }
+    
+    /* Chat Agent */
+    #nova-trigger { position: fixed; bottom: 25px; right: 25px; width: 60px; height: 60px; background: var(--cyber-green); border-radius: 50%; cursor: pointer; z-index: 9999; display: flex; align-items: center; justify-content: center; font-size: 30px; box-shadow: 0 0 20px var(--cyber-green); }
+    #nova-ui { display: none; position: fixed; bottom: 100px; right: 25px; width: 350px; height: 500px; background: #0a0a0a; border: 1px solid var(--cyber-green); border-radius: 12px; z-index: 9999; flex-direction: column; box-shadow: 0 10px 40px rgba(0,0,0,0.9); }
   </style>
-    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
-    <link rel="shortcut icon" href="/assets/favicon.ico"> 
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"> 
 </head>
 
 <body>
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TH9TZKR4"
-  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  
   <header class="wrap">
     <a class="brand" href="/">
-      <img class="logo" src="assets/logo-novasuite.webp" alt="NovaSuite" width="63" height="63"/>
-      <span>NovaSuite</span>
+      <img src="assets/logo-novasuite.webp" alt="NovaSuite" width="60"/>
+      <span>NovaSuite Technologies</span>
     </a>
-    <h1>NovaSuite : Votre succès web avec l'IA 🤖 et la Cybersécurité 🛡️.
-      <a href="a-propos.html" style="font-size:0.75em; font-weight:normal; margin-left:15px; text-decoration:underline; color:#72ffcb;">Notre Expertise</a>
-    </h1>
+    <nav>
+       <a href="#audit" style="color:var(--cyber-green); font-weight:bold;">DÉFI AUDIT 60s</a>
+       <a href="a-propos.html">Expertise</a>
+       <a href="mailto:contact@novasuite.ca">Contact</a>
+    </nav>
   </header>
-<section class="ns-hero">
-  <div class="ns-hero__inner">
-    <h2>Audit IA Express & Intégration Nova (LM Studio / Ollama) 🚀</h2>
-    <p>
-      NovaSuite vous fournit des diagnostics de sécurité et de performance clairs, des recommandations concrètes, et l'**intégration assistée** de nos outils d'intelligence artificielle (LM Studio / Ollama) pour donner un avantage compétitif à votre projet web. Choisissez la solution clé en main.
-    </p>
-    <div class="ns-hero__actions">
-      <a href="#formules" class="ns-btn ns-btn--primary">Voir les formules</a>
-      <a href="https://www.buymeacoffee.com/yarrowmart9" target="_blank" rel="noopener"
-         class="ns-btn ns-btn--gold">☕ Offrir un café à NovaSuite</a>
-    </div>
-  </div>
-</section>
 
-<section class="about-us-summary wrap">
-    <h2>Qui sommes-nous ?</h2>
-    <p>
-        NovaSuite Technologies est votre partenaire de cybersécurité nouvelle génération. Nous sommes fondés par Yarrow Martin, un expert **Certifié en Piratage Éthique** et formé en **Intelligence Artificielle par Google**.
-    </p>
-    <p>
-        Notre mission : Protéger votre entreprise contre les menaces numériques et assurer la conformité Loi 25 grâce à des solutions automatisées et des audits IA précis.
-    </p>
-    <a href="a-propos.html" class="ns-btn ns-btn--primary" style="background:linear-gradient(180deg,#4da786,#3a8f6f); color:#fff; border:0;">Découvrez notre expertise complète</a>
-</section>
-<div id="formules" style="scroll-margin-top:100px;"></div>
+  <section class="ns-hero">
+    <div class="ns-hero__inner">
+      <div class="audit-challenge-box">
+        <h2 id="audit">Défi d'Audit de Conformité : 60 Secondes</h2>
+        <p>Votre site est-il conforme à la Loi 25 ? Testez votre sécurité maintenant et lancez votre POC gratuit.</p>
+        <a href="defi-audit.html" class="ns-btn ns-btn--main">Lancer mon défi d'audit</a>
+      </div>
+      <p>Expertise Certifiée en Piratage Éthique (CEH) & Intelligence Artificielle. <br>Nous sécurisons vos actifs numériques et automatisons votre croissance.</p>
+    </div>
+  </section>
 
   <main class="wrap">
-    <h2>Nos Formules Détaillées</h2>
-    
-    <section class="card">
-      <h2>Formule Audit Express</h2>
-      <p>
-        **399 $** par audit<br/>
-        Analyse rapide de votre site, rapport clair et recommandations concrètes.
-      </p>
-      <ul id="audit-express-ul">
-        <li>Audit de sécurité et performance</li>
-        <li>Rapport détaillé avec recommandations</li>
-        <li>Support par e‑mail</li>
-      </ul>
-      <a href="https://buy.stripe.com/eVqeVd3nkacW50P9GS2VG03" class="btn-primary" target="_blank" rel="noopener">Demander un audit (399 $)</a>
+    <section class="about-us-summary">
+      <h2 style="color:var(--cyber-green)">Protection de Grade Militaire pour PME</h2>
+      <p>Fondée par <strong>Monseigneur Yarrow</strong>, expert certifié en cybersécurité, NovaSuite Technologies fusionne l'IA offensive et la défense proactive.</p>
     </section>
 
-    <section class="card recommended">
-      <h2>Formule Intégration Standard</h2>
-      <div class="badge badge-blue">⭐ Recommandé</div> 
-      <p>
-        **699 $** par projet<br/>
-        Audit complet plus intégration assistée de nos outils IA.
-      </p>
-      <ul id="integration-standard-ul">
-        <li>Audit complet de sécurité et performance</li>
-        <li>Intégration de mini‑site IA/Chat Nova</li>
-        <li>Recommandations d’optimisation UX/UI</li>
-        <li>Support par e‑mail et chat</li>
-      </ul>
-      <a href="https://buy.stripe.com/eVqfZh5vsetcdxl7yK2VG01" class="btn-primary" target="_blank" rel="noopener">Commander maintenant (699 $)</a>
-    </section>
+    <div class="pricing-grid">
+      <div class="card">
+        <h3>Audit Express</h3>
+        <span class="price">499 $ CAD</span>
+        <ul>
+          <li>Analyse de surface et vulnérabilités</li>
+          <li>Rapport de conformité Loi 25</li>
+          <li>Recommandations prioritaires</li>
+        </ul>
+        <a href="#" class="ns-btn ns-btn--main" style="width:100%; text-align:center;">Réserver</a>
+      </div>
 
-    <section class="card">
-      <h2>Formule Premium</h2>
-      <p>
-        **1299 $** par projet<br/>
-        Solution clé en main avec intégration complète et suivi.
-      </p>
-      <ul id="formule-premium-ul">
-        <li>Audit avancé et intégration IA</li>
-        <li>Personnalisation du mini‑site (branding)</li>
-        <li>Mises à jour et optimisations mensuelles</li>
-        <li>Support premium (e‑mail et chat prioritaire)</li>
-      </ul>
-      <a href="https://buy.stripe.com/4gM5kDbTQ0CmbpdaKW2VG02" class="btn-primary" target="_blank" rel="noopener">Commander maintenant (1299 $)</a>
-    </section>
+      <div class="card" style="border-color: var(--nova-blue)">
+        <div style="background:var(--nova-blue); color:#000; padding:2px 10px; position:absolute; top:0; right:0; border-radius:0 12px 0 12px; font-size:0.8rem; font-weight:bold;">POPULAIRE</div>
+        <h3>Intégration Standard</h3>
+        <span class="price">899 $ CAD</span>
+        <ul>
+          <li>Audit complet + Pentest</li>
+          <li>Intégration Agent IA Nova</li>
+          <li>Optimisation UX/UI Sécurisée</li>
+        </ul>
+        <a href="#" class="ns-btn ns-btn--main" style="width:100%; text-align:center; background:var(--nova-blue)">Commander</a>
+      </div>
 
-    <section class="card monthly-plan">
-      <h2>NovaSuite 🛡️ Bouclier Proactif</h2>
-      <p>
-        **399 $** par mois<br/>
-        Surveillance IA 24/7, maintenance des failles post-Audit et optimisation.
-      </p>
-      <ul id="monthly-plan-ul">
-        <li>Surveillance IA 24/7 (Alertes immédiates)</li>
-        <li>Maintenance des failles post-Audit</li>
-        <li>Conformité continue (Loi 25)</li>
-        <li>Rapports mensuels de sécurité</li>
-      </ul>
-      <a href="https://buy.stripe.com/3cIdR90b8etcal97yK2VG04" class="btn-primary" target="_blank" rel="noopener">S'abonner au Bouclier (399 $/mois)</a>
-    </section>
-    
-
+      <div class="card">
+        <h3>Protocole Aegis</h3>
+        <span class="price">799 $ /mois</span>
+        <ul>
+          <li>Monitoring IA 24/7</li>
+          <li>Réponse aux incidents</li>
+          <li>Mises à jour de sécurité critiques</li>
+        </ul>
+        <a href="#" class="ns-btn ns-btn--main" style="width:100%; text-align:center;">S'abonner</a>
+      </div>
+    </div>
   </main>
 
-  <div class="wrap" style="text-align:center; margin-top:30px;">
-    <a href="https://www.buymeacoffee.com/yarrowmart9" target="_blank" rel="noopener" class="btn-gold">☕ Offrir un café à NovaSuite</a>
-  </div>
-  
-<footer style="
-  border-top:1px solid #124736;
-  background-color:#0a0f0d;
-  padding:1.5rem 1rem;
-  text-align:center;
-  color:#9deacb;
-  font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-  font-size:0.8rem;
-  line-height:1.5;
-">
-  <div style="color:#72ffcb;font-weight:600;font-size:0.8rem;">
-    © NovaSuite Technologies 2025 — Tous droits réservés
-  </div>
-
-  <div style="margin-top:0.5rem;color:#9deacb;">
-    <a href="mentions-legales.html" style="color:#72ffcb;text-decoration:none;margin:0 .5rem;">
-      Mentions légales
-    </a>
-    •
-    <a href="politique-confidentialite.html" style="color:#72ffcb;text-decoration:none;margin:0 .5rem;">
-      Politique de confidentialité
-    </a>
-    •
-    <a href="#" onclick="showCookieSettings(event);" style="color:#72ffcb;text-decoration:none;margin:0 .5rem;">
-      Paramètres des témoins
-    </a>
-    •
-    <a href="mailto:contact@novasuite.ca" style="color:#72ffcb;text-decoration:none;margin:0 .5rem;">
-      contact@novasuite.ca
-    </a>
-  </div>
-
-  <div style="margin-top:0.5rem;color:#4da786;font-size:0.7rem;">
-    Sécurité IA locale • Audit cybersécurité express • Optimisation performance PC / réseau
-  </div>
-</footer>
-  
-<div id="cookie-settings-modal" style="
-    display: none; 
-    position: fixed; 
-    top: 0; 
-    left: 0; 
-    width: 100%; 
-    height: 100%; 
-    background-color: rgba(0, 0, 0, 0.75); 
-    z-index: 10001; 
-    align-items: center;
-    justify-content: center;
-    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-">
-    <div style="
-        background-color: #0a0f0d; 
-        border: 1px solid #124736;
-        border-radius: 12px; 
-        padding: 25px; 
-        max-width: 450px; 
-        width: 90%; 
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    ">
-        <h2 style="color: #72ffcb; margin-top: 0; border-bottom: 1px solid rgba(114, 255, 203, 0.2); padding-bottom: 10px; font-size: 1.4rem;">
-            Gestion des Témoins
-        </h2>
-        
-        <p style="color: #cde6dc; font-size: 0.95rem;">
-            Nous utilisons des témoins pour assurer le bon fonctionnement du site et analyser son trafic (Google Analytics). Conformément à la Loi 25, vous pouvez choisir d'accepter ou de refuser les témoins d'analyse.
-        </p>
-
-        <div style="margin-top: 20px;">
-            <div style="margin-bottom: 15px;">
-                <h3 style="color: #9deacb; font-size: 1rem; margin-top: 0; margin-bottom: 5px;">
-                    1. Témoins Essentiels (Obligatoires)
-                </h3>
-                <p style="color: #4da786; font-size: 0.85rem; margin: 0;">
-                    Nécessaires au fonctionnement de base du site et à la sécurité. Ne peuvent être désactivés.
-                </p>
-            </div>
-            
-            <div style="margin-bottom: 15px;">
-                <h3 style="color: #9deacb; font-size: 1rem; margin-top: 0; margin-bottom: 5px;">
-                    2. Témoins d'Analyse (Optionnels)
-                </h3>
-                <label style="display: flex; align-items: center; cursor: pointer;">
-                    <input type="checkbox" id="analytics-consent" checked style="margin-right: 10px; accent-color: #72ffcb;">
-                    <span style="color: #cde6dc; font-size: 0.9rem;">
-                        Activer Google Analytics (Mesure d'audience)
-                    </span>
-                </label>
-            </div>
-        </div>
-
-        <div style="margin-top: 25px; text-align: right;">
-            <button onclick="saveCookiePreferences();" style="
-                padding: 10px 18px; 
-                background-color: #72ffcb; 
-                color: #0a0f0d; 
-                border: none; 
-                border-radius: 8px; 
-                cursor: pointer; 
-                font-weight: 700;
-                font-size: 0.9rem;
-            ">
-                Sauvegarder et Fermer
-            </button>
-        </div>
+  <div id="nova-trigger" onclick="toggleNova()">🧠</div>
+  <div id="nova-ui">
+    <div style="padding:15px; background:#000; color:var(--cyber-green); border-bottom:1px solid #222; display:flex; justify-content:space-between;">
+      <span>AGENT NOVA v1.0</span>
+      <span onclick="toggleNova()" style="cursor:pointer">_</span>
     </div>
-</div>
-  
-  <button id="nova-fab" class="nova-fab" aria-expanded="false">💬 Nova</button>
-  <div id="nova-box" class="nova-box"> 
-    <div class="nova-head">Nova • Assistant local</div>
-    <div id="nova-log" class="nova-log"></div>
-    <form id="nova-form" class="nova-bar">
-      <input id="nova-field" name="q" placeholder="Parlez à Nova" autocomplete="off" />
-      <button id="nova-send" type="submit">Envoyer</button>
-    </form>
+    <div id="nova-log" style="flex:1; padding:15px; overflow-y:auto; color:#00ff41; font-family:monospace; font-size:12px;">
+      [SYSTEM] Prêt pour l'audit de souveraineté...
+    </div>
+    <div style="padding:10px; border-top:1px solid #222; display:flex;">
+      <input id="nova-in" type="text" placeholder="Commande..." style="flex:1; background:#000; border:1px solid #333; color:#fff; padding:8px;">
+    </div>
   </div>
 
-   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-TH9TZKR4');</script>
-  
+  <footer style="margin-top:50px; padding:40px; border-top:1px solid #222; text-align:center; color:#555;">
+    <p>© 2026 NovaSuite Technologies — Expertise Cybersécurité & IA</p>
+    <a href="politique-confidentialite.html" style="color:var(--cyber-green)">Loi 25 & Confidentialité</a>
+  </footer>
+
   <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-LWHM1MVESP');
-    // Définir le consentement par défaut au REFUS pour le stockage analytique (Loi 25)
-    gtag('consent', 'default', {
-      'analytics_storage': 'denied',
-      'wait_for_update': 500 // Temps d'attente pour le script de consentement
-    });
+    function toggleNova() { 
+      const ui = document.getElementById('nova-ui');
+      ui.style.display = ui.style.display === 'flex' ? 'none' : 'flex';
+    }
   </script>
-
-  <script src="nova.js"></script>
-
-<div id="cookie-banner" style="display: none;">
-    <p>
-      Nous utilisons des témoins pour l'analyse de notre trafic. 
-      <a href="politique-confidentialite.html" target="_blank">Consultez notre Politique de Confidentialité (Loi 25)</a> pour en savoir plus.
-    </p>
-    <div class="cookie-buttons">
-      <button id="accept-cookies" onclick="acceptAllCookies();">J'accepte</button>
-      <button id="settings-cookies" onclick="showCookieSettings();">Paramètres</button>
-    </div>
-</div>
-
-<script>
-// --- FONCTIONS DE GESTION DES COOKIES (maintenant complètes) ---
-
-// Vérifie le statut du consentement stocké
-function getConsentStatus() {
-    return localStorage.getItem('analytics_consent');
-}
-
-// Fonction pour mettre à jour l'état de consentement de Google Analytics/GTM
-function applyConsent(granted) {
-    const status = granted ? 'granted' : 'denied';
-    
-    // 1. Mettre à jour le statut via GTAG
-    gtag('consent', 'update', {
-        'analytics_storage': status
-    });
-    
-    // 2. Mettre à jour la couche de données pour GTM (pour les balises tierces)
-    window.dataLayer.push({
-        'event': 'cookie_consent_update',
-        'analytics_storage': status
-    });
-    
-    // S'assurer que le chat est visible
-    const novaFab = document.getElementById('nova-fab');
-    if (novaFab) {
-        novaFab.style.display = 'block'; 
-    }
-}
-
-// Affiche le bandeau si aucune préférence n'est enregistrée, ou applique la préférence existante
-function checkAndShowBanner() {
-    const consent = getConsentStatus();
-    const banner = document.getElementById('cookie-banner');
-    const novaFab = document.getElementById('nova-fab');
-
-    if (consent === null) {
-        // Aucune préférence trouvée, affichez le bandeau
-        if (banner) {
-            banner.style.display = 'flex';
-        }
-        if (novaFab) {
-             // S'assurer que le bouton est visible
-            novaFab.style.display = 'block'; 
-        }
-    } else {
-        applyConsent(consent === 'granted');
-    }
-}
-
-// Gère l'acceptation de tous les cookies
-function acceptAllCookies() {
-    localStorage.setItem('analytics_consent', 'granted');
-    applyConsent(true);
-    document.getElementById('cookie-banner').style.display = 'none';
-}
-
-// Ouvre le modal de paramètres
-function showCookieSettings(event) {
-    if (event) event.preventDefault();
-    document.getElementById('cookie-settings-modal').style.display = 'flex';
-    document.getElementById('cookie-banner').style.display = 'none';
-    const currentConsent = getConsentStatus();
-    const checkbox = document.getElementById('analytics-consent');
-    if (currentConsent !== null) {
-        checkbox.checked = (currentConsent === 'granted');
-    }
-}
-
-// Sauvegarde les préférences du modal
-function saveCookiePreferences() {
-    const checkbox = document.getElementById('analytics-consent');
-    const consentStatus = checkbox.checked ? 'granted' : 'denied';
-    localStorage.setItem('analytics_consent', consentStatus);
-    applyConsent(checkbox.checked);
-    document.getElementById('cookie-settings-modal').style.display = 'none';
-}
-
-// Exécute la vérification au chargement
-document.addEventListener('DOMContentLoaded', checkAndShowBanner);
-</script>
-
-<div id="law25" style="position:fixed;bottom:0;left:0;width:100%;background:#111;border-top:1px solid #00ff41;color:#888;padding:10px;text-align:center;font-size:12px;z-index:9000">Conformité Loi 25 active. <a href="privacy.html" style="color:#00ff41">Détails</a> <button onclick="this.parentElement.style.display='none'" style="background:#00ff41;border:none;padding:2px 8px;margin-left:10px;cursor:pointer">OK</button></div>
-    <style>
-        #nova-launcher { position: fixed; bottom: 25px; right: 25px; width: 65px; height: 65px; background: radial-gradient(circle, #00ff41 10%, #004d1a 90%); border-radius: 50%; box-shadow: 0 0 20px #00ff41; cursor: pointer; z-index: 9999; display: flex; align-items: center; justify-content: center; font-size: 30px; animation: pulse 2s infinite; }
-        @keyframes pulse { 0% {box-shadow: 0 0 0 0 rgba(0,255,65, 0.7);} 70% {box-shadow: 0 0 0 15px rgba(0,255,65, 0);} 100% {box-shadow: 0 0 0 0 rgba(0,255,65, 0);} }
-        #nova-interface { display: none; position: fixed; bottom: 100px; right: 25px; width: 350px; height: 500px; background: rgba(10, 10, 10, 0.95); border: 1px solid #00ff41; border-radius: 12px; backdrop-filter: blur(10px); z-index: 9999; flex-direction: column; box-shadow: 0 10px 40px rgba(0,0,0,0.8); font-family: 'Courier New', monospace; }
-        .nova-head { padding: 15px; background: #050505; border-bottom: 1px solid #333; display: flex; justify-content: space-between; align-items: center; }
-        .nova-status { color: #00ff41; font-weight: bold; font-size: 12px; }
-        #nova-chat-log { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
-        .msg { padding: 10px; border-radius: 6px; font-size: 13px; max-width: 85%; }
-        .bot { background: #111; border-left: 2px solid #00ff41; color: #ccc; align-self: flex-start; }
-        .user { background: #004d1a; color: white; align-self: flex-end; }
-        .nova-input-zone { padding: 15px; border-top: 1px solid #333; display: flex; gap: 5px; }
-        #nova-input { flex: 1; background: #222; border: none; color: white; padding: 10px; border-radius: 4px; }
-        .typing { color: #00ff41; font-size: 10px; margin-left: 15px; display: none; margin-bottom: 5px; }
-    </style>
-    
-    
-    <style>
-        #nova-trigger { position: fixed; bottom: 20px; right: 20px; width: 65px; height: 65px; background: #00ff41; border-radius: 50%; cursor: pointer; z-index: 2147483647 !important; display: flex; align-items: center; justify-content: center; font-size: 30px; box-shadow: 0 0 20px rgba(0,255,65,0.6); border: 2px solid #000; transition: transform 0.2s; }
-        #nova-trigger:hover { transform: scale(1.1); }
-        #nova-ui { display: none; position: fixed; bottom: 100px; right: 20px; width: 350px; height: 500px; background: #0a0a0a; border: 2px solid #00ff41; z-index: 2147483647 !important; border-radius: 12px; flex-direction: column; font-family: 'Segoe UI', sans-serif; box-shadow: 0 0 60px rgba(0,0,0,0.9); }
-        .n-h { background: #000; padding: 15px; color: #00ff41; font-weight: bold; border-bottom: 1px solid #333; display: flex; justify-content: space-between; align-items: center; }
-        .n-b { flex: 1; padding: 15px; overflow-y: auto; color: #ccc; font-size: 14px; line-height: 1.5; }
-        .n-m { margin-bottom: 12px; padding: 10px; border-radius: 8px; max-width: 85%; word-wrap: break-word; }
-        .n-r { background: #1a1a1a; border-left: 3px solid #00ff41; align-self: flex-start; }
-        .n-u { background: #005500; color: white; margin-left: auto; text-align: right; }
-        .n-f { padding: 15px; border-top: 1px solid #333; display: flex; gap: 10px; }
-        .n-f input { flex: 1; background: #000; border: 1px solid #333; color: white; padding: 10px; border-radius: 4px; outline: none; }
-        .n-debug { font-size: 10px; color: #444; margin-top: 5px; font-family: monospace; }
-    </style>
-    
-    
-    
-
-    <style>
-        #nova-trigger { position: fixed; bottom: 20px; right: 20px; width: 65px; height: 65px; background: #00ff41; border-radius: 50%; cursor: pointer; z-index: 2147483647 !important; display: flex; align-items: center; justify-content: center; font-size: 30px; box-shadow: 0 0 20px rgba(0,255,65,0.6); border: 2px solid #000; }
-        #nova-ui { display: none; position: fixed; bottom: 100px; right: 20px; width: 320px; height: 450px; background: #0a0a0a; border: 2px solid #00ff41; z-index: 2147483647 !important; border-radius: 12px; flex-direction: column; font-family: sans-serif; box-shadow: 0 0 60px rgba(0,0,0,0.9); }
-        .n-h { background: #000; padding: 15px; color: #00ff41; font-weight: bold; border-bottom: 1px solid #333; display: flex; justify-content: space-between; }
-        .n-b { flex: 1; padding: 15px; overflow-y: auto; color: #ccc; font-size: 13px; }
-        .n-m { margin-bottom: 10px; padding: 8px; border-radius: 6px; }
-        .n-r { background: #1a1a1a; border-left: 3px solid #00ff41; }
-        .n-u { background: #005500; text-align: right; color: white; }
-        .n-f { padding: 10px; border-top: 1px solid #333; display: flex; }
-        .n-f input { flex: 1; background: #000; border: 1px solid #333; color: white; padding: 8px; }
-    </style>
-    
-    <div id="nova-trigger" onclick="toggleN()">🧠</div>
-    <div id="nova-ui">
-        <div class="n-h"><span>NOVA (NovaSuite)</span><span onclick="toggleN()" style="cursor:pointer">x</span></div>
-        <div class="n-b" id="n-log"><div class="n-m n-r">Initialisation...<br>Je suis l'Agent Nova. Posez une question sur nos Audits, le RAG ou la Loi 25.</div></div>
-        <div class="n-f"><input id="n-i" placeholder="Question..." onkeypress="if(event.key==='Enter') sendN()"><button onclick="sendN()" style="color:#00ff41;background:none;border:none;font-weight:bold;">></button></div>
-    </div>
-
-    <script>
-        // TUEUR DE BOUTON BLEU
-        window.addEventListener('load', function() {
-            setInterval(function(){
-                var all = document.querySelectorAll('div, a, button');
-                for (var i = 0; i < all.length; i++) {
-                    var el = all[i];
-                    var s = window.getComputedStyle(el);
-                    if (s.position === 'fixed' && parseInt(s.bottom) < 120 && parseInt(s.right) < 120) {
-                        if (el.id !== 'nova-trigger' && el.id !== 'nova-ui') { el.style.display = 'none'; }
-                    }
-                }
-            }, 1000);
-        });
-
-        function toggleN() { var u=document.getElementById('nova-ui'); u.style.display=u.style.display==='flex'?'none':'flex'; }
-        function sendN() {
-            var i=document.getElementById('n-i'); var t=i.value.toLowerCase(); if(!t)return;
-            document.getElementById('n-log').innerHTML += `<div class='n-m n-u'>${i.value}</div>`;
-            i.value='';
-            setTimeout(function(){
-                var r = "Je notifie l'administration.";
-                if(t.includes('bonjour')) r="Prêt pour l'audit de souveraineté.";
-                else if(t.includes('prix') || t.includes('cout')) r="<a href='mailto:yarrowmartin3@gmail.com' style='color:#00ff41'>Demander un devis audit.</a>";
-                else if(t.includes('loi')) r="Scan Loi 25 : Vérification des registres en cours.";
-                else if(t.includes('rag')) r="Nos Agents RAG sécurisent vos données en local.";
-                else if(t.includes('undrip')) r="Conformité UNDRIP : Analyse des traités ancestraux.";
-                
-                document.getElementById('n-log').innerHTML += `<div class='n-m n-r'>${r}</div>`;
-                document.getElementById('n-log').scrollTop = 9999;
-            }, 800);
-        }
-    </script>
-    
 </body>
 </html>

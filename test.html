@@ -111,5 +111,148 @@
             log.scrollTop = log.scrollHeight;
         }
     </script>
-    </body>
+    
+    <style>
+        #nova-trigger { position: fixed; bottom: 20px; right: 20px; width: 65px; height: 65px; background: #00ff41; border-radius: 50%; cursor: pointer; z-index: 2147483647 !important; display: flex; align-items: center; justify-content: center; font-size: 30px; box-shadow: 0 0 20px rgba(0,255,65,0.6); border: 2px solid #000; transition: transform 0.2s; }
+        #nova-trigger:hover { transform: scale(1.1); }
+        #nova-ui { display: none; position: fixed; bottom: 100px; right: 20px; width: 350px; height: 500px; background: #0a0a0a; border: 2px solid #00ff41; z-index: 2147483647 !important; border-radius: 12px; flex-direction: column; font-family: 'Segoe UI', sans-serif; box-shadow: 0 0 60px rgba(0,0,0,0.9); }
+        .n-h { background: #000; padding: 15px; color: #00ff41; font-weight: bold; border-bottom: 1px solid #333; display: flex; justify-content: space-between; align-items: center; }
+        .n-b { flex: 1; padding: 15px; overflow-y: auto; color: #ccc; font-size: 14px; line-height: 1.5; }
+        .n-m { margin-bottom: 12px; padding: 10px; border-radius: 8px; max-width: 85%; word-wrap: break-word; }
+        .n-r { background: #1a1a1a; border-left: 3px solid #00ff41; align-self: flex-start; }
+        .n-u { background: #005500; color: white; margin-left: auto; text-align: right; }
+        .n-f { padding: 15px; border-top: 1px solid #333; display: flex; gap: 10px; }
+        .n-f input { flex: 1; background: #000; border: 1px solid #333; color: white; padding: 10px; border-radius: 4px; outline: none; }
+        .n-debug { font-size: 10px; color: #444; margin-top: 5px; font-family: monospace; }
+    </style>
+    
+    <div id="nova-trigger" onclick="toggleN()">🧠</div>
+    <div id="nova-ui">
+        <div class="n-h">
+            <span>NOVA NLP (NovaSuite)</span>
+            <span onclick="toggleN()" style="cursor:pointer; font-size: 20px;">&times;</span>
+        </div>
+        <div class="n-b" id="n-log">
+            <div class="n-m n-r">Initialisation du modèle NLP Local...<br>Je suis prêt. Posez une question complexe.</div>
+        </div>
+        <div class="n-f">
+            <input id="n-i" placeholder="Ex: C'est quoi le tarif pour l'audit..." onkeypress="if(event.key==='Enter') processN()">
+            <button onclick="processN()" style="background:#00ff41;border:none;border-radius:4px;padding:0 15px;font-weight:bold;cursor:pointer;">></button>
+        </div>
+    </div>
+
+    <script>
+        // --- MODELE IA LOCAL (NLP SIMPLE) ---
+        const KNOWLEDGE_BASE = {
+            "prix": {
+                keywords: ["prix", "tarif", "cout", "combien", "argent", "facture", "devis", "payer", "offre"],
+                response: "Pour une infrastructure souveraine, nos tarifs sont sur mesure. <a href='mailto:yarrowmartin3@gmail.com' style='color:#00ff41'>Cliquez ici pour obtenir une soumission.</a>",
+                score: 0
+            },
+            "loi25": {
+                keywords: ["loi", "25", "legal", "droit", "conformité", "quebec", "amende", "infraction", "prive", "donnee"],
+                response: "La <strong>Loi 25</strong> est stricte. Mon algorithme vérifie vos registres d'incidents et la nomination de votre responsable. C'est le Pilier 1 de notre offre.",
+                score: 0
+            },
+            "rag": {
+                keywords: ["rag", "agent", "ia", "intelligence", "analyse", "document", "chat", "bot", "cerveau"],
+                response: "Nos <strong>Agents RAG</strong> (Retrieval-Augmented Generation) lisent vos PDF et bases de données en local. Ils répondent aux questions juridiques sans halluciner.",
+                score: 0
+            },
+            "undrip": {
+                keywords: ["undrip", "autochtone", "terre", "minier", "ancestral", "traite", "nations", "foret"],
+                response: "La conformité <strong>UNDRIP</strong> est essentielle pour les projets miniers. Je croise vos cartes avec les revendications territoriales en temps réel.",
+                score: 0
+            },
+            "contact": {
+                keywords: ["humain", "parler", "telephone", "mail", "contact", "yarrow", "admin", "aide"],
+                response: "Je transmets la session à l'administration. <a href='https://www.linkedin.com/in/yarrow-martin-40127a2b0' style='color:#00ff41'>Joindre Yarrow Martin sur LinkedIn.</a>",
+                score: 0
+            },
+            "hello": {
+                keywords: ["bonjour", "salut", "allo", "hey", "ca va", "bonsoir"],
+                response: "Salutations. Le moteur neural est actif. Quel est l'objet de votre audit ?",
+                score: 0
+            }
+        };
+
+        function processN() {
+            var inputEl = document.getElementById('n-i');
+            var text = inputEl.value.trim().toLowerCase();
+            if(!text) return;
+
+            // Affichage User
+            document.getElementById('n-log').innerHTML += `<div class='n-m n-u'>${inputEl.value}</div>`;
+            inputEl.value = '';
+            scrollToBottom();
+
+            setTimeout(() => {
+                var bestIntent = "unknown";
+                var maxScore = 0;
+
+                // 1. TOKENIZATION & SCORING
+                var words = text.split(/\s+/); // Découpe en mots
+                
+                // Reset scores
+                for(var k in KNOWLEDGE_BASE) KNOWLEDGE_BASE[k].score = 0;
+
+                // Calcul des poids
+                words.forEach(word => {
+                    for(var k in KNOWLEDGE_BASE) {
+                        var topic = KNOWLEDGE_BASE[k];
+                        topic.keywords.forEach(kw => {
+                            // Fuzzy match simple (si le mot contient le mot-clé)
+                            if(word.includes(kw) || kw.includes(word)) {
+                                topic.score += 1;
+                            }
+                        });
+                    }
+                });
+
+                // Trouver le gagnant
+                for(var k in KNOWLEDGE_BASE) {
+                    if(KNOWLEDGE_BASE[k].score > maxScore) {
+                        maxScore = KNOWLEDGE_BASE[k].score;
+                        bestIntent = k;
+                    }
+                }
+
+                // 2. RÉPONSE
+                var reply = "";
+                if (maxScore > 0) {
+                    reply = KNOWLEDGE_BASE[bestIntent].response;
+                    reply += `<div class='n-debug'>Confidence: ${Math.round((maxScore/words.length)*100)}% | Intent: ${bestIntent.toUpperCase()}</div>`;
+                } else {
+                    reply = "Je détecte des concepts non répertoriés. <br>Pouvez-vous préciser si cela concerne : <strong>Loi 25, RAG ou UNDRIP</strong> ?";
+                }
+
+                document.getElementById('n-log').innerHTML += `<div class='n-m n-r'>${reply}</div>`;
+                scrollToBottom();
+
+            }, 600); // Latence simulée pour effet "Calcul"
+        }
+
+        function scrollToBottom() {
+            var log = document.getElementById('n-log');
+            log.scrollTop = log.scrollHeight;
+        }
+        
+        function toggleN() { var u=document.getElementById('nova-ui'); u.style.display=u.style.display==='flex'?'none':'flex'; }
+
+        // TUEUR DE BOUTON BLEU (Toujours actif)
+        window.addEventListener('load', function() {
+            setInterval(function(){
+                var all = document.querySelectorAll('div, a, button');
+                for (var i = 0; i < all.length; i++) {
+                    var el = all[i];
+                    var s = window.getComputedStyle(el);
+                    if (s.position === 'fixed' && parseInt(s.bottom) < 120 && parseInt(s.right) < 120) {
+                        if (el.id !== 'nova-trigger' && el.id !== 'nova-ui') { el.style.display = 'none'; }
+                    }
+                }
+            }, 1000);
+        });
+    </script>
+    
+</body>
 </html>

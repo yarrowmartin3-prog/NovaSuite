@@ -21,7 +21,6 @@
         }
     </script>
     <style>
-        /* Effet de verre (Glassmorphism) pour le chat et le bandeau */
         .glass { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
         .neon-glow { box-shadow: 0 0 20px rgba(0, 255, 65, 0.15); }
         .gold-glow { box-shadow: 0 0 20px rgba(255, 215, 0, 0.15); }
@@ -30,12 +29,9 @@
 </head>
 <body class="antialiased min-h-screen flex flex-col relative overflow-x-hidden">
 
-    <div class="fixed inset-0 z-[-1] opacity-20" style="background-image: url('./assets/banner-novasuite.webp'); background-size: cover; background-position: center; filter: grayscale(80%);"></div>
-    <div class="fixed inset-0 z-[-1] bg-gradient-to-b from-cyber/80 via-cyber/95 to-cyber"></div>
-
-    <header class="w-full max-w-6xl mx-auto px-6 py-8 flex items-center justify-between">
+    <header class="w-full max-w-6xl mx-auto px-6 py-8 flex items-center justify-between z-10">
         <div class="flex items-center gap-4">
-            <img src="./assets/logo-novasuite.webp" alt="NovaSuite Logo" class="w-14 h-14 rounded-lg border border-gray-800 shadow-lg">
+            <img src="assets/logo-novasuite.webp" alt="NovaSuite Logo" class="w-14 h-14 rounded-lg border border-gray-800 shadow-lg">
             <div>
                 <h1 class="text-2xl font-black text-white tracking-tight">NovaSuite</h1>
                 <p class="text-xs text-neon uppercase tracking-widest font-bold">Infrastructure IA Locale</p>
@@ -44,28 +40,35 @@
         <a href="a-propos.html" class="hidden md:block text-sm text-gray-400 hover:text-white transition">Notre Expertise</a>
     </header>
 
-    <main class="flex-grow w-full max-w-6xl mx-auto px-6 flex flex-col items-center justify-center text-center mt-12 mb-24">
-        <div class="inline-block mb-6 px-4 py-1.5 rounded-full border border-neon/30 bg-neon/5 text-neon text-xs font-bold uppercase tracking-wider">
-            Conformité Loi 25 Garantie
-        </div>
-        <h2 class="text-5xl md:text-7xl font-black text-white mb-6 leading-tight">
-            Souveraineté Numérique. <br>
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-neon to-emerald-500">Zéro Compromis.</span>
-        </h2>
-        <p class="text-lg md:text-xl text-gray-400 max-w-2xl mb-10 leading-relaxed">
-            Audits de cybersécurité express et déploiement d'Intelligence Artificielle 100% isolée du cloud pour les entreprises du Québec.
-        </p>
-        <div class="flex flex-col sm:flex-row gap-4 w-full justify-center">
-            <a href="#offres" class="px-8 py-4 bg-white text-black font-bold rounded-lg hover:bg-gray-200 transition shadow-[0_0_20px_rgba(255,255,255,0.2)]">
-                Lancer un Audit
-            </a>
-            <a href="./partenaires-msp.html" class="px-8 py-4 bg-panel border border-gold/50 text-gold font-bold rounded-lg hover:bg-gold hover:text-black transition gold-glow">
-                Accès Partenaires MSP
-            </a>
+    <main class="w-full max-w-6xl mx-auto px-4 md:px-6 mb-24 mt-4">
+        <div class="relative w-full rounded-3xl overflow-hidden border border-gray-800 shadow-[0_0_40px_rgba(0,255,65,0.05)]">
+            
+            <div class="absolute inset-0 z-0" style="background-image: url('assets/banner-novasuite.webp'); background-size: cover; background-position: center; filter: brightness(0.4);"></div>
+            
+            <div class="relative z-10 flex flex-col items-center justify-center text-center px-6 py-24 md:py-32">
+                <div class="inline-block mb-6 px-4 py-1.5 rounded-full border border-neon/50 bg-black/60 backdrop-blur-sm text-neon text-xs font-bold uppercase tracking-wider">
+                    Conformité Loi 25 Garantie
+                </div>
+                <h2 class="text-5xl md:text-7xl font-black text-white mb-6 leading-tight drop-shadow-2xl">
+                    Souveraineté Numérique. <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-neon to-emerald-400 drop-shadow-none">Zéro Compromis.</span>
+                </h2>
+                <p class="text-lg md:text-xl text-gray-200 max-w-2xl mb-10 leading-relaxed drop-shadow-lg">
+                    Audits de cybersécurité express et déploiement d'Intelligence Artificielle 100% isolée du cloud pour les entreprises du Québec.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 w-full justify-center">
+                    <a href="#offres" class="px-8 py-4 bg-white text-black font-bold rounded-lg hover:bg-gray-200 transition shadow-[0_0_20px_rgba(255,255,255,0.3)]">
+                        Lancer un Audit
+                    </a>
+                    <a href="./partenaires-msp.html" class="px-8 py-4 bg-black/60 backdrop-blur-md border border-gold text-gold font-bold rounded-lg hover:bg-gold hover:text-black transition gold-glow">
+                        Accès Partenaires MSP
+                    </a>
+                </div>
+            </div>
         </div>
     </main>
 
-    <section id="offres" class="w-full max-w-6xl mx-auto px-6 mb-24">
+    <section id="offres" class="w-full max-w-6xl mx-auto px-6 mb-24 z-10">
         <div class="grid md:grid-cols-2 gap-8">
             
             <div class="glass rounded-2xl p-8 border-t-4 border-t-neon neon-glow hover:-translate-y-1 transition duration-300">
@@ -96,7 +99,7 @@
         </div>
     </section>
 
-    <footer class="w-full border-t border-gray-800 bg-black/50 py-10 text-center text-xs text-gray-500 mt-auto">
+    <footer class="w-full border-t border-gray-800 bg-black/80 py-10 text-center text-xs text-gray-500 mt-auto z-10">
         <p class="mb-2">© 2026 NovaSuite Technologies. Infrastructure isolée et souveraine.</p>
         <div class="flex justify-center gap-4">
             <a href="mentions-legales.html" class="hover:text-neon transition">Mentions Légales</a>
@@ -173,7 +176,6 @@
             }, 800);
         }
 
-        // Init
         document.addEventListener('DOMContentLoaded', checkLoi25);
     </script>
 </body>

@@ -1,209 +1,180 @@
-<!doctype html>
-<html lang="fr">
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>NovaSuite • Infrastructure IA & Loi 25</title>
-  <meta name="description" content="Découvrez NovaSuite : Conformité Loi 25, Cybersécurité et IA locale au Québec."/>
-  <meta property="og:title" content="NovaSuite • Accueil"/>
-  <meta property="og:image" content="assets/banner-novasuite.webp"/> 
-  
-  <link rel="icon" type="image/svg+xml" href="assets/favicon.webp"/> 
-  <link rel="stylesheet" href="assets/nova.css?v=20251116"/>
-
-  <style>
-    /* ===== VOTRE DESIGN ORIGINAL (INTACT) ===== */
-    .ns-hero{position:relative;border-radius:12px;overflow:hidden;margin-top:10px; box-shadow:0 6px 25px rgba(0,0,0,.4)}
-    .ns-hero::before{
-      content:"";position:absolute;inset:0;
-      background-image:url('assets/banner-novasuite.webp'); 
-      background-size:cover;background-position:center;
-      filter:brightness(.65)
-    }
-    .ns-hero__inner{
-      position:relative;min-height:380px;
-      display:flex;flex-direction:column;justify-content:center;align-items:center;
-      text-align:center;padding:20px
-    }
-    .ns-hero h2{margin:0 0 10px;font-size:clamp(1.8rem,3vw,2.4rem);color:#fff; text-shadow:0 2px 8px rgba(0,0,0,.5)}
-    .ns-hero p{max-width:640px;margin:0 0 18px;color:#e2e8f0; text-shadow:0 2px 6px rgba(0,0,0,.6)}
-    .ns-hero__actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
-    .ns-btn{display:inline-flex;align-items:center;justify-content:center; padding:12px 16px;border-radius:12px;font-weight:800;text-decoration:none}
-    .ns-btn--primary{background:linear-gradient(180deg,#1ea7ff,#1293ee);color:#031425;border:0}
-    .ns-btn--gold{background:linear-gradient(180deg,#ffe08a,#ffc233);color:#3b2a00;border:0; box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);}
-    .ns-btn:hover{filter:brightness(1.05)}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NovaSuite • Cybersécurité & IA Souveraine</title>
     
-    @media (max-width:700px){
-      .ns-hero__inner{min-height:460px;padding:16px}
-      .ns-btn{min-width:180px;padding:10px 14px}
-    }
-    
-    /* Styles du Chat Nova */
-    .nova-fab{
-      position:fixed; right:16px; bottom:16px; z-index:9999; 
-      padding:12px 16px; border-radius:999px; font-weight:800; text-decoration:none;
-      background:linear-gradient(180deg,#1ea7ff,#1293ee); color:#031425; border:none;
-      box-shadow:0 10px 28px rgba(0,0,0,.35);
-      cursor:pointer; transition: opacity 0.3s ease-in-out; 
-    }
-    .nova-box{
-      position:fixed; right:16px; bottom:65px; z-index:9998; 
-      width:300px; height:400px; background-color:#1e293b; border-radius:12px;
-      box-shadow:0 10px 28px rgba(0,0,0,.5); display:none; flex-direction:column;
-    }
-    .nova-head{ padding:10px 15px; background-color:#0f172a; color:#fff; border-top-left-radius:12px; border-top-right-radius:12px; font-weight:bold; }
-    .nova-log{ flex-grow:1; padding:15px; overflow-y:auto; color:#fff; font-size:0.9em; }
-    .nova-bar{ display:flex; padding:10px; background-color:#0f172a; border-bottom-left-radius:12px; border-bottom-right-radius:12px; }
-    .nova-bar input{ flex-grow:1; padding:8px; border:none; border-radius:6px; margin-right:8px; background-color:#334155; color:#fff; }
-    .nova-bar button{ padding:8px 12px; border:none; border-radius:66px; cursor:pointer; background-color:#1ea7ff; color:#031425; font-weight:bold; }
-    
-    /* BANDEAU LOI 25 */
-    #cookie-banner {
-      position: fixed !important; bottom: 20px !important; right: 20px !important; width: 320px !important; 
-      max-width: 90% !important; background-color: #0f172a; color: #cde6dc; padding: 15px; 
-      z-index: 99999 !important; display: flex; flex-direction: column; align-items: flex-start;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); border: 1px solid #124736; border-radius: 12px; 
-    }
-    #cookie-banner p { margin: 0 0 10px 0; font-size: 0.9rem; flex-grow: 1; }
-    #cookie-banner a { color: #72ffcb; text-decoration: underline; font-weight: 600; display: block; margin-bottom: 10px; }
-    .cookie-buttons { display: flex; gap: 10px; width: 100%; justify-content: flex-end; }
-    .cookie-buttons button { padding: 8px 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 0.85rem; }
-    #accept-cookies { background-color: #72ffcb; color: #0a0f0d; }
-    #settings-cookies { background-color: #124736; color: #72ffcb; border: 1px solid #72ffcb; }
-    
-    /* Autres styles */
-    .card { background-color: #0f172a; border: 1px solid #1e293b; padding: 25px; border-radius: 12px; margin-bottom: 20px; position: relative; }
-    .card.gold { border: 1px solid #ffd700; background: linear-gradient(145deg, #0f172a 0%, #1a1a00 100%); }
-    .card .badge-gold { position: absolute; top: 15px; right: 15px; background-color: #ffd700; color: #000; padding: 4px 8px; border-radius: 6px; font-size: 0.8rem; font-weight: 800; box-shadow: 0 2px 4px rgba(0,0,0,.2); text-transform: uppercase; }
-    
-    .about-us-summary{ text-align: center; padding: 40px 20px; background-color: #0f172a; border-top: 1px solid #124736; border-bottom: 1px solid #124736; margin-top: 20px; }
-    .about-us-summary h2{ color: #72ffcb; margin-bottom: 15px; font-size: 1.8rem; }
-    .about-us-summary p{ font-size: 1.1em; max-width: 800px; margin: 0 auto 15px auto; color: #cde6dc; }
-  </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cyber: '#050505',
+                        neon: '#00ff41',
+                        gold: '#ffd700',
+                        panel: '#0f172a'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Effet de verre (Glassmorphism) pour le chat et le bandeau */
+        .glass { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .neon-glow { box-shadow: 0 0 20px rgba(0, 255, 65, 0.15); }
+        .gold-glow { box-shadow: 0 0 20px rgba(255, 215, 0, 0.15); }
+        body { background-color: #050505; color: #e2e8f0; font-family: 'Inter', system-ui, sans-serif; }
+    </style>
 </head>
+<body class="antialiased min-h-screen flex flex-col relative overflow-x-hidden">
 
-<body style="background-color: #050505; color: #e2e8f0; font-family: sans-serif; margin: 0;">
-  
-  <header class="wrap" style="max-width: 1000px; margin: 0 auto; padding: 20px;">
-    <a class="brand" href="/" style="display: flex; align-items: center; text-decoration: none; color: #fff;">
-      <img class="logo" src="assets/logo-novasuite.webp" alt="NovaSuite" width="60" height="60" style="margin-right: 15px; border-radius: 8px;"/>
-      <span style="font-size: 1.5rem; font-weight: 900;">NovaSuite</span>
-    </a>
-  </header>
+    <div class="fixed inset-0 z-[-1] opacity-20" style="background-image: url('./assets/banner-novasuite.webp'); background-size: cover; background-position: center; filter: grayscale(80%);"></div>
+    <div class="fixed inset-0 z-[-1] bg-gradient-to-b from-cyber/80 via-cyber/95 to-cyber"></div>
 
-<section class="ns-hero wrap" style="max-width: 1000px; margin: 0 auto;">
-  <div class="ns-hero__inner">
-    <h2>Souveraineté Numérique & IA Locale 🛡️</h2>
-    <p>
-      NovaSuite vous fournit des audits de conformité Loi 25 automatisés et l'intégration d'infrastructures d'Intelligence Artificielle isolées du cloud. Protégez les données du Québec.
-    </p>
-    <div class="ns-hero__actions">
-      <a href="#formules" class="ns-btn ns-btn--primary">Lancer un Audit</a>
-      <a href="./partenaires-msp.html" class="ns-btn ns-btn--gold">Portail Partenaires</a>
-    </div>
-  </div>
-</section>
+    <header class="w-full max-w-6xl mx-auto px-6 py-8 flex items-center justify-between">
+        <div class="flex items-center gap-4">
+            <img src="./assets/logo-novasuite.webp" alt="NovaSuite Logo" class="w-14 h-14 rounded-lg border border-gray-800 shadow-lg">
+            <div>
+                <h1 class="text-2xl font-black text-white tracking-tight">NovaSuite</h1>
+                <p class="text-xs text-neon uppercase tracking-widest font-bold">Infrastructure IA Locale</p>
+            </div>
+        </div>
+        <a href="a-propos.html" class="hidden md:block text-sm text-gray-400 hover:text-white transition">Notre Expertise</a>
+    </header>
 
-<section class="about-us-summary wrap" style="max-width: 1000px; margin: 40px auto; border-radius: 12px;">
-    <h2>Qui sommes-nous ?</h2>
-    <p>
-        NovaSuite Technologies est votre partenaire de cybersécurité nouvelle génération. Fondé par Yarrow Martin, expert **Certifié en Piratage Éthique**.
-    </p>
-    <a href="a-propos.html" class="ns-btn ns-btn--primary" style="background:linear-gradient(180deg,#4da786,#3a8f6f); color:#fff;">Découvrir l'infrastructure</a>
-</section>
+    <main class="flex-grow w-full max-w-6xl mx-auto px-6 flex flex-col items-center justify-center text-center mt-12 mb-24">
+        <div class="inline-block mb-6 px-4 py-1.5 rounded-full border border-neon/30 bg-neon/5 text-neon text-xs font-bold uppercase tracking-wider">
+            Conformité Loi 25 Garantie
+        </div>
+        <h2 class="text-5xl md:text-7xl font-black text-white mb-6 leading-tight">
+            Souveraineté Numérique. <br>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-neon to-emerald-500">Zéro Compromis.</span>
+        </h2>
+        <p class="text-lg md:text-xl text-gray-400 max-w-2xl mb-10 leading-relaxed">
+            Audits de cybersécurité express et déploiement d'Intelligence Artificielle 100% isolée du cloud pour les entreprises du Québec.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 w-full justify-center">
+            <a href="#offres" class="px-8 py-4 bg-white text-black font-bold rounded-lg hover:bg-gray-200 transition shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+                Lancer un Audit
+            </a>
+            <a href="./partenaires-msp.html" class="px-8 py-4 bg-panel border border-gold/50 text-gold font-bold rounded-lg hover:bg-gold hover:text-black transition gold-glow">
+                Accès Partenaires MSP
+            </a>
+        </div>
+    </main>
 
-<div id="formules"></div>
+    <section id="offres" class="w-full max-w-6xl mx-auto px-6 mb-24">
+        <div class="grid md:grid-cols-2 gap-8">
+            
+            <div class="glass rounded-2xl p-8 border-t-4 border-t-neon neon-glow hover:-translate-y-1 transition duration-300">
+                <h3 class="text-2xl font-bold text-white mb-2">Audit Express</h3>
+                <p class="text-gray-400 text-sm mb-6">Diagnostic immédiat Loi 25 et scan de vulnérabilités.</p>
+                <div class="text-4xl font-black text-white mb-6">499 $<span class="text-lg text-gray-500 font-normal"> / audit</span></div>
+                <ul class="space-y-3 text-gray-300 text-sm mb-8">
+                    <li class="flex items-center gap-2">✓ <span class="text-gray-400">Scan d'URL approfondi</span></li>
+                    <li class="flex items-center gap-2">✓ <span class="text-gray-400">Détection des transferts hors-Québec</span></li>
+                    <li class="flex items-center gap-2">✓ <span class="text-gray-400">Rapport technique automatisé</span></li>
+                </ul>
+                <a href="mailto:contact@novasuite.ca" class="block w-full text-center py-3 bg-panel border border-neon text-neon font-bold rounded-lg hover:bg-neon hover:text-black transition">Commander</a>
+            </div>
 
-  <main class="wrap" style="max-width: 1000px; margin: 0 auto; padding: 20px;">
-    <h2 style="color: #fff; border-bottom: 1px solid #1e293b; padding-bottom: 15px;">Nos Infrastructures</h2>
-    
-    <section class="card">
-      <h2 style="color: #1ea7ff; margin-top: 0;">Audit Express (Loi 25)</h2>
-      <p style="font-size: 1.2rem; color: #fff;"><strong>499 $</strong> <span style="font-size: 0.9rem; color: #888;">/ diagnostic</span></p>
-      <p>Analyse de conformité immédiate. Détecte les failles de transfert hors-Québec et valide votre sécurité web.</p>
-      <ul style="color: #94a3b8; line-height: 1.8;">
-        <li>Scan de vulnérabilité URL</li>
-        <li>Rapport de conformité Loi 25 automatisé</li>
-        <li>Recommandations techniques d'ingénierie</li>
-      </ul>
-      <a href="mailto:contact@novasuite.ca" class="ns-btn ns-btn--primary" style="margin-top: 15px;">Commander l'audit</a>
+            <div class="glass rounded-2xl p-8 border-t-4 border-t-gold gold-glow relative hover:-translate-y-1 transition duration-300">
+                <div class="absolute top-6 right-6 bg-gold text-black text-xs font-black px-3 py-1 rounded-full uppercase">Exclusif</div>
+                <h3 class="text-2xl font-bold text-white mb-2">Partenaires MSP</h3>
+                <p class="text-gray-400 text-sm mb-6">Accès restreint pour les collaborateurs stratégiques.</p>
+                <div class="text-4xl font-black text-white mb-6">Enterprise</div>
+                <ul class="space-y-3 text-gray-300 text-sm mb-8">
+                    <li class="flex items-center gap-2"><span class="text-gold">★</span> <span class="text-gray-400">Partage de revenus (Commissions 15%)</span></li>
+                    <li class="flex items-center gap-2"><span class="text-gold">★</span> <span class="text-gray-400">Accès au protocole Aegis Monitoring</span></li>
+                    <li class="flex items-center gap-2"><span class="text-gold">★</span> <span class="text-gray-400">Protection territoriale stricte</span></li>
+                </ul>
+                <a href="./partenaires-msp.html" class="block w-full text-center py-3 bg-gold text-black font-bold rounded-lg hover:bg-yellow-400 transition shadow-lg shadow-gold/20">Accéder à la Term Sheet</a>
+            </div>
+
+        </div>
     </section>
 
-    <section class="card gold">
-      <div class="badge-gold">Exclusif</div> 
-      <h2 style="color: #ffd700; margin-top: 0;">Partenaires MSP</h2>
-      <p style="font-size: 1.2rem; color: #fff;"><strong>Accès Enterprise</strong></p>
-      <p>Portail sécurisé destiné aux collaborateurs stratégiques (ATRIA / ServLinks).</p>
-      <ul style="color: #94a3b8; line-height: 1.8;">
-        <li>Partage de revenus (Commissions et Récurrents)</li>
-        <li>Accès au protocole Aegis Monitoring</li>
-        <li>Protection de territoire</li>
-      </ul>
-      <a href="./partenaires-msp.html" class="ns-btn ns-btn--gold" style="margin-top: 15px;">Accès Term Sheet</a>
-    </section>
+    <footer class="w-full border-t border-gray-800 bg-black/50 py-10 text-center text-xs text-gray-500 mt-auto">
+        <p class="mb-2">© 2026 NovaSuite Technologies. Infrastructure isolée et souveraine.</p>
+        <div class="flex justify-center gap-4">
+            <a href="mentions-legales.html" class="hover:text-neon transition">Mentions Légales</a>
+            <span>|</span>
+            <a href="mailto:contact@novasuite.ca" class="hover:text-neon transition">contact@novasuite.ca</a>
+        </div>
+    </footer>
 
-  </main>
-
-<footer style="border-top:1px solid #124736; background-color:#0a0f0d; padding:2rem 1rem; text-align:center; color:#9deacb; font-family:sans-serif; font-size:0.8rem; margin-top: 50px;">
-  <div style="color:#72ffcb;font-weight:600;">© 2026 NovaSuite Technologies — Tous droits réservés</div>
-  <div style="margin-top:1rem;">
-    <a href="mentions-legales.html" style="color:#72ffcb;text-decoration:none;margin:0 .5rem;">Mentions légales</a> •
-    <a href="mailto:contact@novasuite.ca" style="color:#72ffcb;text-decoration:none;margin:0 .5rem;">contact@novasuite.ca</a>
-  </div>
-</footer>
-  
-<button id="nova-fab" class="nova-fab">💬 Nova</button>
-<div id="nova-box" class="nova-box"> 
-  <div class="nova-head" style="display: flex; justify-content: space-between;">
-    <span>Nova • Assistant local</span>
-    <span onclick="document.getElementById('nova-box').style.display='none'" style="cursor:pointer;">×</span>
-  </div>
-  <div id="nova-log" class="nova-log">
-    <div style="background:#1e293b; padding:8px; border-radius:4px; margin-bottom:8px; border-left:3px solid #1ea7ff;">Initialisation sécurisée terminée. Comment puis-je vous aider ?</div>
-  </div>
-  <form id="nova-form" class="nova-bar" onsubmit="event.preventDefault(); sendChat();">
-    <input id="nova-field" placeholder="Parlez à Nova" autocomplete="off" />
-    <button type="submit">></button>
-  </form>
-</div>
-
-<div id="cookie-banner" style="display: none;">
-    <p><strong>Conformité Loi 25</strong> : Nous utilisons des témoins locaux stricts pour assurer la souveraineté de l'infrastructure.</p>
-    <div class="cookie-buttons">
-      <button id="accept-cookies" onclick="acceptCookies();">J'accepte</button>
+    <div id="cookie-banner" class="hidden fixed bottom-6 left-6 right-6 md:left-auto md:w-96 glass rounded-xl p-5 z-[99999] border-l-4 border-neon shadow-2xl">
+        <h4 class="text-white font-bold mb-2 flex items-center gap-2">🔒 Loi 25 & Sécurité</h4>
+        <p class="text-xs text-gray-400 mb-4 leading-relaxed">Nous utilisons des témoins locaux stricts pour assurer la sécurité de la session. Aucune donnée ne quitte le Québec.</p>
+        <div class="flex gap-3">
+            <button onclick="acceptCookies()" class="flex-1 bg-neon text-black text-xs font-bold py-2 rounded hover:bg-green-400 transition">Accepter l'isolation</button>
+            <a href="mentions-legales.html" class="px-4 py-2 border border-gray-600 text-gray-300 text-xs font-bold rounded hover:bg-gray-800 transition flex items-center justify-center">Détails</a>
+        </div>
     </div>
-</div>
 
-<script>
-// Logique Loi 25
-function checkLoi25() { if(!localStorage.getItem('nova_consent')) { setTimeout(() => { document.getElementById('cookie-banner').style.display = 'flex'; }, 1000); } }
-function acceptCookies() { localStorage.setItem('nova_consent', 'granted'); document.getElementById('cookie-banner').style.display = 'none'; }
-
-// Logique du bouton Chat
-document.getElementById('nova-fab').addEventListener('click', function(e) {
-    e.preventDefault();
-    const box = document.getElementById('nova-box');
-    box.style.display = (box.style.display === 'flex') ? 'none' : 'flex';
-});
-
-// Logique simulation Chat
-function sendChat() {
-    const input = document.getElementById('nova-field');
-    const log = document.getElementById('nova-log');
-    if(!input.value) return;
+    <button id="nova-fab" class="fixed bottom-6 right-6 w-16 h-16 bg-white rounded-full flex items-center justify-center text-3xl shadow-2xl hover:scale-110 transition-transform z-[9999] border-2 border-gray-200">
+        🧠
+    </button>
     
-    log.innerHTML += `<div style="background:#334155; padding:8px; border-radius:4px; margin-bottom:8px; text-align:right;">${input.value}</div>`;
-    input.value = '';
-    log.scrollTop = log.scrollHeight;
-    
-    setTimeout(() => {
-        log.innerHTML += `<div style="background:#1e293b; padding:8px; border-radius:4px; margin-bottom:8px; border-left:3px solid #1ea7ff;">Message chiffré et reçu. Un agent prendra le relais.</div>`;
-        log.scrollTop = log.scrollHeight;
-    }, 800);
-}
+    <div id="nova-box" class="hidden fixed bottom-28 right-6 w-[340px] h-[450px] glass rounded-2xl z-[9998] flex-col overflow-hidden border border-gray-700 shadow-2xl">
+        <div class="bg-gray-900 px-4 py-3 border-b border-gray-800 flex justify-between items-center">
+            <span class="text-neon font-mono text-sm font-bold">NOVA_NUCLEUS_V3</span>
+            <button onclick="document.getElementById('nova-box').classList.add('hidden')" class="text-gray-400 hover:text-white text-xl">×</button>
+        </div>
+        <div id="nova-log" class="flex-1 p-4 overflow-y-auto flex flex-col gap-3 font-mono text-xs">
+            <div class="bg-gray-800 border-l-2 border-neon text-gray-300 p-3 rounded rounded-tl-none self-start max-w-[85%]">
+                Agent Nova en ligne. Protocole de chiffrement local activé. En attente de requête.
+            </div>
+        </div>
+        <form id="nova-form" class="p-3 bg-gray-900 border-t border-gray-800 flex gap-2" onsubmit="event.preventDefault(); sendChat();">
+            <input id="nova-field" type="text" placeholder="Entrez une commande..." class="flex-1 bg-black border border-gray-700 text-white rounded px-3 py-2 text-xs font-mono outline-none focus:border-neon transition" autocomplete="off">
+            <button type="submit" class="bg-neon text-black px-3 py-2 rounded font-bold hover:bg-green-400 transition">></button>
+        </form>
+    </div>
 
-document.addEventListener('DOMContentLoaded', checkLoi25);
-</script>
+    <script>
+        // Loi 25
+        function checkLoi25() {
+            if(!localStorage.getItem('nova_consent')) {
+                setTimeout(() => { document.getElementById('cookie-banner').classList.remove('hidden'); }, 1000);
+            }
+        }
+        function acceptCookies() {
+            localStorage.setItem('nova_consent', 'granted');
+            document.getElementById('cookie-banner').classList.add('hidden');
+        }
 
+        // Chat Nova
+        document.getElementById('nova-fab').addEventListener('click', () => {
+            document.getElementById('nova-box').classList.toggle('hidden');
+            if(!document.getElementById('nova-box').classList.contains('hidden')) {
+                document.getElementById('nova-field').focus();
+            }
+        });
+
+        function sendChat() {
+            const input = document.getElementById('nova-field');
+            const log = document.getElementById('nova-log');
+            const val = input.value.trim();
+            if(!val) return;
+            
+            log.innerHTML += `<div class="bg-panel border-r-2 border-white text-white p-3 rounded rounded-tr-none self-end max-w-[85%]">${val}</div>`;
+            input.value = '';
+            log.scrollTop = log.scrollHeight;
+            
+            setTimeout(() => {
+                let r = "Requête chiffrée. Traitement en environnement Zero-Cloud...";
+                if(val.toLowerCase().includes('hugo') || val.toLowerCase().includes('atria')) r = "Accès reconnu. Les conditions de partenariat MSP sont disponibles dans le portail.";
+                
+                log.innerHTML += `<div class="bg-gray-800 border-l-2 border-neon text-gray-300 p-3 rounded rounded-tl-none self-start max-w-[85%]">${r}</div>`;
+                log.scrollTop = log.scrollHeight;
+            }, 800);
+        }
+
+        // Init
+        document.addEventListener('DOMContentLoaded', checkLoi25);
+    </script>
 </body>
 </html>

@@ -1,52 +1,542 @@
-<!DOCTYPE html>
-<html lang="en">
+
+<!doctype html>
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NovaSuite</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="cookieManagement.js"></script>
-    <script src="novaChatIntegration.js"></script>
+  
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>NovaSuite • Accueil</title>
+  <meta name="description" content="Découvrez NovaSuite : Audit IA Express, Cybersécurité, et Intégration Nova (LM Studio/Ollama) pour votre projet web."/>
+  <meta property="og:title" content="NovaSuite • Accueil"/>
+  <meta property="og:description" content="La solution clé en main pour l'IA et la sécurité web."/>
+  <meta property="og:image" content="assets/banner-novasuite.webp"/> 
+  <meta property="og:url" content="https://novasuite.ca/index.html"/>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.webp"/> 
+  <link rel="stylesheet" href="assets/nova.css?v=20251116"/>
+
+<meta http-equiv="Content-Security-Policy" content="
+default-src 'self';
+script-src 'self' https://www.googletagmanager.com https://www.google-analytics.com 'unsafe-inline';
+img-src 'self' https://www.google-analytics.com https://www.googletagmanager.com data:;
+connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://novasuite.onrender.com https://region1.google-analytics.com;
+style-src 'self' 'unsafe-inline';
+frame-src https://www.googletagmanager.com;">
+
+  <style>
+    /* ===== Styles de la page (Hero et Formules) - Maintenus ===== */
+    .ns-hero{position:relative;border-radius:12px;overflow:hidden;margin-top:10px;
+             box-shadow:0 6px 25px rgba(0,0,0,.4)}
+    .ns-hero::before{
+      content:"";position:absolute;inset:0;
+      /* CORRECTION: Assurez-vous que le nom du fichier est correct */
+      background-image:url('assets/banner-novasuite.webp'); 
+      background-size:cover;background-position:center;
+      filter:brightness(.65)
+    }
+    .ns-hero__inner{
+      position:relative;min-height:380px;
+      display:flex;flex-direction:column;justify-content:center;align-items:center;
+      text-align:center;padding:20px
+    }
+    .ns-hero h2{margin:0 0 10px;font-size:clamp(1.8rem,3vw,2.4rem);color:#fff;
+                text-shadow:0 2px 8px rgba(0,0,0,.5)}
+    .ns-hero p{max-width:640px;margin:0 0 18px;color:#e2e8f0;
+               text-shadow:0 2px 6px rgba(0,0,0,.6)}
+    .ns-hero__actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+    .ns-btn{display:inline-flex;align-items:center;justify-content:center;
+            padding:12px 16px;border-radius:12px;font-weight:800;text-decoration:none}
+    .ns-btn--primary{background:linear-gradient(180deg,#1ea7ff,#1293ee);color:#031425;border:0}
+    .ns-btn--gold{background:linear-gradient(180deg,#ffe08a,#ffc233);color:#3b2a00;border:0}
+    .ns-btn:hover{filter:brightness(1.05)}
+    @media (max-width:700px){
+      .ns-hero__inner{min-height:460px;padding:16px}
+      .ns-btn{min-width:180px;padding:10px 14px}
+    }
+    
+    /* Styles du Chat Nova */
+    .nova-fab{
+      position:fixed; 
+      right:16px; /* Position par défaut à droite */
+      bottom:16px; 
+      z-index:9999; 
+      padding:12px 16px; border-radius:999px; font-weight:800; text-decoration:none;
+      background:linear-gradient(180deg,#1ea7ff,#1293ee); color:#031425; border:none;
+      box-shadow:0 10px 28px rgba(0,0,0,.35);
+      -webkit-tap-highlight-color: transparent;
+      cursor:pointer;
+      transition: opacity 0.3s ease-in-out; 
+    }
+    .nova-box{
+      position:fixed; right:16px; bottom:65px; z-index:9998; 
+      width:300px; height:400px; background-color:#1e293b; border-radius:12px;
+      box-shadow:0 10px 28px rgba(0,0,0,.5);
+      display:none; /* C'est le CSS qui gère le masquage par défaut */
+      flex-direction:column;
+    }
+    .nova-head{
+      padding:10px 15px; background-color:#0f172a; color:#fff;
+      border-top-left-radius:12px; border-top-right-radius:12px; font-weight:bold;
+    }
+    .nova-log{
+      flex-grow:1; padding:15px; overflow-y:auto; color:#fff; font-size:0.9em;
+    }
+    .nova-bar{
+      display:flex; padding:10px; background-color:#0f172a;
+      border-bottom-left-radius:12px; border-bottom-right-radius:12px;
+    }
+    .nova-bar input{
+      flex-grow:1; padding:8px; border:none; border-radius:6px; margin-right:8px;
+      background-color:#334155; color:#fff;
+    }
+    .nova-bar button{
+      padding:8px 12px; border:none; border-radius:66px; cursor:pointer;
+      background-color:#1ea7ff; color:#031425; font-weight:bold;
+    }
+    @media (max-width:600px){
+      .nova-fab{ padding:11px 15px; right:14px; bottom:16px; }
+      .nova-box{ width:90%; height:70%; right:5%; bottom:65px; }
+    }
+
+    /* ===== NOUVEAU STYLE DE BANDEAU DE CONSENTEMENT (LATÉRAL COMPACT) ===== */
+    #cookie-banner {
+      position: fixed !important;
+      bottom: 20px !important; 
+      right: 20px !important; 
+      width: 320px !important; 
+      max-width: 90% !important; 
+      background-color: #0f172a; 
+      color: #cde6dc; 
+      padding: 15px; 
+      z-index: 99999 !important;
+      display: flex; 
+      flex-direction: column; 
+      align-items: flex-start;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      border: 1px solid #124736;
+      border-radius: 12px; 
+    }
+    #cookie-banner p { 
+      margin: 0 0 10px 0; 
+      font-size: 0.9rem; 
+      flex-grow: 1;
+      padding-right: 0; 
+    }
+    #cookie-banner a { 
+      color: #72ffcb; 
+      text-decoration: underline; 
+      font-weight: 600; 
+      margin-right: 0; 
+      display: block; 
+      margin-bottom: 10px;
+    }
+    .cookie-buttons { 
+      display: flex; 
+      gap: 10px; 
+      width: 100%; 
+      justify-content: flex-end; 
+    }
+    .cookie-buttons button {
+      padding: 8px 12px; border: none; border-radius: 6px; cursor: pointer;
+      font-weight: 700; font-size: 0.85rem; transition: background-color 0.2s;
+      flex-shrink: 0;
+    }
+    #accept-cookies { background-color: #72ffcb; color: #0a0f0d; }
+    #settings-cookies { background-color: #124736; color: #72ffcb; border: 1px solid #72ffcb; }
+    
+    @media (max-width: 600px) {
+      #cookie-banner { 
+        width: 100% !important; 
+        right: 0 !important; 
+        left: 0 !important; 
+        bottom: 0 !important; 
+        border-radius: 12px 12px 0 0; 
+      }
+      .cookie-buttons {
+          justify-content: space-between; 
+      }
+      .nova-fab {
+        right: 16px; 
+        left: auto;
+      }
+    }
+
+    /* Autres styles */
+    .card .badge-blue {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background-color: #1ea7ff;
+        color: #031425;
+        padding: 4px 8px;
+        border-radius: 6px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        box-shadow: 0 2px 4px rgba(0,0,0,.2);
+    }
+    .about-us-summary{
+      text-align: center; 
+      padding: 40px 20px; 
+      background-color: #0f172a; 
+      border-top: 1px solid #124736;
+      border-bottom: 1px solid #124736;
+      margin-top: 20px;
+    }
+    .about-us-summary h2{
+      color: #72ffcb; 
+      margin-bottom: 15px;
+      font-size: 1.8rem;
+    }
+    .about-us-summary p{
+      font-size: 1.1em; 
+      max-width: 800px; 
+      margin: 0 auto 15px auto;
+      color: #cde6dc;
+    }
+  </style>
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="shortcut icon" href="/assets/favicon.ico"> 
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png"> 
 </head>
+
 <body>
-    <header>
-        <div class="hero-section">
-            <h1>Welcome to NovaSuite</h1>
-            <p>Your one-stop solution for all your needs!</p>
-            <button id="learnMore">Learn More</button>
-        </div>
-    </header>
-    <section class="about-us">
-        <h2>About Us</h2>
-        <p>At NovaSuite, we strive to deliver the best services to our customers. Our team is dedicated to ensuring complete satisfaction.</p>
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TH9TZKR4"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  
+  <header class="wrap">
+    <a class="brand" href="/">
+      <img class="logo" src="assets/logo-novasuite.webp" alt="NovaSuite" width="63" height="63"/>
+      <span>NovaSuite</span>
+    </a>
+    <h1>NovaSuite : Votre succès web avec l'IA 🤖 et la Cybersécurité 🛡️.
+      <a href="a-propos.html" style="font-size:0.75em; font-weight:normal; margin-left:15px; text-decoration:underline; color:#72ffcb;">Notre Expertise</a>
+    </h1>
+  </header>
+<section class="ns-hero">
+  <div class="ns-hero__inner">
+    <h2>Audit IA Express & Intégration Nova (LM Studio / Ollama) 🚀</h2>
+    <p>
+      NovaSuite vous fournit des diagnostics de sécurité et de performance clairs, des recommandations concrètes, et l'**intégration assistée** de nos outils d'intelligence artificielle (LM Studio / Ollama) pour donner un avantage compétitif à votre projet web. Choisissez la solution clé en main.
+    </p>
+    <div class="ns-hero__actions">
+      <a href="#formules" class="ns-btn ns-btn--primary">Voir les formules</a>
+      <a href="https://www.buymeacoffee.com/yarrowmart9" target="_blank" rel="noopener"
+         class="ns-btn ns-btn--gold">☕ Offrir un café à NovaSuite</a>
+    </div>
+  </div>
+</section>
+
+<section class="about-us-summary wrap">
+    <h2>Qui sommes-nous ?</h2>
+    <p>
+        NovaSuite Technologies est votre partenaire de cybersécurité nouvelle génération. Nous sommes fondés par Yarrow Martin, un expert **Certifié en Piratage Éthique** et formé en **Intelligence Artificielle par Google**.
+    </p>
+    <p>
+        Notre mission : Protéger votre entreprise contre les menaces numériques et assurer la conformité Loi 25 grâce à des solutions automatisées et des audits IA précis.
+    </p>
+    <a href="a-propos.html" class="ns-btn ns-btn--primary" style="background:linear-gradient(180deg,#4da786,#3a8f6f); color:#fff; border:0;">Découvrez notre expertise complète</a>
+</section>
+<div id="formules" style="scroll-margin-top:100px;"></div>
+
+  <main class="wrap">
+    <h2>Nos Formules Détaillées</h2>
+    
+    <section class="card">
+      <h2>Formule Audit Express</h2>
+      <p>
+        **399 $** par audit<br/>
+        Analyse rapide de votre site, rapport clair et recommandations concrètes.
+      </p>
+      <ul id="audit-express-ul">
+        <li>Audit de sécurité et performance</li>
+        <li>Rapport détaillé avec recommandations</li>
+        <li>Support par e‑mail</li>
+      </ul>
+      <a href="https://buy.stripe.com/eVqeVd3nkacW50P9GS2VG03" class="btn-primary" target="_blank" rel="noopener">Demander un audit (399 $)</a>
     </section>
-    <section class="pricing">
-        <h2>Pricing</h2>
-        <div class="pricing-list">
-            <div class="pricing-item">
-                <h3>Basic Package</h3>
-                <p>Price: $10/month</p>
-                <p>Formula: x + 5</p>
+
+    <section class="card recommended">
+      <h2>Formule Intégration Standard</h2>
+      <div class="badge badge-blue">⭐ Recommandé</div> 
+      <p>
+        **699 $** par projet<br/>
+        Audit complet plus intégration assistée de nos outils IA.
+      </p>
+      <ul id="integration-standard-ul">
+        <li>Audit complet de sécurité et performance</li>
+        <li>Intégration de mini‑site IA/Chat Nova</li>
+        <li>Recommandations d’optimisation UX/UI</li>
+        <li>Support par e‑mail et chat</li>
+      </ul>
+      <a href="https://buy.stripe.com/eVqfZh5vsetcdxl7yK2VG01" class="btn-primary" target="_blank" rel="noopener">Commander maintenant (699 $)</a>
+    </section>
+
+    <section class="card">
+      <h2>Formule Premium</h2>
+      <p>
+        **1299 $** par projet<br/>
+        Solution clé en main avec intégration complète et suivi.
+      </p>
+      <ul id="formule-premium-ul">
+        <li>Audit avancé et intégration IA</li>
+        <li>Personnalisation du mini‑site (branding)</li>
+        <li>Mises à jour et optimisations mensuelles</li>
+        <li>Support premium (e‑mail et chat prioritaire)</li>
+      </ul>
+      <a href="https://buy.stripe.com/4gM5kDbTQ0CmbpdaKW2VG02" class="btn-primary" target="_blank" rel="noopener">Commander maintenant (1299 $)</a>
+    </section>
+
+    <section class="card monthly-plan">
+      <h2>NovaSuite 🛡️ Bouclier Proactif</h2>
+      <p>
+        **399 $** par mois<br/>
+        Surveillance IA 24/7, maintenance des failles post-Audit et optimisation.
+      </p>
+      <ul id="monthly-plan-ul">
+        <li>Surveillance IA 24/7 (Alertes immédiates)</li>
+        <li>Maintenance des failles post-Audit</li>
+        <li>Conformité continue (Loi 25)</li>
+        <li>Rapports mensuels de sécurité</li>
+      </ul>
+      <a href="https://buy.stripe.com/3cIdR90b8etcal97yK2VG04" class="btn-primary" target="_blank" rel="noopener">S'abonner au Bouclier (399 $/mois)</a>
+    </section>
+    
+
+  </main>
+
+  <div class="wrap" style="text-align:center; margin-top:30px;">
+    <a href="https://www.buymeacoffee.com/yarrowmart9" target="_blank" rel="noopener" class="btn-gold">☕ Offrir un café à NovaSuite</a>
+  </div>
+  
+<footer style="
+  border-top:1px solid #124736;
+  background-color:#0a0f0d;
+  padding:1.5rem 1rem;
+  text-align:center;
+  color:#9deacb;
+  font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  font-size:0.8rem;
+  line-height:1.5;
+">
+  <div style="color:#72ffcb;font-weight:600;font-size:0.8rem;">
+    © NovaSuite Technologies 2025 — Tous droits réservés
+  </div>
+
+  <div style="margin-top:0.5rem;color:#9deacb;">
+    <a href="mentions-legales.html" style="color:#72ffcb;text-decoration:none;margin:0 .5rem;">
+      Mentions légales
+    </a>
+    •
+    <a href="politique-confidentialite.html" style="color:#72ffcb;text-decoration:none;margin:0 .5rem;">
+      Politique de confidentialité
+    </a>
+    •
+    <a href="#" onclick="showCookieSettings(event);" style="color:#72ffcb;text-decoration:none;margin:0 .5rem;">
+      Paramètres des témoins
+    </a>
+    •
+    <a href="mailto:contact@novasuite.ca" style="color:#72ffcb;text-decoration:none;margin:0 .5rem;">
+      contact@novasuite.ca
+    </a>
+  </div>
+
+  <div style="margin-top:0.5rem;color:#4da786;font-size:0.7rem;">
+    Sécurité IA locale • Audit cybersécurité express • Optimisation performance PC / réseau
+  </div>
+</footer>
+  
+<div id="cookie-settings-modal" style="
+    display: none; 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    background-color: rgba(0, 0, 0, 0.75); 
+    z-index: 10001; 
+    align-items: center;
+    justify-content: center;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+">
+    <div style="
+        background-color: #0a0f0d; 
+        border: 1px solid #124736;
+        border-radius: 12px; 
+        padding: 25px; 
+        max-width: 450px; 
+        width: 90%; 
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    ">
+        <h2 style="color: #72ffcb; margin-top: 0; border-bottom: 1px solid rgba(114, 255, 203, 0.2); padding-bottom: 10px; font-size: 1.4rem;">
+            Gestion des Témoins
+        </h2>
+        
+        <p style="color: #cde6dc; font-size: 0.95rem;">
+            Nous utilisons des témoins pour assurer le bon fonctionnement du site et analyser son trafic (Google Analytics). Conformément à la Loi 25, vous pouvez choisir d'accepter ou de refuser les témoins d'analyse.
+        </p>
+
+        <div style="margin-top: 20px;">
+            <div style="margin-bottom: 15px;">
+                <h3 style="color: #9deacb; font-size: 1rem; margin-top: 0; margin-bottom: 5px;">
+                    1. Témoins Essentiels (Obligatoires)
+                </h3>
+                <p style="color: #4da786; font-size: 0.85rem; margin: 0;">
+                    Nécessaires au fonctionnement de base du site et à la sécurité. Ne peuvent être désactivés.
+                </p>
             </div>
-            <div class="pricing-item">
-                <h3>Pro Package</h3>
-                <p>Price: $20/month</p>
-                <p>Formula: 2x + 10</p>
-            </div>
-            <div class="pricing-item">
-                <h3>Premium Package</h3>
-                <p>Price: $30/month</p>
-                <p>Formula: 3x + 15</p>
+            
+            <div style="margin-bottom: 15px;">
+                <h3 style="color: #9deacb; font-size: 1rem; margin-top: 0; margin-bottom: 5px;">
+                    2. Témoins d'Analyse (Optionnels)
+                </h3>
+                <label style="display: flex; align-items: center; cursor: pointer;">
+                    <input type="checkbox" id="analytics-consent" checked style="margin-right: 10px; accent-color: #72ffcb;">
+                    <span style="color: #cde6dc; font-size: 0.9rem;">
+                        Activer Google Analytics (Mesure d'audience)
+                    </span>
+                </label>
             </div>
         </div>
-    </section>
-    <footer>
-        <p>&copy; 2026 NovaSuite. All Rights Reserved.</p>
-    </footer>
-    <script>
-        // Initialize cookie management and chat integration
-        initCookieManagement();
-        initNovaChat();
-    </script>
+
+        <div style="margin-top: 25px; text-align: right;">
+            <button onclick="saveCookiePreferences();" style="
+                padding: 10px 18px; 
+                background-color: #72ffcb; 
+                color: #0a0f0d; 
+                border: none; 
+                border-radius: 8px; 
+                cursor: pointer; 
+                font-weight: 700;
+                font-size: 0.9rem;
+            ">
+                Sauvegarder et Fermer
+            </button>
+        </div>
+    </div>
+</div>
+  
+  <button id="nova-fab" class="nova-fab" aria-expanded="false">💬 Nova</button>
+  <div id="nova-box" class="nova-box"> 
+    <div class="nova-head">Nova • Assistant local</div>
+    <div id="nova-log" class="nova-log"></div>
+    <form id="nova-form" class="nova-bar">
+      <input id="nova-field" name="q" placeholder="Parlez à Nova" autocomplete="off" />
+      <button id="nova-send" type="submit">Envoyer</button>
+    </form>
+  </div>
+
+   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TH9TZKR4');</script>
+  
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-LWHM1MVESP');
+    // Définir le consentement par défaut au REFUS pour le stockage analytique (Loi 25)
+    gtag('consent', 'default', {
+      'analytics_storage': 'denied',
+      'wait_for_update': 500 // Temps d'attente pour le script de consentement
+    });
+  </script>
+
+  <script src="nova.js"></script>
+
+<div id="cookie-banner" style="display: none;">
+    <p>
+      Nous utilisons des témoins pour l'analyse de notre trafic. 
+      <a href="politique-confidentialite.html" target="_blank">Consultez notre Politique de Confidentialité (Loi 25)</a> pour en savoir plus.
+    </p>
+    <div class="cookie-buttons">
+      <button id="accept-cookies" onclick="acceptAllCookies();">J'accepte</button>
+      <button id="settings-cookies" onclick="showCookieSettings();">Paramètres</button>
+    </div>
+</div>
+
+<script>
+// --- FONCTIONS DE GESTION DES COOKIES (maintenant complètes) ---
+
+// Vérifie le statut du consentement stocké
+function getConsentStatus() {
+    return localStorage.getItem('analytics_consent');
+}
+
+// Fonction pour mettre à jour l'état de consentement de Google Analytics/GTM
+function applyConsent(granted) {
+    const status = granted ? 'granted' : 'denied';
+    
+    // 1. Mettre à jour le statut via GTAG
+    gtag('consent', 'update', {
+        'analytics_storage': status
+    });
+    
+    // 2. Mettre à jour la couche de données pour GTM (pour les balises tierces)
+    window.dataLayer.push({
+        'event': 'cookie_consent_update',
+        'analytics_storage': status
+    });
+    
+    // S'assurer que le chat est visible
+    const novaFab = document.getElementById('nova-fab');
+    if (novaFab) {
+        novaFab.style.display = 'block'; 
+    }
+}
+
+// Affiche le bandeau si aucune préférence n'est enregistrée, ou applique la préférence existante
+function checkAndShowBanner() {
+    const consent = getConsentStatus();
+    const banner = document.getElementById('cookie-banner');
+    const novaFab = document.getElementById('nova-fab');
+
+    if (consent === null) {
+        // Aucune préférence trouvée, affichez le bandeau
+        if (banner) {
+            banner.style.display = 'flex';
+        }
+        if (novaFab) {
+             // S'assurer que le bouton est visible
+            novaFab.style.display = 'block'; 
+        }
+    } else {
+        applyConsent(consent === 'granted');
+    }
+}
+
+// Gère l'acceptation de tous les cookies
+function acceptAllCookies() {
+    localStorage.setItem('analytics_consent', 'granted');
+    applyConsent(true);
+    document.getElementById('cookie-banner').style.display = 'none';
+}
+
+// Ouvre le modal de paramètres
+function showCookieSettings(event) {
+    if (event) event.preventDefault();
+    document.getElementById('cookie-settings-modal').style.display = 'flex';
+    document.getElementById('cookie-banner').style.display = 'none';
+    const currentConsent = getConsentStatus();
+    const checkbox = document.getElementById('analytics-consent');
+    if (currentConsent !== null) {
+        checkbox.checked = (currentConsent === 'granted');
+    }
+}
+
+// Sauvegarde les préférences du modal
+function saveCookiePreferences() {
+    const checkbox = document.getElementById('analytics-consent');
+    const consentStatus = checkbox.checked ? 'granted' : 'denied';
+    localStorage.setItem('analytics_consent', consentStatus);
+    applyConsent(checkbox.checked);
+    document.getElementById('cookie-settings-modal').style.display = 'none';
+}
+
+// Exécute la vérification au chargement
+document.addEventListener('DOMContentLoaded', checkAndShowBanner);
+</script>
+
 </body>
 </html>

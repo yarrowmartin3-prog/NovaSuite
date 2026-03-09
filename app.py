@@ -16,21 +16,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# --- LA COMBINAISON GAGNANTE ---
+# --- CONFIGURATION BREVO ---
 SMTP_SERVER = "smtp-relay.brevo.com"
-SMTP_PORT = 2525  # Le port fantôme qui traverse le pare-feu de Render
-
-# Le login technique trouvé par Monseigneur Yarrow
+SMTP_PORT = 2525
 SMTP_LOGIN = os.getenv("SMTP_LOGIN", "9fb545001@smtp-brevo.com")
-
-# Le mot de passe (la clé xsmtpsib-...)
 SMTP_PASSWORD = os.getenv("SMTP_PASSWORD", "")
-
-# L'adresse affichée aux clients
 SENDER_EMAIL = os.getenv("SENDER_EMAIL", "yarrowmartin3@gmail.com")
 
-# L'adresse où VOUS recevez les messages
-DESTINATION_EMAIL = "yarrowmartin3@gmail.com" 
+# --- VOTRE NOUVELLE BOÎTE DE RÉCEPTION ---
+MY_EMAIL = "contact@novasuite.ca" 
 
 class AuditRequest(BaseModel):
     url: str
@@ -51,10 +45,10 @@ async def send_contact(req: ContactRequest):
     try:
         msg = MIMEMultipart()
         msg['From'] = f"NovaSuite Web <{SENDER_EMAIL}>"
-        msg['To'] = DESTINATION_EMAIL
-        msg['Subject'] = f"Nouveau Contact Web : {req.nom}"
+        msg['To'] = MY_EMAIL # Envoi à contact@novasuite.ca
+        msg['Subject'] = f"Nouveau Contact : {req.nom}"
         
-        body = f"Nouveau lead depuis le site NovaSuite.\n\nNom: {req.nom}\nEmail: {req.email}\n\nMessage:\n{req.message}"
+        body = f"Nouveau message de contact.\n\nNom: {req.nom}\nEmail: {req.email}\n\nMessage:\n{req.message}"
         msg.attach(MIMEText(body, 'plain', 'utf-8'))
         
         server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT, timeout=15)
@@ -62,46 +56,39 @@ async def send_contact(req: ContactRequest):
         server.login(SMTP_LOGIN, SMTP_PASSWORD)
         server.send_message(msg)
         server.quit()
-        
-        return {"status": "success", "message": "Transmis"}
+        return {"status": "success"}
     except Exception as e:
-        print(f"🚨 Erreur Contact Brevo: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/api/audit")
 async def run_audit(req: AuditRequest):
-    result_rule = f"Loi 25 - Section 3.2 : Consentement explicite non détecté sur {req.url}"
+    result_rule = f"Loi 25 - Section 3.2 : Consentement non conforme sur {req.url}"
     command = "Vérifiez l'en-tête X-Privacy-Consent."
     
     try:
-        msg = MIMEMultipart()
-        msg['From'] = f"Agent Nova <{SENDER_EMAIL}>"
-        msg['To'] = req.email
-        msg['Subject'] = "⚠️ Résultat Partiel de votre Audit - NovaSuite"
+        # 1. Envoi au CLIENT
+        msg_client = MIMEMultipart()
+        msg_client['From'] = f"Agent Nova <{SENDER_EMAIL}>"
+        msg_client['To'] = req.email
+        msg_client['Subject'] = "🔒 Votre Rapport d'Audit NovaSuite"
         
-        body = f"""Bonjour,
-
-L'Agent Nova a terminé l'audit préliminaire pour l'infrastructure : {req.url}
-
-🚨 Règle critique identifiée : {result_rule}
-🛠️ Commande de remédiation : {command}
-
-Des vulnérabilités supplémentaires ont été détectées en arrière-plan. 
-Pour obtenir le rapport de remédiation complet et sécuriser votre infrastructure, procédez à la mise à niveau immédiate :
-https://buy.stripe.com/5kA9AT6zwa8W50PeUV
-
-Cordialement,
-Monseigneur Yarrow | NovaSuite Technologies
-"""
-        msg.attach(MIMEText(body, 'plain', 'utf-8'))
+        body_client = f"Bonjour,\n\nL'Agent Nova a terminé l'audit pour : {req.url}\n\n🚨 Règle : {result_rule}\n🛠️ Commande : {command}\n\nComplet ici : https://buy.stripe.com/5kA9AT6zwa8W50PeUV"
+        msg_client.attach(MIMEText(body_client, 'plain', 'utf-8'))
         
+        # 2. Copie pour VOUS à contact@novasuite.ca
+        msg_me = MIMEMultipart()
+        msg_me['From'] = SENDER_EMAIL
+        msg_me['To'] = MY_EMAIL
+        msg_me['Subject'] = f"🔔 Audit effectué : {req.url}"
+        msg_me.attach(MIMEText(f"Audit demandé par {req.email} pour le site {req.url}.", 'plain', 'utf-8'))
+
         server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT, timeout=15)
         server.starttls()
         server.login(SMTP_LOGIN, SMTP_PASSWORD)
-        server.send_message(msg)
+        server.send_message(msg_client)
+        server.send_message(msg_me)
         server.quit()
 
         return {"rule": result_rule, "command": command}
     except Exception as e:
-        print(f"🚨 Erreur Audit Brevo: {e}")
         raise HTTPException(status_code=500, detail=str(e))

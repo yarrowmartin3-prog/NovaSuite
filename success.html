@@ -3,66 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Audit Reçu - NovaSuite Technologies</title>
+    <title>Paiement Confirmé - NovaSuite Technologies</title>
     <style>
         body { background-color: #050505; color: #eee; font-family: 'Inter', sans-serif; text-align: center; padding-top: 80px; margin: 0; }
-        .card { max-width: 600px; margin: 0 auto; background: rgba(0, 196, 255, 0.08); padding: 40px; border-radius: 12px; border: 1px solid #333; }
-        .btn-primary { background: #00ff41; color: #000; padding: 12px 24px; text-decoration: none; font-weight: bold; border-radius: 6px; display: inline-block; margin-top: 20px; }
+        .card { max-width: 600px; margin: 0 auto; background: rgba(0, 255, 65, 0.05); padding: 40px; border-radius: 12px; border: 1px solid #00ff41; box-shadow: 0 0 30px rgba(0,255,65,0.2); }
+        .btn-primary { background: #00ff41; color: #000; padding: 12px 24px; text-decoration: none; font-weight: bold; border-radius: 6px; display: inline-block; margin-top: 20px; transition: 0.3s; }
+        .btn-primary:hover { background: #fff; }
     </style>
 </head>
 <body>
-
-    <div id="loi25-banner" style="position:fixed; top:0; left:0; width:100%; background:#dc2626; color:white; padding:8px; text-align:center; font-size:10px; font-weight:bold; z-index:100; letter-spacing:0.1em; box-shadow:0 0 15px rgba(220,38,38,0.5);">
-        ALERTE : CONFORMITÉ LOI 25 REQUISE. <a href="defi-audit.php" style="text-decoration:underline; color:white;">LANCEZ LE POC GRATUIT</a>
-    </div>
-
-    <header>
-        <img src="/assets/logo-novasuite.webp" alt="NovaSuite Logo" style="width: 80px; border-radius: 8px;">
-    </header>
-
+    <header><a href="/"><img src="assets/logo-novasuite.webp" alt="NovaSuite Logo" style="width: 80px; border-radius: 8px;"></a></header>
     <main>
         <section class="card">
-            <h2 style="color: #00ff41;">✅ Votre Audit est Lancé !</h2>
-            <p>Merci pour votre demande.</p>
-            <p>L'analyse est en cours et un rapport détaillé sera généré pour l'URL soumise.</p>
+            <h2 style="color: #00ff41; font-size: 2rem;">✅ Paiement Confirmé</h2>
+            <p style="font-size: 1.2rem;">Merci pour votre confiance.</p>
+            <p>Le processus d'<strong>Audit Complet</strong> est activé. Notre équipe vous contactera dans les 24h avec le rapport de remédiation technique.</p>
             <hr style="border-top: 1px solid rgba(255, 255, 255, 0.1); margin: 25px 0;">
-            <h3>Prochaine Étape : Sécurisez votre entreprise</h3>
-            <p>Pendant que Nova travaille, préparez la mise aux normes. Notre <strong>Audit Express</strong> est à <strong>499 $</strong> et l'<strong>Intégration Standard</strong> à <strong>899 $</strong>.</p>
-            <a href="https://buy.stripe.com/00w8wPaPMfxgcthaKW2VG05" class="btn-primary">Acheter l'Audit Complet (499 $)</a>
+            <h3>Ne laissez pas ces failles ouvertes.</h3>
+            <p>Passez immédiatement à l'étape supérieure et laissez NovaSuite régler vos problèmes de conformité avec notre <strong>Intégration Standard</strong>.</p>
+            <a href="https://buy.stripe.com/9B69AT2jg84O8d19GS2VG08" class="btn-primary">Acheter l'Intégration (899 $)</a>
         </section>
     </main>
 
-    <div id="chat-container" style="position: fixed; bottom: 20px; right: 20px; width: 320px; z-index: 100; font-family: monospace;">
-        <div id="chat-window" style="display: none; flex-direction: column; background: #0a0a0a; border: 1px solid #00ff41; border-bottom: none; border-radius: 12px 12px 0 0; height: 384px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);">
-            <div style="background: #16a34a; color: black; padding: 12px; font-weight: bold; border-radius: 12px 12px 0 0; display: flex; justify-content: space-between;">
-                <span>🤖 AGENT NOVA v1.0</span>
-                <button type="button" onclick="toggleChat()" style="color: black; font-weight: 900; background: none; border: none; cursor: pointer;">X</button>
-            </div>
-            <div id="chat-messages" style="flex: 1; padding: 16px; overflow-y: auto; font-size: 11px; background: rgba(0,0,0,0.9); color: #22c55e;">
-                <p>[SYS] Nova en ligne. Prêt pour l'audit.</p>
-            </div>
-            <div style="padding: 8px; background: #111; display: flex; border-top: 1px solid #333;">
-                <input id="chat-input" type="text" style="flex: 1; background: #000; border: 1px solid #333; padding: 8px; color: white; font-size: 11px; outline: none;" placeholder="Entrer commande..." onkeypress="if(event.key==='Enter') sendMessage()">
-                <button type="button" onclick="sendMessage()" style="background: #22c55e; color: black; padding: 0 12px; font-weight: bold; border: none; cursor: pointer;">></button>
-            </div>
-        </div>
-        <button type="button" onclick="toggleChat()" style="width: 100%; background: #000; border: 1px solid #22c55e; color: #22c55e; font-weight: bold; padding: 12px; border-radius: 9999px; cursor: pointer; font-size: 10px; letter-spacing: 0.1em; margin-top: 8px;">
-            + ASSISTANCE IA NOVA
-        </button>
-    </div>
-    <script>
-    function toggleChat() { const win = document.getElementById('chat-window'); win.style.display = win.style.display === 'none' || win.style.display === '' ? 'flex' : 'none'; }
-    async function sendMessage() {
-        const input = document.getElementById('chat-input'); const msgDiv = document.getElementById('chat-messages');
-        if(!input.value.trim()) return;
-        msgDiv.innerHTML += `<p style="color: white; margin-top: 8px;">> ${input.value.trim()}</p>`;
-        const msg = input.value.trim(); input.value = ''; msgDiv.scrollTop = msgDiv.scrollHeight;
-        try {
-            const res = await fetch('https://novasuite-1.onrender.com/api/chat/nova', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({message: msg}) });
-            const data = await res.json(); msgDiv.innerHTML += `<p style="color: #4ade80; margin-top: 8px;">NOVA: ${data.response || data.detail}</p>`;
-        } catch(e) { msgDiv.innerHTML += `<p style="color: #ef4444; margin-top: 8px;">[ERREUR] Connexion API Render échouée.</p>`; }
-        msgDiv.scrollTop = msgDiv.scrollHeight;
-    }
-    </script>
+    <div id="chat-container" style="position:fixed;bottom:20px;right:20px;width:320px;z-index:99999;font-family:monospace;"><div id="chat-window" style="display:none;flex-direction:column;background:#0a0a0a;border:1px solid #00ff41;border-bottom:none;border-radius:12px 12px 0 0;height:384px;box-shadow:0 20px 25px -5px rgba(0,0,0,0.5);"><div style="background:#16a34a;color:black;padding:12px;font-weight:bold;border-radius:12px 12px 0 0;display:flex;justify-content:space-between;"><span>🤖 AGENT NOVA v1.0</span><button type="button" onclick="toggleChat()" style="color:black;font-weight:900;background:none;border:none;cursor:pointer;">X</button></div><div id="chat-messages" style="flex:1;padding:16px;overflow-y:auto;font-size:11px;background:rgba(0,0,0,0.9);color:#22c55e;"><p>[SYS] Nova en ligne. Paiement enregistré.</p></div><div style="padding:8px;background:#111;display:flex;border-top:1px solid #333;"><input id="chat-input" type="text" style="flex:1;background:#000;border:1px solid #333;padding:8px;color:white;font-size:11px;outline:none;" placeholder="Entrer commande..." onkeypress="if(event.key==='Enter') sendMessage()"><button type="button" onclick="sendMessage()" style="background:#22c55e;color:black;padding:0 12px;font-weight:bold;border:none;cursor:pointer;">></button></div></div><button type="button" onclick="toggleChat()" style="width:100%;background:#000;border:1px solid #22c55e;color:#22c55e;font-weight:bold;padding:12px;border-radius:9999px;cursor:pointer;font-size:10px;letter-spacing:0.1em;margin-top:8px;">+ ASSISTANCE IA NOVA</button></div>
+    <script>function toggleChat(){const w=document.getElementById('chat-window');w.style.display=w.style.display==='none'||w.style.display===''?'flex':'none';} async function sendMessage(){const i=document.getElementById('chat-input');const m=document.getElementById('chat-messages');if(!i.value.trim())return;m.innerHTML+=`<p style="color:white;margin-top:8px;">> ${i.value.trim()}</p>`;const msg=i.value.trim();i.value='';m.scrollTop=m.scrollHeight;try{const r=await fetch('https://novasuite-1.onrender.com/api/chat/nova',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg})});const d=await r.json();m.innerHTML+=`<p style="color:#4ade80;margin-top:8px;">NOVA: ${d.response||d.detail}</p>`;}catch(e){m.innerHTML+=`<p style="color:#ef4444;margin-top:8px;">[ERREUR] Connexion API Render échouée.</p>`;}m.scrollTop=m.scrollHeight;}</script>
 </body>
 </html>

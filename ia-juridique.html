@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>IA Juridique - RAG, UNDRIP, Cyber Souveraineté</title>
+    <style>
+        body { background-color: #050505; color: #fff; font-family: 'Inter', sans-serif; padding-top: 80px; margin: 0; }
+        .container { max-width: 800px; margin: 0 auto; text-align: center; background: #111; padding: 40px; border-radius: 12px; border: 1px solid #333; }
+        h1 { color: #00ff41; margin-bottom: 20px; }
+        p { font-size: 18px; line-height: 1.6; margin: 20px auto; color: #ccc; }
+        .social-links { margin-top: 30px; }
+        .social-links a { display: inline-block; margin: 10px; color: #00ff41; text-decoration: none; border: 1px solid #00ff41; padding: 10px 20px; border-radius: 6px; transition: 0.3s; }
+        .social-links a:hover { background: #00ff41; color: #000; }
+        .back-link { display: inline-block; margin-top: 40px; color: #888; text-decoration: none; font-size: 14px; }
+        .back-link:hover { color: #fff; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>IA Juridique & Cyber Souveraineté</h1>
+        <p>Nous nous spécialisons dans le déploiement de modèles de Génération Augmentée par la Recherche (RAG) locaux, garantissant la confidentialité absolue de vos données d'entreprise.</p>
+        <p style="font-size: 15px;">Nous concevons nos architectures en respect des principes de souveraineté des données (Loi 25) et des droits UNDRIP applicables.</p>
+        
+        <div class="social-links">
+            <a href="https://www.facebook.com/profile.php?id=61579345525683" target="_blank">Page Facebook</a>
+            <a href="https://www.linkedin.com/in/yarrow-martin-40127a2b0" target="_blank">Profil LinkedIn</a>
+        </div>
+        
+        <a href="/" class="back-link">← Retour au site principal NovaSuite</a>
+    </div>
+
+    <div style="position:fixed;top:0;left:0;width:100%;background:#dc2626;color:white;padding:8px;text-align:center;font-size:10px;font-weight:bold;z-index:99999;letter-spacing:0.1em;box-shadow:0 0 15px rgba(220,38,38,0.5);">ALERTE : CONFORMITÉ LOI 25 REQUISE. <a href="defi-audit.php" style="text-decoration:underline;color:white;">LANCEZ LE POC GRATUIT</a></div>
+    <div id="chat-container" style="position:fixed;bottom:20px;right:20px;width:320px;z-index:99999;font-family:monospace;"><div id="chat-window" style="display:none;flex-direction:column;background:#0a0a0a;border:1px solid #00ff41;border-bottom:none;border-radius:12px 12px 0 0;height:384px;box-shadow:0 20px 25px -5px rgba(0,0,0,0.5);"><div style="background:#16a34a;color:black;padding:12px;font-weight:bold;border-radius:12px 12px 0 0;display:flex;justify-content:space-between;"><span>🤖 AGENT NOVA v1.0</span><button type="button" onclick="toggleChat()" style="color:black;font-weight:900;background:none;border:none;cursor:pointer;">X</button></div><div id="chat-messages" style="flex:1;padding:16px;overflow-y:auto;font-size:11px;background:rgba(0,0,0,0.9);color:#22c55e;"><p>[SYS] Nova en ligne. Prêt pour l'audit.</p></div><div style="padding:8px;background:#111;display:flex;border-top:1px solid #333;"><input id="chat-input" type="text" style="flex:1;background:#000;border:1px solid #333;padding:8px;color:white;font-size:11px;outline:none;" placeholder="Entrer commande..." onkeypress="if(event.key==='Enter') sendMessage()"><button type="button" onclick="sendMessage()" style="background:#22c55e;color:black;padding:0 12px;font-weight:bold;border:none;cursor:pointer;">></button></div></div><button type="button" onclick="toggleChat()" style="width:100%;background:#000;border:1px solid #22c55e;color:#22c55e;font-weight:bold;padding:12px;border-radius:9999px;cursor:pointer;font-size:10px;letter-spacing:0.1em;margin-top:8px;">+ ASSISTANCE IA NOVA</button></div>
+    <script>function toggleChat(){const w=document.getElementById('chat-window');w.style.display=w.style.display==='none'||w.style.display===''?'flex':'none';} async function sendMessage(){const i=document.getElementById('chat-input');const m=document.getElementById('chat-messages');if(!i.value.trim())return;m.innerHTML+=`<p style="color:white;margin-top:8px;">> ${i.value.trim()}</p>`;const msg=i.value.trim();i.value='';m.scrollTop=m.scrollHeight;try{const r=await fetch('https://novasuite-1.onrender.com/api/chat/nova',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg})});const d=await r.json();m.innerHTML+=`<p style="color:#4ade80;margin-top:8px;">NOVA: ${d.response||d.detail}</p>`;}catch(e){m.innerHTML+=`<p style="color:#ef4444;margin-top:8px;">[ERREUR] Connexion API Render échouée.</p>`;}m.scrollTop=m.scrollHeight;}</script>
+</body>
+</html>

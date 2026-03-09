@@ -4,3 +4,4 @@ openai
 pydantic
 requests
 python-dotenv
+fpdf

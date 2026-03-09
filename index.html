@@ -16,7 +16,7 @@
         tailwind.config = { theme: { extend: { colors: { cyber: '#050505', neon: '#00ff41', gold: '#ffd700', panel: '#0f172a' } } } }
     </script>
     <style>
-        body { background-color: #050505; color: #e2e8f0; font-family: 'Inter', system-ui, sans-serif; overflow-x: hidden; padding-top: 40px; }
+        body { background-color: #050505; color: #e2e8f0; font-family: 'Inter', system-ui, sans-serif; overflow-x: hidden; padding-top: 80px; }
         .glass { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
         .neon-glow { box-shadow: 0 0 20px rgba(0, 255, 65, 0.15); }
         .cta-audit, .cta-msp, .cta-commander { transition: all 0.3s ease; text-align: center; display: inline-block; font-weight: bold; border-radius: 0.5rem; }
@@ -28,14 +28,14 @@
         .cta-commander:hover { background: #00ff41; color: #000; box-shadow: 0 0 15px rgba(0,255,65,0.4); }
     </style>
 </head>
-<body class="antialiased min-h-screen flex flex-col relative">
+<body class="antialiased min-h-screen flex flex-col relative pb-64 pt-24 md:pt-28">
 
-    <header class="w-full max-w-6xl mx-auto px-6 py-8 flex items-center justify-between z-10">
-        <div class="flex items-center gap-4">
-            <img src="assets/logo-novasuite.webp" alt="NovaSuite Logo" class="w-14 h-14 rounded-lg border border-gray-800 shadow-lg">
+    <header class="w-full max-w-6xl mx-auto px-4 py-4 md:px-6 md:py-8 flex items-center justify-between z-10">
+        <div class="flex items-center gap-3 md:gap-4">
+            <img src="assets/logo-novasuite.webp" alt="NovaSuite Logo" class="w-10 h-10 md:w-14 md:h-14 rounded-lg border border-gray-800 shadow-lg">
             <div>
-                <h1 class="text-2xl font-black text-white tracking-tight">NovaSuite</h1>
-                <p class="text-xs text-neon uppercase tracking-widest font-bold">Infrastructure IA Locale</p>
+                <h1 class="text-xl md:text-2xl font-black text-white tracking-tight leading-none">NovaSuite</h1>
+                <p class="text-[9px] md:text-xs text-neon uppercase tracking-widest font-bold mt-1">Infrastructure IA Locale</p>
             </div>
         </div>
         <a href="a-propos.html" class="hidden md:block text-sm text-gray-400 hover:text-white transition">Notre Expertise</a>
@@ -56,7 +56,7 @@
         </div>
     </main>
 
-    <section id="offres" class="w-full max-w-6xl mx-auto px-6 mb-24 z-10">
+    <section id="offres" class="w-full max-w-6xl mx-auto px-6 mb-24 z-10 flex-1">
         <h2 class="text-3xl font-black text-center text-white mb-10">Nos Forfaits de Sécurité</h2>
         <div class="grid md:grid-cols-3 gap-6">
             <div class="glass rounded-2xl p-8 border-t-4 border-t-gray-500 flex flex-col">
@@ -121,7 +121,7 @@
     </script>
 
     <div style="position:fixed;top:0;left:0;width:100%;background:#dc2626;color:white;padding:8px;text-align:center;font-size:10px;font-weight:bold;z-index:99999;letter-spacing:0.1em;box-shadow:0 0 15px rgba(220,38,38,0.5);">ALERTE : CONFORMITÉ LOI 25 REQUISE. <a href="defi-audit.html" style="text-decoration:underline;color:white;">LANCEZ LE POC GRATUIT</a></div>
-    <div id="chat-container" style="position:fixed;bottom:20px;right:20px;width:320px;max-width:calc(100% - 40px);z-index:99999;font-family:monospace;"><div id="chat-window" style="display:none;flex-direction:column;background:#0a0a0a;border:1px solid #00ff41;border-bottom:none;border-radius:12px 12px 0 0;height:384px;box-shadow:0 20px 25px -5px rgba(0,0,0,0.5);"><div style="background:#16a34a;color:black;padding:12px;font-weight:bold;border-radius:12px 12px 0 0;display:flex;justify-content:space-between;"><span>🤖 AGENT NOVA v1.0</span><button type="button" onclick="toggleChat()" style="color:black;font-weight:900;background:none;border:none;cursor:pointer;">X</button></div><div id="chat-messages" style="flex:1;padding:16px;overflow-y:auto;font-size:11px;background:rgba(0,0,0,0.9);color:#22c55e;"><p>[SYS] Nova en ligne. Prêt pour l'audit.</p></div><div style="padding:8px;background:#111;display:flex;border-top:1px solid #333;"><input id="chat-input" type="text" style="flex:1;background:#000;border:1px solid #333;padding:8px;color:white;font-size:11px;outline:none;" placeholder="Entrer commande..." onkeypress="if(event.key==='Enter') sendMessage()"><button type="button" onclick="sendMessage()" style="background:#22c55e;color:black;padding:0 12px;font-weight:bold;border:none;cursor:pointer;">></button></div></div><button type="button" onclick="toggleChat()" style="width:100%;background:#000;border:1px solid #22c55e;color:#22c55e;font-weight:bold;padding:12px;border-radius:9999px;cursor:pointer;font-size:10px;letter-spacing:0.1em;margin-top:8px;">+ ASSISTANCE IA NOVA</button></div>
+    <div id="chat-container" style="position:fixed;bottom:20px;right:20px;width:320px;max-width:calc(100% - 40px);z-index:99999;font-family:monospace;box-sizing:border-box;"><div id="chat-window" style="display:none;flex-direction:column;background:#0a0a0a;border:1px solid #00ff41;border-bottom:none;border-radius:12px 12px 0 0;height:384px;box-shadow:0 20px 25px -5px rgba(0,0,0,0.5);"><div style="background:#16a34a;color:black;padding:12px;font-weight:bold;border-radius:12px 12px 0 0;display:flex;justify-content:space-between;"><span>🤖 AGENT NOVA v1.0</span><button type="button" onclick="toggleChat()" style="color:black;font-weight:900;background:none;border:none;cursor:pointer;">X</button></div><div id="chat-messages" style="flex:1;padding:16px;overflow-y:auto;font-size:11px;background:rgba(0,0,0,0.9);color:#22c55e;"><p>[SYS] Nova en ligne. Prêt pour l'audit.</p></div><div style="padding:8px;background:#111;display:flex;border-top:1px solid #333;"><input id="chat-input" type="text" style="flex:1;background:#000;border:1px solid #333;padding:8px;color:white;font-size:11px;outline:none;" placeholder="Entrer commande..." onkeypress="if(event.key==='Enter') sendMessage()"><button type="button" onclick="sendMessage()" style="background:#22c55e;color:black;padding:0 12px;font-weight:bold;border:none;cursor:pointer;">></button></div></div><button type="button" onclick="toggleChat()" style="width:100%;background:#000;border:1px solid #22c55e;color:#22c55e;font-weight:bold;padding:12px;border-radius:9999px;cursor:pointer;font-size:10px;letter-spacing:0.1em;margin-top:8px;">+ ASSISTANCE IA NOVA</button></div>
     <script>function toggleChat(){const w=document.getElementById('chat-window');w.style.display=w.style.display==='none'||w.style.display===''?'flex':'none';} async function sendMessage(){const i=document.getElementById('chat-input');const m=document.getElementById('chat-messages');if(!i.value.trim())return;m.innerHTML+=`<p style="color:white;margin-top:8px;">> ${i.value.trim()}</p>`;const msg=i.value.trim();i.value='';m.scrollTop=m.scrollHeight;try{const r=await fetch('https://novasuite-1.onrender.com/api/chat/nova',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg})});const d=await r.json();m.innerHTML+=`<p style="color:#4ade80;margin-top:8px;">NOVA: ${d.response||d.detail}</p>`;}catch(e){m.innerHTML+=`<p style="color:#ef4444;margin-top:8px;">[ERREUR] Connexion API Render échouée.</p>`;}m.scrollTop=m.scrollHeight;}</script>
 </body>
 </html>

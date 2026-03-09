@@ -16,9 +16,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# --- LA CONFIGURATION EXACTE DE BREVO ---
+# --- LA COMBINAISON GAGNANTE ---
 SMTP_SERVER = "smtp-relay.brevo.com"
-SMTP_PORT = 587
+SMTP_PORT = 2525  # Le port fantôme qui traverse le pare-feu de Render
 
 # Le login technique trouvé par Monseigneur Yarrow
 SMTP_LOGIN = os.getenv("SMTP_LOGIN", "9fb545001@smtp-brevo.com")
@@ -26,7 +26,7 @@ SMTP_LOGIN = os.getenv("SMTP_LOGIN", "9fb545001@smtp-brevo.com")
 # Le mot de passe (la clé xsmtpsib-...)
 SMTP_PASSWORD = os.getenv("SMTP_PASSWORD", "")
 
-# L'adresse affichée aux clients (doit être validée dans Brevo)
+# L'adresse affichée aux clients
 SENDER_EMAIL = os.getenv("SENDER_EMAIL", "yarrowmartin3@gmail.com")
 
 # L'adresse où VOUS recevez les messages
@@ -59,7 +59,6 @@ async def send_contact(req: ContactRequest):
         
         server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT, timeout=15)
         server.starttls()
-        # CONNEXION AVEC LE BON LOGIN TECHNIQUE
         server.login(SMTP_LOGIN, SMTP_PASSWORD)
         server.send_message(msg)
         server.quit()
@@ -98,7 +97,6 @@ Monseigneur Yarrow | NovaSuite Technologies
         
         server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT, timeout=15)
         server.starttls()
-        # CONNEXION AVEC LE BON LOGIN TECHNIQUE
         server.login(SMTP_LOGIN, SMTP_PASSWORD)
         server.send_message(msg)
         server.quit()

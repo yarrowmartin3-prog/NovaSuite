@@ -425,41 +425,30 @@
 
     <script>
         // ==========================================
-        // Loi 25 - Version Blindée (Incognito Safe)
+        // Loi 25 - Version Forteresse (Toujours visible par défaut)
         // ==========================================
         function checkLoi25() {
             try {
-                if(!localStorage.getItem('nova_consent')) {
-                    afficherPopup();
+                // Si le client a déjà accepté, on cache la bannière
+                if(localStorage.getItem('nova_consent') === 'granted') {
+                    document.getElementById('cookie-banner').style.display = 'none';
                 }
             } catch(e) {
-                // Si le navigateur bloque localStorage en mode privé, on affiche par sécurité légale
-                afficherPopup();
+                // En mode ultra-sécurisé, si localStorage est bloqué, la bannière restera visible (Conformité maximale)
             }
-        }
-
-        function afficherPopup() {
-            setTimeout(() => { 
-                const banner = document.getElementById('cookie-banner');
-                if(banner) {
-                    banner.classList.remove('hidden');
-                    banner.style.display = 'block'; // Force l'affichage pour surcharger d'éventuels conflits
-                }
-            }, 1000);
         }
 
         function acceptCookies() {
             try {
                 localStorage.setItem('nova_consent', 'granted');
             } catch(e) {
-                // Ignore l'erreur en mode privé (le bandeau se fermera quand même pour la session active)
+                // Ignore l'erreur de sauvegarde en navigation privée
             }
-            const banner = document.getElementById('cookie-banner');
-            if(banner) {
-                banner.classList.add('hidden');
-                banner.style.display = 'none';
-            }
+            document.getElementById('cookie-banner').style.display = 'none';
         }
+
+        // Exécution immédiate
+        checkLoi25();
 
         // ==========================================
         // Chat Nova (Intact)

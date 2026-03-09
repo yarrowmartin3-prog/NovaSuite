@@ -25,6 +25,224 @@
         .neon-glow { box-shadow: 0 0 20px rgba(0, 255, 65, 0.15); }
         .gold-glow { box-shadow: 0 0 20px rgba(255, 215, 0, 0.15); }
         body { background-color: #050505; color: #e2e8f0; font-family: 'Inter', system-ui, sans-serif; }
+
+        /* ── BANNIÈRE ─────────────────────────────────────────
+           La bannière est déclarée en CSS pur via .banner-bg.
+           background-color sert de fallback silencieux si
+           l'image assets/banner-novasuite.webp n'est pas
+           disponible dans l'environnement de prévisualisation.
+           Sur novasuite.ca le fichier existe → image normale.
+        ──────────────────────────────────────────────────────*/
+        .banner-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            background-color: #0d1424;
+            background-image: url('assets/banner-novasuite.webp');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            filter: brightness(0.4);
+        }
+
+        /* =============================================
+           CTA — HERO PRINCIPAL
+           Blanc → noir + border neon + sweep scan-line
+        ============================================= */
+        .cta-audit {
+            position: relative;
+            overflow: hidden;
+            padding: 1rem 2rem;
+            background: #ffffff;
+            color: #000000;
+            font-weight: 900;
+            font-size: 1.125rem;
+            border-radius: 0.5rem;
+            border: 1px solid transparent;
+            text-align: center;
+            letter-spacing: 0.01em;
+            transition: color 0.35s ease, background 0.35s ease,
+                        border-color 0.35s ease, box-shadow 0.35s ease,
+                        transform 0.2s ease;
+        }
+        .cta-audit::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(110deg, transparent 25%, rgba(0,255,65,0.18) 50%, transparent 75%);
+            transform: translateX(-100%);
+            transition: transform 0.55s ease;
+        }
+        @keyframes neon-border-pulse {
+            0%, 100% { box-shadow: 0 0 12px rgba(0,255,65,0.45), 0 0 28px rgba(0,255,65,0.2); }
+            50%       { box-shadow: 0 0 22px rgba(0,255,65,0.7),  0 0 48px rgba(0,255,65,0.3); }
+        }
+        .cta-audit:hover {
+            background: #000000;
+            color: #00ff41;
+            border-color: #00ff41;
+            transform: translateY(-2px) scale(1.015);
+            animation: neon-border-pulse 1.8s ease-in-out infinite;
+        }
+        .cta-audit:hover::before { transform: translateX(100%); }
+        .cta-audit:active { transform: translateY(0) scale(0.99); }
+
+        /* =============================================
+           CTA — PARTENAIRES MSP
+           Gold border → fill gold + shimmer sweep
+        ============================================= */
+        .cta-msp {
+            position: relative;
+            overflow: hidden;
+            padding: 1rem 2rem;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(8px);
+            color: #ffd700;
+            font-weight: 700;
+            border-radius: 0.5rem;
+            border: 1px solid #ffd700;
+            text-align: center;
+            transition: color 0.3s ease, background 0.3s ease,
+                        box-shadow 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 0 20px rgba(255,215,0,0.15);
+        }
+        .cta-msp::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(110deg, transparent 20%, rgba(255,215,0,0.22) 50%, transparent 80%);
+            transform: translateX(-110%);
+            transition: transform 0.5s ease;
+        }
+        @keyframes gold-border-pulse {
+            0%, 100% { box-shadow: 0 0 14px rgba(255,215,0,0.5), 0 0 30px rgba(255,215,0,0.2);  }
+            50%       { box-shadow: 0 0 26px rgba(255,215,0,0.8), 0 0 55px rgba(255,215,0,0.35); }
+        }
+        .cta-msp:hover {
+            background: #ffd700;
+            color: #000000;
+            transform: translateY(-2px) scale(1.015);
+            animation: gold-border-pulse 1.8s ease-in-out infinite;
+        }
+        .cta-msp:hover::before { transform: translateX(110%); }
+        .cta-msp:active { transform: translateY(0) scale(0.99); }
+
+        /* =============================================
+           CTA — COMMANDER (card Audit Express)
+           Outline neon → wipe vertical bas→haut
+        ============================================= */
+        .cta-commander {
+            position: relative;
+            display: block;
+            width: 100%;
+            overflow: hidden;
+            padding: 0.75rem 1.5rem;
+            background: #0f172a;
+            color: #00ff41;
+            font-weight: 700;
+            border-radius: 0.5rem;
+            border: 1px solid #00ff41;
+            text-align: center;
+            transition: color 0.28s ease, box-shadow 0.28s ease, transform 0.18s ease;
+        }
+        .cta-commander::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: #00ff41;
+            transform: scaleY(0);
+            transform-origin: bottom;
+            transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
+            z-index: 0;
+        }
+        .cta-commander span { position: relative; z-index: 1; transition: color 0.28s ease; }
+        .cta-commander:hover {
+            color: #000000;
+            box-shadow: 0 0 18px rgba(0,255,65,0.4), 0 0 40px rgba(0,255,65,0.15);
+            transform: translateY(-1px);
+        }
+        .cta-commander:hover::after { transform: scaleY(1); }
+        .cta-commander:active { transform: translateY(0); }
+
+        /* =============================================
+           CTA — TERM SHEET (card MSP)
+           Gold fill → glow multicouche + reflet
+        ============================================= */
+        .cta-termsheet {
+            position: relative;
+            display: block;
+            width: 100%;
+            overflow: hidden;
+            padding: 0.75rem 1.5rem;
+            background: #ffd700;
+            color: #000000;
+            font-weight: 700;
+            border-radius: 0.5rem;
+            border: 1px solid transparent;
+            text-align: center;
+            transition: background 0.25s ease, box-shadow 0.3s ease, transform 0.18s ease;
+            box-shadow: 0 4px 24px rgba(255,215,0,0.2);
+        }
+        .cta-termsheet::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.25) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .cta-termsheet:hover {
+            background: #ffe033;
+            box-shadow: 0 0 20px rgba(255,215,0,0.6), 0 0 50px rgba(255,215,0,0.25), 0 4px 30px rgba(255,215,0,0.3);
+            transform: translateY(-1px);
+        }
+        .cta-termsheet:hover::before { opacity: 1; }
+        .cta-termsheet:active { transform: translateY(0); }
+
+        /* =============================================
+           CTA — SECTION FINALE
+           Neon fill → inversion dark + ripple + pulse
+        ============================================= */
+        .cta-final {
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+            padding: 1.25rem 2.5rem;
+            background: #00ff41;
+            color: #000000;
+            font-weight: 900;
+            font-size: 0.95rem;
+            letter-spacing: 0.08em;
+            border-radius: 0.5rem;
+            border: 1px solid #00ff41;
+            text-align: center;
+            transition: color 0.32s ease, background 0.32s ease,
+                        box-shadow 0.32s ease, transform 0.2s ease;
+            box-shadow: 0 0 20px rgba(0,255,65,0.4);
+        }
+        .cta-final::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 0; height: 0;
+            background: rgba(0,255,65,0.15);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.5s ease, height 0.5s ease, opacity 0.5s ease;
+            opacity: 0;
+        }
+        @keyframes final-pulse {
+            0%, 100% { box-shadow: 0 0 24px rgba(0,255,65,0.5), 0 0 60px rgba(0,255,65,0.2);  }
+            50%       { box-shadow: 0 0 42px rgba(0,255,65,0.8), 0 0 90px rgba(0,255,65,0.35); }
+        }
+        .cta-final:hover {
+            background: #000000;
+            color: #00ff41;
+            transform: scale(1.04) translateY(-2px);
+            animation: final-pulse 2s ease-in-out infinite;
+        }
+        .cta-final:hover::before { width: 300px; height: 300px; opacity: 1; }
+        .cta-final:active { transform: scale(1.01) translateY(0); }
     </style>
 </head>
 <body class="antialiased min-h-screen flex flex-col relative overflow-x-hidden">
@@ -42,8 +260,8 @@
 
     <main class="w-full max-w-6xl mx-auto px-4 md:px-6 mb-24 mt-4">
         <div class="relative w-full rounded-3xl overflow-hidden border border-gray-800 shadow-[0_0_40px_rgba(0,255,65,0.05)]">
-            
-            <div class="absolute inset-0 z-0" style="background-image: url('assets/banner-novasuite.webp'); background-size: cover; background-position: center; filter: brightness(0.4);"></div>
+
+            <div class="banner-bg"></div>
             
             <div class="relative z-10 flex flex-col items-center justify-center text-center px-6 py-24 md:py-32">
                 <div class="inline-block mb-6 px-4 py-1.5 rounded-full border border-neon/50 bg-black/60 backdrop-blur-sm text-neon text-xs font-bold uppercase tracking-wider">
@@ -56,11 +274,11 @@
                 <p class="text-lg md:text-xl text-gray-200 max-w-2xl mb-10 leading-relaxed drop-shadow-lg">
                     Audits de cybersécurité express et déploiement d'Intelligence Artificielle 100% isolée du cloud pour les entreprises du Québec.
                 </p>
-                <div class="flex flex-col sm:flex-row gap-4 w-full justify-center">
-                    <a href="#offres" class="px-8 py-4 bg-white text-black font-bold rounded-lg hover:bg-gray-200 transition shadow-[0_0_20px_rgba(255,255,255,0.3)]">
-                        Lancer un Audit
+                <div class="flex flex-col sm:flex-row gap-4 w-full justify-center items-center">
+                    <a href="defi-audit.php" class="cta-audit text-lg md:text-xl">
+                        Défi d'Audit de Conformité de 60 Secondes : Lancez votre POC Gratuit
                     </a>
-                    <a href="./partenaires-msp.html" class="px-8 py-4 bg-black/60 backdrop-blur-md border border-gold text-gold font-bold rounded-lg hover:bg-gold hover:text-black transition gold-glow">
+                    <a href="./partenaires-msp.html" class="cta-msp">
                         Accès Partenaires MSP
                     </a>
                 </div>
@@ -80,7 +298,7 @@
                     <li class="flex items-center gap-2">✓ <span class="text-gray-400">Détection des transferts hors-Québec</span></li>
                     <li class="flex items-center gap-2">✓ <span class="text-gray-400">Rapport technique automatisé</span></li>
                 </ul>
-                <a href="mailto:contact@novasuite.ca" class="block w-full text-center py-3 bg-panel border border-neon text-neon font-bold rounded-lg hover:bg-neon hover:text-black transition">Commander</a>
+                <a href="defi-audit.php" class="cta-commander"><span>Commander</span></a>
             </div>
 
             <div class="glass rounded-2xl p-8 border-t-4 border-t-gold gold-glow relative hover:-translate-y-1 transition duration-300">
@@ -93,9 +311,19 @@
                     <li class="flex items-center gap-2"><span class="text-gold">★</span> <span class="text-gray-400">Accès au protocole Aegis Monitoring</span></li>
                     <li class="flex items-center gap-2"><span class="text-gold">★</span> <span class="text-gray-400">Protection territoriale stricte</span></li>
                 </ul>
-                <a href="./partenaires-msp.html" class="block w-full text-center py-3 bg-gold text-black font-bold rounded-lg hover:bg-yellow-400 transition shadow-lg shadow-gold/20">Accéder à la Term Sheet</a>
+                <a href="./partenaires-msp.html" class="cta-termsheet">Accéder à la Term Sheet</a>
             </div>
 
+        </div>
+    </section>
+
+    <section class="w-full max-w-4xl mx-auto px-6 mb-24 z-10 text-center">
+        <div class="glass p-12 rounded-3xl border border-neon/30">
+            <h3 class="text-3xl font-bold text-white mb-4">Prêt pour votre diagnostic gratuit ?</h3>
+            <p class="text-gray-400 mb-8 max-w-2xl mx-auto">Lancez le POC gratuit maintenant. Obtenez une citation de règle et une commande d'exécution en moins de 60 secondes.</p>
+            <a href="defi-audit.php" class="cta-final">
+                DÉFI D'AUDIT DE 60 SECONDES
+            </a>
         </div>
     </section>
 

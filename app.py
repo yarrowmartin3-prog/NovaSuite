@@ -30,7 +30,7 @@ SMTP_PASSWORD = os.getenv("SMTP_PASSWORD", "")
 SENDER_EMAIL = os.getenv("SENDER_EMAIL", "yarrowmartin3@gmail.com")
 
 # L'adresse où VOUS recevez les messages
-DESTINATION_EMAIL = "martin.yarrow@gmail.com" 
+DESTINATION_EMAIL = "yarrowmartin3@gmail.com" 
 
 class AuditRequest(BaseModel):
     url: str

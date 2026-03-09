@@ -10,16 +10,19 @@ from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
 from fpdf import FPDF
 
-# --- CONFIGURATION NOVA NUCLEUS ---
+# --- CONFIGURATION NOVA ---
 NOVA_API_URL = os.getenv("NOVA_API_URL", "https://api.groq.com/openai/v1/chat/completions")
 NOVA_MODEL_NAME = os.getenv("NOVA_MODEL_NAME", "llama-3.1-8b-instant")
 NOVA_API_KEY = os.getenv("NOVA_API_KEY", "")
 
-# --- CONFIGURATION PROTONMAIL (Port 465 pour SSL Direct) ---
-SMTP_EMAIL = os.getenv("SMTP_EMAIL", "")
+# --- CONFIGURATION BREVO (Port 587 avec STARTTLS) ---
+SMTP_EMAIL = os.getenv("SMTP_EMAIL", "yarrowmartin3@gmail.com")
 SMTP_PASSWORD = os.getenv("SMTP_PASSWORD", "")
-SMTP_SERVER = os.getenv("SMTP_SERVER", "smtp.protonmail.ch")
-SMTP_PORT = int(os.getenv("SMTP_PORT", 465))
+SMTP_SERVER = os.getenv("SMTP_SERVER", "smtp-relay.brevo.com")
+SMTP_PORT = int(os.getenv("SMTP_PORT", 587))
+
+# L'adresse où vous recevrez les messages du formulaire de contact
+DESTINATION_EMAIL = "contact@novasuite.ca"
 
 app = FastAPI()
 
@@ -38,18 +41,22 @@ class AuditRequest(BaseModel):
     url: str
     email: str
 
+class ContactRequest(BaseModel):
+    nom: str
+    email: str
+    message: str
+
+# --- FIX UPTIMEROBOT (Route HEAD) ---
+@app.head("/")
 @app.get("/")
 async def root():
-    return {"status": "online", "agent": "Nova Nucleus V3", "security": "Proton-Shielded"}
+    return {"status": "online", "agent": "Nova Nucleus V3"}
 
-# --- 1. AGENT DE CONVERSATION NOVA ---
+# --- 1. CHATBOT NOVA ---
 @app.post("/api/chat/nova")
 async def chat_with_nova(request: ChatRequest):
     try:
-        headers = {
-            "Content-Type": "application/json",
-            "Authorization": f"Bearer {NOVA_API_KEY}"
-        }
+        headers = {"Content-Type": "application/json", "Authorization": f"Bearer {NOVA_API_KEY}"}
         payload = {
             "model": NOVA_MODEL_NAME,
             "messages": [
@@ -63,11 +70,32 @@ async def chat_with_nova(request: ChatRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-# --- 2. DÉFI D'AUDIT : SCAN + GÉNÉRATION PDF + ENVOI PROTON ---
+# --- 2. FORMULAIRE DE CONTACT ---
+@app.post("/api/contact")
+async def send_contact(req: ContactRequest):
+    try:
+        msg = MIMEMultipart()
+        msg['From'] = f"NovaSuite Site Web <{SMTP_EMAIL}>"
+        msg['To'] = DESTINATION_EMAIL
+        msg['Subject'] = f"Nouveau Message de {req.nom} via le site web"
+        
+        body = f"Nom: {req.nom}\nEmail: {req.email}\n\nMessage:\n{req.message}"
+        msg.attach(MIMEText(body, 'plain', 'utf-8'))
+        
+        server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT, timeout=20)
+        server.starttls()
+        server.login(SMTP_EMAIL, SMTP_PASSWORD)
+        server.send_message(msg)
+        server.quit()
+        return {"status": "success", "message": "Message envoyé avec succès."}
+    except Exception as e:
+        print(f"Erreur Contact: {e}")
+        return {"status": "error", "message": "Erreur lors de l'envoi."}
+
+# --- 3. AUDIT 60S & ENVOI PDF BREVO ---
 @app.post("/api/audit")
 async def run_audit(req: AuditRequest):
     try:
-        # Exécution du script de diagnostic local
         result = subprocess.check_output(
             ['python3', 'nova_audit_system.py', '--url', req.url],
             text=True, stderr=subprocess.STDOUT
@@ -75,16 +103,11 @@ async def run_audit(req: AuditRequest):
 
         if SMTP_EMAIL and SMTP_PASSWORD:
             try:
-                # Création du PDF Professionnel
                 pdf = FPDF()
                 pdf.add_page()
-                
-                # Gestion sécurisée du Logo
                 logo_path = "assets/logo-novasuite.png"
                 if os.path.exists(logo_path):
                     pdf.image(logo_path, x=10, y=8, w=33)
-                else:
-                    print(f"⚠️ LOGO MANQUANT: {logo_path}")
 
                 pdf.set_font("Arial", 'B', 16)
                 pdf.ln(20)
@@ -93,21 +116,18 @@ async def run_audit(req: AuditRequest):
                 pdf.cell(0, 10, f"Cible : {req.url} | Inspecté par Nova Nucleus", ln=True, align='C')
                 pdf.ln(10)
 
-                # Nettoyage du texte pour compatibilité PDF (latin-1)
                 clean_text = result.replace('🔒', '[SECURE]').replace('❌', '[FAIL]').replace('🚀', '[!]').replace('✅', '[OK]')
                 clean_text = clean_text.encode('latin-1', 'replace').decode('latin-1')
 
                 pdf.set_font("Courier", size=9)
                 pdf.multi_cell(0, 5, clean_text)
-                
                 pdf_filename = "Rapport_NovaSuite_Audit.pdf"
                 pdf.output(pdf_filename)
 
-                # Construction du Courriel
                 msg = MIMEMultipart()
                 msg['From'] = f"NovaSuite Technologies <{SMTP_EMAIL}>"
                 msg['To'] = req.email
-                msg['Subject'] = f"🔒 Action Requise : Votre Rapport d'Audit NovaSuite ({req.url})"
+                msg['Subject'] = f"Action Requise : Votre Rapport d'Audit NovaSuite ({req.url})"
 
                 body = f"""Bonjour,
 
@@ -121,25 +141,23 @@ https://buy.stripe.com/9B69AT2jg84O8d19GS2VG08
 Cordialement,
 Monseigneur Yarrow | NovaSuite Technologies
 """
-                msg.attach(MIMEText(body, 'plain'))
+                msg.attach(MIMEText(body, 'plain', 'utf-8'))
 
                 with open(pdf_filename, "rb") as f:
                     attach = MIMEApplication(f.read(), _subtype="pdf")
                     attach.add_header('Content-Disposition', 'attachment', filename=pdf_filename)
                     msg.attach(attach)
 
-                # Connexion SSL Directe (Port 465) pour éviter les Timeouts
-                print(f"Connexion à {SMTP_SERVER}:{SMTP_PORT}...")
-                server = smtplib.SMTP_SSL(SMTP_SERVER, SMTP_PORT, timeout=30)
+                server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT, timeout=20)
+                server.starttls()
                 server.login(SMTP_EMAIL, SMTP_PASSWORD)
                 server.send_message(msg)
                 server.quit()
-                print("✅ Rapport envoyé avec succès via Proton.")
+                print("✅ PDF envoyé via Brevo.")
 
             except Exception as mail_err:
-                print(f"🚨 ERREUR CRITIQUE ENVOI : {mail_err}")
+                print(f"🚨 ERREUR ENVOI BREVO : {mail_err}")
 
         return {"status": "success", "report": result}
-
     except Exception as e:
         return {"status": "error", "message": str(e)}

@@ -10,14 +10,16 @@ from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
 from fpdf import FPDF
 
-# --- CONFIGURATION HYBRIDE ---
+# --- CONFIGURATION HYBRIDE NOVA ---
 NOVA_API_URL = os.getenv("NOVA_API_URL", "http://localhost:1234/v1/chat/completions")
 NOVA_MODEL_NAME = os.getenv("NOVA_MODEL_NAME", "llama-3.1-8b-instant")
 NOVA_API_KEY = os.getenv("NOVA_API_KEY", "lm-studio")
 
-# --- CONFIGURATION COURRIEL (Variables Render) ---
+# --- CONFIGURATION PROTONMAIL (Variables Render) ---
 SMTP_EMAIL = os.getenv("SMTP_EMAIL", "")
 SMTP_PASSWORD = os.getenv("SMTP_PASSWORD", "")
+SMTP_SERVER = os.getenv("SMTP_SERVER", "smtp.protonmail.ch")
+SMTP_PORT = int(os.getenv("SMTP_PORT", 587))
 
 app = FastAPI()
 
@@ -70,7 +72,7 @@ async def chat_with_nova(request: ChatRequest):
         print(f"DEBUG CRITIQUE : {str(e)}")
         raise HTTPException(status_code=503, detail="Le cerveau de Nova est en maintenance.")
 
-# --- 2. AUDIT 60 SECONDES ET ENVOI PDF ---
+# --- 2. AUDIT 60 SECONDES ET ENVOI PDF VIA PROTON ---
 @app.post("/api/audit")
 async def run_audit(req: AuditRequest):
     try:
@@ -81,14 +83,14 @@ async def run_audit(req: AuditRequest):
             stderr=subprocess.STDOUT
         )
 
-        # 2. Générer le PDF et envoyer le courriel (si configuré)
+        # 2. Générer le PDF et envoyer le courriel via ProtonMail
         if SMTP_EMAIL and SMTP_PASSWORD:
             try:
                 # Création du PDF
                 pdf = FPDF()
                 pdf.add_page()
                 
-                # Tentative d'ajout du logo (Vérifiez que logo-novasuite.png est bien dans /assets)
+                # Tentative d'ajout du logo NovaSuite
                 try:
                     pdf.image("assets/logo-novasuite.png", x=10, y=8, w=30)
                 except Exception as img_err:
@@ -98,22 +100,22 @@ async def run_audit(req: AuditRequest):
                 pdf.set_font("Arial", 'B', 16)
                 pdf.cell(0, 30, "RAPPORT D'AUDIT CYBERSÉCURITÉ - NOVA NUCLEUS", ln=True, align='C')
                 
-                # Nettoyage des emojis pour éviter que le PDF ne plante
-                clean_text = result.replace('🔒', '[SECURE]').replace('❌', '[ECHEC]').replace('🚀', '[!]').replace('🛡️', '[BOUCLIER]')
+                # Nettoyage des caractères spéciaux pour le PDF
+                clean_text = result.replace('🔒', '[SECURE]').replace('❌', '[ECHEC]').replace('🚀', '[!]').replace('🛡️', '[BOUCLIER]').replace('✅', '[OK]')
                 clean_text = clean_text.encode('latin-1', 'replace').decode('latin-1')
                 
                 pdf.set_font("Courier", size=10)
                 pdf.multi_cell(0, 6, clean_text)
                 
-                # Sauvegarde temporaire du PDF
-                pdf_path = f"audit_novasuite.pdf"
+                # Sauvegarde temporaire du PDF sur Render
+                pdf_path = "audit_novasuite.pdf"
                 pdf.output(pdf_path)
 
                 # Création du courriel
                 msg = MIMEMultipart()
                 msg['From'] = f"NovaSuite Technologies <{SMTP_EMAIL}>"
                 msg['To'] = req.email
-                msg['Subject'] = f"🔒 Action Requise : Votre Rapport d'Audit NovaSuite ({req.url})"
+                msg['Subject'] = f"Action Requise : Votre Rapport d'Audit NovaSuite ({req.url})"
                 
                 body = f"""Bonjour,
 
@@ -137,17 +139,17 @@ La Direction Technique | NovaSuite
                     attach.add_header('Content-Disposition', 'attachment', filename="Rapport_Audit_NovaSuite.pdf")
                     msg.attach(attach)
                 
-                # Envoi via Gmail
-                server = smtplib.SMTP('smtp.gmail.com', 587)
+                # Envoi via l'infrastructure ProtonMail
+                server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
                 server.starttls()
                 server.login(SMTP_EMAIL, SMTP_PASSWORD)
                 server.send_message(msg)
                 server.quit()
                 
             except Exception as mail_err:
-                print(f"🚨 ERREUR D'ENVOI COURRIEL/PDF : {mail_err}")
+                print(f"🚨 ERREUR D'ENVOI COURRIEL PROTON : {mail_err}")
 
-        # 3. Retourner le résultat à l'écran
+        # 3. Retourner le résultat à l'écran du site
         return {"status": "success", "report": result}
         
     except subprocess.CalledProcessError as e:

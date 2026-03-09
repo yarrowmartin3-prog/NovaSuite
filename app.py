@@ -1,41 +1,24 @@
+import os
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-import requests
-import subprocess
-import os
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from email.mime.application import MIMEApplication
-from fpdf import FPDF
-
-# --- CONFIGURATION NOVA ---
-NOVA_API_URL = os.getenv("NOVA_API_URL", "https://api.groq.com/openai/v1/chat/completions")
-NOVA_MODEL_NAME = os.getenv("NOVA_MODEL_NAME", "llama-3.1-8b-instant")
-NOVA_API_KEY = os.getenv("NOVA_API_KEY", "")
-
-# --- CONFIGURATION BREVO (Port 587 avec STARTTLS) ---
-SMTP_EMAIL = os.getenv("SMTP_EMAIL", "yarrowmartin3@gmail.com")
-SMTP_PASSWORD = os.getenv("SMTP_PASSWORD", "")
-SMTP_SERVER = os.getenv("SMTP_SERVER", "smtp-relay.brevo.com")
-SMTP_PORT = int(os.getenv("SMTP_PORT", 587))
-
-# L'adresse où vous recevrez les messages du formulaire de contact
-DESTINATION_EMAIL = "contact@novasuite.ca"
+import sib_api_v3_sdk
+from sib_api_v3_sdk.rest import ApiException
 
 app = FastAPI()
 
+# Configuration CORS pour permettre à votre site de parler à l'API
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-class ChatRequest(BaseModel):
-    message: str
+# Configuration Brevo (Assurez-vous que la clé est dans les variables d'environnement de Render)
+configuration = sib_api_v3_sdk.Configuration()
+configuration.api_key['api-key'] = os.getenv('BREVO_API_KEY')
+api_instance = sib_api_v3_sdk.TransactionalEmailsApi(sib_api_v3_sdk.ApiClient(configuration))
 
 class AuditRequest(BaseModel):
     url: str
@@ -46,118 +29,52 @@ class ContactRequest(BaseModel):
     email: str
     message: str
 
-# --- FIX UPTIMEROBOT (Route HEAD) ---
-@app.head("/")
+@app.post("/api/audit")
+async def run_audit(request: AuditRequest):
+    # Logique simplifiée pour le POC (Simulation de résultat)
+    result_rule = "Loi 25 - Section 3.2 : Consentement explicite non détecté sur " + request.url
+    command = "Vérifiez l'en-tête X-Privacy-Consent dans vos requêtes HTTP."
+    
+    # Envoi du courriel via Brevo
+    subject = "⚠️ Résultat Partiel de votre Audit - NovaSuite"
+    html_content = f"""
+    <html><body>
+    <h1>NovaSuite - Rapport d'Audit 60s</h1>
+    <p>Bonjour,</p>
+    <p>Voici les résultats préliminaires pour le site : <strong>{request.url}</strong></p>
+    <p style='color:red;'><strong>Règle citée :</strong> {result_rule}</p>
+    <p><strong>Action recommandée :</strong> <code>{command}</code></p>
+    <hr>
+    <p>Pour obtenir le rapport complet de remédiation et corriger ces failles, procédez au paiement ici : <a href='https://buy.stripe.com/5kA9AT6zwa8W50PeUV'>Finaliser l'Audit Complet</a></p>
+    </body></html>
+    """
+    
+    sender = {"name": "NovaSuite Technologies", "email": "info@novasuite.ca"}
+    to = [{"email": request.email}]
+    send_smtp_email = sib_api_v3_sdk.SendSmtpEmail(to=to, html_content=html_content, sender=sender, subject=subject)
+
+    try:
+        api_instance.send_transac_email(send_smtp_email)
+        return {"rule": result_rule, "command": command}
+    except ApiException as e:
+        raise HTTPException(status_code=500, detail="Erreur Brevo: " + str(e))
+
+@app.post("/api/contact")
+async def contact_form(request: ContactRequest):
+    subject = f"Nouveau Contact : {request.nom}"
+    html_content = f"<html><body><h2>Message de {request.nom}</h2><p>Email: {request.email}</p><p>Message: {request.message}</p></body></html>"
+    
+    # On s'envoie le message à soi-même (Yarrow)
+    sender = {"name": "NovaSuite System", "email": "info@novasuite.ca"}
+    to = [{"email": "martin.yarrow@gmail.com"}] # Remplacez par votre email de réception
+    send_smtp_email = sib_api_v3_sdk.SendSmtpEmail(to=to, html_content=html_content, sender=sender, subject=subject)
+
+    try:
+        api_instance.send_transac_email(send_smtp_email)
+        return {"status": "success"}
+    except ApiException as e:
+        raise HTTPException(status_code=500, detail="Erreur d'envoi")
+
 @app.get("/")
 async def root():
-    return {"status": "online", "agent": "Nova Nucleus V3"}
-
-# --- 1. CHATBOT NOVA ---
-@app.post("/api/chat/nova")
-async def chat_with_nova(request: ChatRequest):
-    try:
-        headers = {"Content-Type": "application/json", "Authorization": f"Bearer {NOVA_API_KEY}"}
-        payload = {
-            "model": NOVA_MODEL_NAME,
-            "messages": [
-                {"role": "system", "content": "Vous êtes Nova, l'IA de NovaSuite. Soyez bref, expert et rassurant sur la Loi 25."},
-                {"role": "user", "content": request.message}
-            ]
-        }
-        response = requests.post(NOVA_API_URL, json=payload, headers=headers, timeout=20)
-        response.raise_for_status()
-        return {"response": response.json()['choices'][0]['message']['content']}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-# --- 2. FORMULAIRE DE CONTACT ---
-@app.post("/api/contact")
-async def send_contact(req: ContactRequest):
-    try:
-        msg = MIMEMultipart()
-        msg['From'] = f"NovaSuite Site Web <{SMTP_EMAIL}>"
-        msg['To'] = DESTINATION_EMAIL
-        msg['Subject'] = f"Nouveau Message de {req.nom} via le site web"
-        
-        body = f"Nom: {req.nom}\nEmail: {req.email}\n\nMessage:\n{req.message}"
-        msg.attach(MIMEText(body, 'plain', 'utf-8'))
-        
-        server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT, timeout=20)
-        server.starttls()
-        server.login(SMTP_EMAIL, SMTP_PASSWORD)
-        server.send_message(msg)
-        server.quit()
-        return {"status": "success", "message": "Message envoyé avec succès."}
-    except Exception as e:
-        print(f"Erreur Contact: {e}")
-        return {"status": "error", "message": "Erreur lors de l'envoi."}
-
-# --- 3. AUDIT 60S & ENVOI PDF BREVO ---
-@app.post("/api/audit")
-async def run_audit(req: AuditRequest):
-    try:
-        result = subprocess.check_output(
-            ['python3', 'nova_audit_system.py', '--url', req.url],
-            text=True, stderr=subprocess.STDOUT
-        )
-
-        if SMTP_EMAIL and SMTP_PASSWORD:
-            try:
-                pdf = FPDF()
-                pdf.add_page()
-                logo_path = "assets/logo-novasuite.png"
-                if os.path.exists(logo_path):
-                    pdf.image(logo_path, x=10, y=8, w=33)
-
-                pdf.set_font("Arial", 'B', 16)
-                pdf.ln(20)
-                pdf.cell(0, 10, "RAPPORT D'AUDIT DE CONFORMITÉ - NOVASUITE", ln=True, align='C')
-                pdf.set_font("Arial", 'I', 10)
-                pdf.cell(0, 10, f"Cible : {req.url} | Inspecté par Nova Nucleus", ln=True, align='C')
-                pdf.ln(10)
-
-                clean_text = result.replace('🔒', '[SECURE]').replace('❌', '[FAIL]').replace('🚀', '[!]').replace('✅', '[OK]')
-                clean_text = clean_text.encode('latin-1', 'replace').decode('latin-1')
-
-                pdf.set_font("Courier", size=9)
-                pdf.multi_cell(0, 5, clean_text)
-                pdf_filename = "Rapport_NovaSuite_Audit.pdf"
-                pdf.output(pdf_filename)
-
-                msg = MIMEMultipart()
-                msg['From'] = f"NovaSuite Technologies <{SMTP_EMAIL}>"
-                msg['To'] = req.email
-                msg['Subject'] = f"Action Requise : Votre Rapport d'Audit NovaSuite ({req.url})"
-
-                body = f"""Bonjour,
-
-L'Agent Nova a terminé l'audit de surface pour l'infrastructure {req.url}.
-
-Vous trouverez ci-joint votre rapport technique détaillé (PDF). Ce document identifie les failles potentielles et votre statut de conformité préliminaire à la Loi 25.
-
-Pour corriger ces vulnérabilités et déployer notre architecture de protection :
-https://buy.stripe.com/9B69AT2jg84O8d19GS2VG08
-
-Cordialement,
-Monseigneur Yarrow | NovaSuite Technologies
-"""
-                msg.attach(MIMEText(body, 'plain', 'utf-8'))
-
-                with open(pdf_filename, "rb") as f:
-                    attach = MIMEApplication(f.read(), _subtype="pdf")
-                    attach.add_header('Content-Disposition', 'attachment', filename=pdf_filename)
-                    msg.attach(attach)
-
-                server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT, timeout=20)
-                server.starttls()
-                server.login(SMTP_EMAIL, SMTP_PASSWORD)
-                server.send_message(msg)
-                server.quit()
-                print("✅ PDF envoyé via Brevo.")
-
-            except Exception as mail_err:
-                print(f"🚨 ERREUR ENVOI BREVO : {mail_err}")
-
-        return {"status": "success", "report": result}
-    except Exception as e:
-        return {"status": "error", "message": str(e)}
+    return {"status": "NovaSuite API Online"}

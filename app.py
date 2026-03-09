@@ -6,11 +6,9 @@ import subprocess
 import os
 
 # --- CONFIGURATION HYBRIDE ---
-# Sur Render, vous allez configurer ces variables. 
-# En local, il prendra les valeurs par défaut (localhost).
 NOVA_API_URL = os.getenv("NOVA_API_URL", "http://localhost:1234/v1/chat/completions")
-NOVA_MODEL_NAME = os.getenv("NOVA_MODEL_NAME", "your-local-model")
-NOVA_API_KEY = os.getenv("NOVA_API_KEY", "lm-studio") # Clé pour Groq ou OpenAI
+NOVA_MODEL_NAME = os.getenv("NOVA_MODEL_NAME", "llama3-8b-8192")
+NOVA_API_KEY = os.getenv("NOVA_API_KEY", "lm-studio")
 
 app = FastAPI()
 
@@ -34,7 +32,7 @@ class AuditRequest(BaseModel):
 async def root():
     return {"status": "online", "agent": "Nova Nucleus V3"}
 
-# --- 1. CHATBOT NOVA ---
+# --- 1. CHATBOT NOVA (Diagnostic Intégré) ---
 @app.post("/api/chat/nova")
 async def chat_with_nova(request: ChatRequest):
     try:
@@ -51,23 +49,28 @@ async def chat_with_nova(request: ChatRequest):
             "temperature": 0.7
         }
         
-        # On envoie la requête au cerveau (Local ou Cloud)
+        # Envoi de la requête
         response = requests.post(NOVA_API_URL, json=payload, headers=headers, timeout=30)
+        
+        # --- BLOC DE DIAGNOSTIC RENDER ---
+        if response.status_code != 200:
+            print(f"🚨 ERREUR GROQ DÉTECTÉE (Code {response.status_code})")
+            print(f"💬 RÉPONSE BRUTE DU SERVEUR : {response.text}")
+        # ----------------------------------
+
         response.raise_for_status()
         
         data = response.json()
         return {"response": data['choices'][0]['message']['content']}
     
     except Exception as e:
-        print(f"DEBUG: {str(e)}")
+        print(f"DEBUG CRITIQUE : {str(e)}")
         raise HTTPException(status_code=503, detail="Le cerveau de Nova est en maintenance. Réessayez dans 30 secondes.")
 
 # --- 2. AUDIT 60 SECONDES ---
 @app.post("/api/audit")
 async def run_audit(req: AuditRequest):
     try:
-        # Exécute Nucleus V3 (votre script OSINT)
-        # Note: Assurez-vous que nova_audit_system.py est bien à la racine sur GitHub
         result = subprocess.check_output(
             ['python3', 'nova_audit_system.py', '--url', req.url, '--email', req.email],
             text=True,

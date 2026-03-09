@@ -4,9 +4,6 @@ from pydantic import BaseModel
 import requests
 import subprocess
 import os
-from dotenv import load_dotenv
-
-load_dotenv()
 
 # --- Configuration ---
 NOVA_API_URL = os.getenv("NOVA_API_URL", "http://localhost:1234/v1/chat/completions")

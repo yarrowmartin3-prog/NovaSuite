@@ -5,23 +5,24 @@ import requests
 import subprocess
 import os
 
-# --- Configuration ---
+# --- CONFIGURATION HYBRIDE ---
+# Sur Render, vous allez configurer ces variables. 
+# En local, il prendra les valeurs par défaut (localhost).
 NOVA_API_URL = os.getenv("NOVA_API_URL", "http://localhost:1234/v1/chat/completions")
 NOVA_MODEL_NAME = os.getenv("NOVA_MODEL_NAME", "your-local-model")
+NOVA_API_KEY = os.getenv("NOVA_API_KEY", "lm-studio") # Clé pour Groq ou OpenAI
 
 app = FastAPI()
 
-# --- Configuration de Sécurité (CORS) ---
-# On autorise tout pour l'instant pour s'assurer que ça marche du premier coup
+# --- SÉCURITÉ (CORS) ---
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], 
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# --- Schémas de données ---
 class ChatRequest(BaseModel):
     message: str
 
@@ -29,39 +30,51 @@ class AuditRequest(BaseModel):
     url: str
     email: str = "client@novasuite.ca"
 
-# --- 1. Route de Chat (Nova) ---
+@app.get("/")
+async def root():
+    return {"status": "online", "agent": "Nova Nucleus V3"}
+
+# --- 1. CHATBOT NOVA ---
 @app.post("/api/chat/nova")
 async def chat_with_nova(request: ChatRequest):
     try:
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {NOVA_API_KEY}"
+        }
         payload = {
             "model": NOVA_MODEL_NAME,
             "messages": [
-                {"role": "system", "content": "Vous êtes Nova, un assistant de cybersécurité pour NovaSuite. Vous fournissez des conseils techniques concis et professionnels."},
+                {"role": "system", "content": "Vous êtes Nova, l'IA de cybersécurité de NovaSuite. Soyez bref, pro et expert en Loi 25."},
                 {"role": "user", "content": request.message}
             ],
-            "temperature": 0.7 
+            "temperature": 0.7
         }
-        response = requests.post(NOVA_API_URL, json=payload, timeout=60)
-        response.raise_for_status() 
-        response_data = response.json()
-        nova_response = response_data['choices'][0]['message']['content']
-        return {"response": nova_response}
+        
+        # On envoie la requête au cerveau (Local ou Cloud)
+        response = requests.post(NOVA_API_URL, json=payload, headers=headers, timeout=30)
+        response.raise_for_status()
+        
+        data = response.json()
+        return {"response": data['choices'][0]['message']['content']}
+    
     except Exception as e:
-        print(f"Erreur: {e}")
-        raise HTTPException(status_code=503, detail="Le service Nova est actuellement indisponible.")
+        print(f"DEBUG: {str(e)}")
+        raise HTTPException(status_code=503, detail="Le cerveau de Nova est en maintenance. Réessayez dans 30 secondes.")
 
-# --- 2. Route d'Audit 60 Secondes (Loi 25) ---
+# --- 2. AUDIT 60 SECONDES ---
 @app.post("/api/audit")
 async def run_audit(req: AuditRequest):
     try:
-        # Exécution de Nucleus V3 en arrière-plan
+        # Exécute Nucleus V3 (votre script OSINT)
+        # Note: Assurez-vous que nova_audit_system.py est bien à la racine sur GitHub
         result = subprocess.check_output(
             ['python3', 'nova_audit_system.py', '--url', req.url, '--email', req.email],
-            text=True
+            text=True,
+            stderr=subprocess.STDOUT
         )
         return {"status": "success", "report": result}
     except subprocess.CalledProcessError as e:
-        # Si le script Python plante, on capture l'erreur pour ne pas faire planter l'API
-        return {"status": "error", "message": f"Erreur du script d'audit : {e.output}"}
+        return {"status": "error", "message": f"Analyse interrompue : {e.output}"}
     except Exception as e:
         return {"status": "error", "message": str(e)}

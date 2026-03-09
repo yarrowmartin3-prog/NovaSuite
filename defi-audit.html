@@ -1,52 +1,65 @@
 <!DOCTYPE html>
-<html lang="fr" class="scroll-smooth">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Défi d'Audit 60s - NovaSuite</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>tailwind.config = { theme: { extend: { colors: { neon: '#00ff41' } } } }</script>
-    <style>body { background-color: #050505; color: white; font-family: 'Inter', sans-serif; }</style>
+    <style>
+        body { background-color: #050505; color: white; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        .glass { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        #score-circle { transition: stroke-dashoffset 2s ease-out; }
+    </style>
 </head>
 <body class="antialiased min-h-screen flex flex-col p-4 md:p-8">
-    <header class="max-w-4xl mx-auto w-full mb-12 flex justify-between items-center">
+    
+    <header class="max-w-4xl mx-auto w-full mb-12">
         <a href="/" class="flex items-center gap-3">
-            <img src="assets/logo-novasuite.webp" class="w-12 h-12 rounded-lg border border-gray-800">
-            <h1 class="text-xl font-black uppercase tracking-tighter text-white">NovaSuite</h1>
+            <img src="assets/logo-novasuite.webp" class="w-12 h-12 rounded-lg border border-white/10 shadow-xl">
+            <h1 class="text-xl font-black uppercase tracking-tighter">NovaSuite</h1>
         </a>
     </header>
 
     <main class="max-w-2xl mx-auto w-full flex-1">
-        <div class="bg-[#0f172a] border border-white/10 p-8 rounded-2xl shadow-2xl relative overflow-hidden">
-            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-neon to-transparent animate-pulse"></div>
-            <h2 class="text-3xl font-black mb-4 uppercase tracking-tight">Défi d'Audit Express</h2>
-            <p class="text-gray-400 mb-8 font-mono text-sm leading-relaxed">> Diagnostic Loi 25 instantané. <br>> Génération de commande de remédiation.</p>
+        <div id="form-container" class="glass p-8 rounded-3xl shadow-2xl relative border-t-2 border-neon">
+            <h2 class="text-3xl font-black mb-2 uppercase italic">Audit Express 60s</h2>
+            <p class="text-gray-400 mb-8 text-xs font-mono">> Diagnostic Loi 25 & Simulation d'intrusion.</p>
             
             <form id="audit-form" class="space-y-4">
-                <div>
-                    <label class="block text-[10px] uppercase font-black text-neon mb-2 tracking-widest">URL de la cible</label>
-                    <input type="url" id="audit-url" placeholder="https://votre-site.com" required class="w-full p-4 bg-black border border-gray-800 rounded-lg focus:border-neon outline-none text-neon font-mono">
-                </div>
-                <div>
-                    <label class="block text-[10px] uppercase font-black text-neon mb-2 tracking-widest">Rapport envoyé à</label>
-                    <input type="email" id="audit-email" placeholder="votre@email.com" required class="w-full p-4 bg-black border border-gray-800 rounded-lg focus:border-neon outline-none text-neon font-mono">
-                </div>
-                <button type="submit" id="audit-btn" class="w-full bg-neon text-black font-black py-5 rounded-lg hover:bg-white transition-all transform active:scale-95 uppercase">Lancer l'Analyse (60s)</button>
+                <input type="url" id="audit-url" placeholder="https://votre-entreprise.ca" required class="w-full p-4 bg-black/50 border border-white/10 rounded-xl focus:border-neon outline-none text-neon font-mono text-sm">
+                <input type="email" id="audit-email" placeholder="votre@email-pro.com" required class="w-full p-4 bg-black/50 border border-white/10 rounded-xl focus:border-neon outline-none text-neon font-mono text-sm">
+                <button type="submit" id="audit-btn" class="w-full bg-neon text-black font-black py-5 rounded-xl hover:bg-white transition-all transform active:scale-95 uppercase text-sm tracking-widest shadow-[0_0_20px_rgba(0,255,65,0.2)]">Lancer l'Analyse</button>
             </form>
 
-            <div id="audit-loading" class="hidden mt-8 text-center">
-                <div class="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-neon mb-4"></div>
-                <p class="font-mono text-neon text-xs">SCAN EN COURS SUR LE RÉSEAU SHODAN...</p>
+            <div id="audit-loading" class="hidden mt-8 text-center py-10">
+                <div class="inline-block animate-spin rounded-full h-10 w-10 border-t-2 border-neon mb-4"></div>
+                <p class="font-mono text-neon text-[10px] tracking-[0.3em] animate-pulse">RECHERCHE DE VULNÉRABILITÉS...</p>
             </div>
 
-            <div id="audit-results" class="hidden mt-8 p-6 bg-black border border-neon rounded-xl animate-fade-in">
-                <h3 class="text-neon font-black text-sm uppercase mb-4 tracking-tighter">Diagnostic Partiel Terminé</h3>
-                <div class="space-y-4 font-mono text-[11px]">
-                    <p class="text-gray-400"><span class="text-white">Règle identifiée:</span> <br><span id="res-rule" class="text-red-400"></span></p>
-                    <p class="text-gray-400"><span class="text-white">Commande d'exécution:</span> <br><span id="res-cmd" class="text-blue-400"></span></p>
+            <div id="audit-results" class="hidden mt-8 animate-in fade-in duration-700">
+                <div class="flex flex-col items-center mb-8">
+                    <div class="relative flex items-center justify-center">
+                        <svg class="w-32 h-32 transform -rotate-90">
+                            <circle cx="64" cy="64" r="58" stroke="currentColor" stroke-width="8" fill="transparent" class="text-gray-900" />
+                            <circle id="score-circle" cx="64" cy="64" r="58" stroke="currentColor" stroke-width="8" fill="transparent" stroke-dasharray="364.4" stroke-dashoffset="364.4" class="text-red-500" />
+                        </svg>
+                        <div class="absolute text-center">
+                            <span id="res-score" class="text-4xl font-black text-white">0</span>
+                            <span class="text-[10px] block text-gray-500 font-bold">/100</span>
+                        </div>
+                    </div>
+                    <p class="text-[10px] text-red-500 font-black mt-3 uppercase tracking-[0.2em] animate-pulse">Risque Détecté : CRITIQUE</p>
                 </div>
-                <hr class="my-6 border-gray-800">
-                <p class="text-xs text-center text-gray-400 mb-4 font-bold">⚠️ Vulnérabilités critiques supplémentaires détectées.</p>
-                <a href="https://buy.stripe.com/5kA9AT6zwa8W50PeUV" class="block w-full bg-white text-black text-center font-black py-4 rounded-lg hover:bg-neon transition-all">DÉBLOQUER L'AUDIT COMPLET (499 $)</a>
+
+                <div id="log-terminal" class="bg-black/80 p-4 rounded-lg font-mono text-[9px] text-neon/40 h-24 overflow-y-auto mb-6 border border-white/5"></div>
+
+                <div class="bg-white/5 border border-white/10 p-4 rounded-xl mb-8">
+                    <p class="text-[10px] text-gray-400 uppercase font-bold mb-1">Faille Prioritaire :</p>
+                    <p id="res-rule" class="text-xs text-red-400 font-mono"></p>
+                </div>
+
+                <a href="https://buy.stripe.com/00w8wPaPMfxgcthaKW2VG05" class="block w-full bg-white text-black text-center font-black py-4 rounded-xl hover:bg-neon transition-all uppercase text-sm">ACCÉDER AU RAPPORT COMPLET (499 $)</a>
             </div>
         </div>
     </main>
@@ -57,38 +70,49 @@
             const btn = document.getElementById('audit-btn');
             const load = document.getElementById('audit-loading');
             const res = document.getElementById('audit-results');
+            const terminal = document.getElementById('log-terminal');
+            const scoreCircle = document.getElementById('score-circle');
+            const scoreText = document.getElementById('res-score');
             
-            btn.classList.add('hidden');
             load.classList.remove('hidden');
-
-            const payload = {
-                url: document.getElementById('audit-url').value,
-                email: document.getElementById('audit-email').value
-            };
+            document.getElementById('audit-form').classList.add('opacity-10', 'pointer-events-none');
 
             try {
                 const response = await fetch('https://novasuite-1.onrender.com/api/audit', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify(payload)
+                    body: JSON.stringify({
+                        url: document.getElementById('audit-url').value,
+                        email: document.getElementById('audit-email').value
+                    })
                 });
                 
                 if (response.ok) {
                     const data = await response.json();
-                    document.getElementById('res-rule').innerText = data.rule;
-                    document.getElementById('res-cmd').innerText = data.command;
                     load.classList.add('hidden');
                     res.classList.remove('hidden');
-                } else {
-                    alert("Erreur technique. Vérifiez les logs Render.");
-                    btn.classList.remove('hidden');
-                    load.classList.add('hidden');
+
+                    const offset = 364.4 - (364.4 * data.score / 100);
+                    setTimeout(() => {
+                        scoreCircle.style.strokeDashoffset = offset;
+                        let s = 0;
+                        const inv = setInterval(() => {
+                            if(s >= data.score) clearInterval(inv);
+                            scoreText.innerText = s;
+                            s++;
+                        }, 30);
+                    }, 400);
+
+                    const lines = ["> Initialisation du scan...", "> Analyse Loi 25...", "> Vérification des cookies...", "> FAIL: Politique non détectée."];
+                    for (let l of lines) {
+                        const p = document.createElement('p'); p.innerText = l;
+                        terminal.appendChild(p);
+                        terminal.scrollTop = terminal.scrollHeight;
+                        await new Promise(r => setTimeout(r, 600));
+                    }
+                    document.getElementById('res-rule').innerText = data.rule;
                 }
-            } catch (err) {
-                alert("Le serveur ne répond pas.");
-                btn.classList.remove('hidden');
-                load.classList.add('hidden');
-            }
+            } catch (err) { alert("Serveur instable."); }
         });
     </script>
 </body>

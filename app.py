@@ -16,14 +16,20 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# --- VARIABLES D'ENVIRONNEMENT (Déjà sur Render) ---
-SMTP_EMAIL = os.getenv("SMTP_EMAIL", "yarrowmartin3@gmail.com")
-SMTP_PASSWORD = os.getenv("SMTP_PASSWORD", "")
+# --- LA CONFIGURATION EXACTE DE BREVO ---
 SMTP_SERVER = "smtp-relay.brevo.com"
-SMTP_PORT = 2525
+SMTP_PORT = 587
 
-# --- DESTINATAIRE ---
-# L'adresse où VOUS recevrez les formulaires de contact
+# Le login technique trouvé par Monseigneur Yarrow
+SMTP_LOGIN = os.getenv("SMTP_LOGIN", "9fb545001@smtp-brevo.com")
+
+# Le mot de passe (la clé xsmtpsib-...)
+SMTP_PASSWORD = os.getenv("SMTP_PASSWORD", "")
+
+# L'adresse affichée aux clients (doit être validée dans Brevo)
+SENDER_EMAIL = os.getenv("SENDER_EMAIL", "yarrowmartin3@gmail.com")
+
+# L'adresse où VOUS recevez les messages
 DESTINATION_EMAIL = "martin.yarrow@gmail.com" 
 
 class AuditRequest(BaseModel):
@@ -44,25 +50,23 @@ async def root():
 async def send_contact(req: ContactRequest):
     try:
         msg = MIMEMultipart()
-        # L'expéditeur DOIT être l'adresse validée sur Brevo (votre SMTP_EMAIL)
-        msg['From'] = SMTP_EMAIL 
+        msg['From'] = f"NovaSuite Web <{SENDER_EMAIL}>"
         msg['To'] = DESTINATION_EMAIL
         msg['Subject'] = f"Nouveau Contact Web : {req.nom}"
         
         body = f"Nouveau lead depuis le site NovaSuite.\n\nNom: {req.nom}\nEmail: {req.email}\n\nMessage:\n{req.message}"
         msg.attach(MIMEText(body, 'plain', 'utf-8'))
         
-        # Connexion et Envoi via Brevo SMTP
         server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT, timeout=15)
         server.starttls()
-        server.login(SMTP_EMAIL, SMTP_PASSWORD)
+        # CONNEXION AVEC LE BON LOGIN TECHNIQUE
+        server.login(SMTP_LOGIN, SMTP_PASSWORD)
         server.send_message(msg)
         server.quit()
         
         return {"status": "success", "message": "Transmis"}
     except Exception as e:
-        print(f"🚨 Erreur Contact SMTP: {e}")
-        # On renvoie l'erreur exacte au site web pour la lire
+        print(f"🚨 Erreur Contact Brevo: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/api/audit")
@@ -72,7 +76,7 @@ async def run_audit(req: AuditRequest):
     
     try:
         msg = MIMEMultipart()
-        msg['From'] = SMTP_EMAIL
+        msg['From'] = f"Agent Nova <{SENDER_EMAIL}>"
         msg['To'] = req.email
         msg['Subject'] = "⚠️ Résultat Partiel de votre Audit - NovaSuite"
         
@@ -94,11 +98,12 @@ Monseigneur Yarrow | NovaSuite Technologies
         
         server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT, timeout=15)
         server.starttls()
-        server.login(SMTP_EMAIL, SMTP_PASSWORD)
+        # CONNEXION AVEC LE BON LOGIN TECHNIQUE
+        server.login(SMTP_LOGIN, SMTP_PASSWORD)
         server.send_message(msg)
         server.quit()
 
         return {"rule": result_rule, "command": command}
     except Exception as e:
-        print(f"🚨 Erreur Audit SMTP: {e}")
+        print(f"🚨 Erreur Audit Brevo: {e}")
         raise HTTPException(status_code=500, detail=str(e))

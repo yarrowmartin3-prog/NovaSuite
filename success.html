@@ -4,204 +4,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Audit Reçu - NovaSuite Technologies</title>
-    <link rel="stylesheet" href="nova.css?v=20251116">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
-    
-    </head>
+    <style>
+        body { background-color: #050505; color: #eee; font-family: 'Inter', sans-serif; text-align: center; padding-top: 80px; margin: 0; }
+        .card { max-width: 600px; margin: 0 auto; background: rgba(0, 196, 255, 0.08); padding: 40px; border-radius: 12px; border: 1px solid #333; }
+        .btn-primary { background: #00ff41; color: #000; padding: 12px 24px; text-decoration: none; font-weight: bold; border-radius: 6px; display: inline-block; margin-top: 20px; }
+    </style>
+</head>
 <body>
 
+    <div id="loi25-banner" style="position:fixed; top:0; left:0; width:100%; background:#dc2626; color:white; padding:8px; text-align:center; font-size:10px; font-weight:bold; z-index:100; letter-spacing:0.1em; box-shadow:0 0 15px rgba(220,38,38,0.5);">
+        ALERTE : CONFORMITÉ LOI 25 REQUISE. <a href="defi-audit.php" style="text-decoration:underline; color:white;">LANCEZ LE POC GRATUIT</a>
+    </div>
+
     <header>
-        <div class="wrap">
-            <a href="/" class="brand">
-                <img src="/assets/logo-novasuite.webp" alt="NovaSuite Logo" class="logo">
-                <h1>NovaSuite Technologies</h1>
-            </a>
-        </div>
+        <img src="/assets/logo-novasuite.webp" alt="NovaSuite Logo" style="width: 80px; border-radius: 8px;">
     </header>
 
-    <main class="wrap" style="text-align: center; padding-top: 50px;">
-
-        <section class="card" style="max-width: 600px; margin: 40px auto; background: rgba(0, 196, 255, 0.08);">
-            <h2 style="color: var(--accent2);">✅ Votre Audit est Lancé !</h2>
-            <p class="lead">Merci pour votre demande, Monseigneur Yarrow.</p>
-            <p>Nous avons bien reçu l'URL **<span id="display-url" style="color: var(--accent);"></span>**. L'analyse est en cours et un rapport détaillé vous sera envoyé par courriel à **<span id="display-email" style="color: var(--accent);"></span>** dans les prochaines minutes.</p>
-            
+    <main>
+        <section class="card">
+            <h2 style="color: #00ff41;">✅ Votre Audit est Lancé !</h2>
+            <p>Merci pour votre demande.</p>
+            <p>L'analyse est en cours et un rapport détaillé sera généré pour l'URL soumise.</p>
             <hr style="border-top: 1px solid rgba(255, 255, 255, 0.1); margin: 25px 0;">
-
-            <h3>Prochaine Étape : Planifiez votre Intégration</h3>
-            <p>Pendant que Nova travaille sur votre rapport, profitez-en pour découvrir nos forfaits. Rappelez-vous, notre **Audit Express** est à **$299** et l'**Intégration Standard** à **$699**.</p>
-            <div class="hero-cta">
-                <a href="mailto:contact@novasuite.ca" class="btn-primary">Contacter un expert</a>
-            </div>
+            <h3>Prochaine Étape : Sécurisez votre entreprise</h3>
+            <p>Pendant que Nova travaille, préparez la mise aux normes. Notre <strong>Audit Express</strong> est à <strong>499 $</strong> et l'<strong>Intégration Standard</strong> à <strong>899 $</strong>.</p>
+            <a href="https://buy.stripe.com/00w8wPaPMfxgcthaKW2VG05" class="btn-primary">Acheter l'Audit Complet (499 $)</a>
         </section>
-
     </main>
-    
-    <div id="nova-box" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="nova-head-title">
-        <div class="nova-head"><h3 id="nova-head-title">Nova - IA Sécurité</h3></div>
-        <div class="nova-log" id="nova-log">
+
+    <div id="chat-container" style="position: fixed; bottom: 20px; right: 20px; width: 320px; z-index: 100; font-family: monospace;">
+        <div id="chat-window" style="display: none; flex-direction: column; background: #0a0a0a; border: 1px solid #00ff41; border-bottom: none; border-radius: 12px 12px 0 0; height: 384px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);">
+            <div style="background: #16a34a; color: black; padding: 12px; font-weight: bold; border-radius: 12px 12px 0 0; display: flex; justify-content: space-between;">
+                <span>🤖 AGENT NOVA v1.0</span>
+                <button type="button" onclick="toggleChat()" style="color: black; font-weight: 900; background: none; border: none; cursor: pointer;">X</button>
             </div>
-        <form class="nova-bar" id="nova-form">
-            <input type="text" id="nova-field" placeholder="Posez une question à Nova..." autocomplete="off">
-            <button type="submit" class="btn-primary" style="margin: 0; padding: 10px 15px;">Envoyer</button>
-        </form>
-    </div>
-    <button id="nova-fab" aria-label="Ouvrir le chat Nova IA" aria-expanded="false">Nova</button>
-
-    <div id="cookie-banner" style="position:fixed; bottom:0; left:0; width:100%; background:var(--bg-start); border-top:1px solid var(--accent); padding:15px; z-index:9999; display:none;">
-        <div class="wrap" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
-            <p style="margin:0; font-size:0.9em;">Nous utilisons des cookies pour améliorer votre expérience. En continuant, vous acceptez notre <a href="politique-confidentialite.html" style="color:var(--accent2);">Politique de Confidentialité (Loi 25)</a>.</p>
-            <button id="accept-cookies" class="btn-primary" style="margin:0; padding:8px 15px; font-weight:700;">J'accepte</button>
+            <div id="chat-messages" style="flex: 1; padding: 16px; overflow-y: auto; font-size: 11px; background: rgba(0,0,0,0.9); color: #22c55e;">
+                <p>[SYS] Nova en ligne. Prêt pour l'audit.</p>
+            </div>
+            <div style="padding: 8px; background: #111; display: flex; border-top: 1px solid #333;">
+                <input id="chat-input" type="text" style="flex: 1; background: #000; border: 1px solid #333; padding: 8px; color: white; font-size: 11px; outline: none;" placeholder="Entrer commande..." onkeypress="if(event.key==='Enter') sendMessage()">
+                <button type="button" onclick="sendMessage()" style="background: #22c55e; color: black; padding: 0 12px; font-weight: bold; border: none; cursor: pointer;">></button>
+            </div>
         </div>
+        <button type="button" onclick="toggleChat()" style="width: 100%; background: #000; border: 1px solid #22c55e; color: #22c55e; font-weight: bold; padding: 12px; border-radius: 9999px; cursor: pointer; font-size: 10px; letter-spacing: 0.1em; margin-top: 8px;">
+            + ASSISTANCE IA NOVA
+        </button>
     </div>
-    
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // 1. Affichage des données (URL et Email) depuis l'URL
-            const params = new URLSearchParams(window.location.search);
-            const url = params.get('url') || 'Non spécifiée';
-            const email = params.get('email') || 'Inconnu';
-            
-            document.getElementById('display-url').textContent = url;
-            document.getElementById('display-email').textContent = email;
-            
-            // 2. LOGIQUE DE CONSENTEMENT (Loi 25)
-            const banner = document.getElementById('cookie-banner');
-            const acceptButton = document.getElementById('accept-cookies');
-            const consentKey = 'analytics_consent';
-
-            if (localStorage.getItem(consentKey) === null) {
-                banner.style.display = 'block';
-            } else if (localStorage.getItem(consentKey) === 'accepted') {
-                if (window.loadGTM) window.loadGTM();
-            }
-
-            acceptButton.addEventListener('click', function() {
-                localStorage.setItem(consentKey, 'accepted');
-                banner.style.display = 'none';
-                if (window.loadGTM) window.loadGTM();
-            });
-            
-            // 3. ENVOI DE LA CONVERSION À GTM/GA
-            // Ce code doit se déclencher seulement si le consentement est donné
-            if (localStorage.getItem(consentKey) === 'accepted' && window.dataLayer) {
-                // Si l'utilisateur a consenti, on envoie l'événement de conversion.
-                window.dataLayer.push({
-                    'event': 'conversion_audit_success',
-                    'audit_url': url,
-                    'user_email': email
-                });
-            }
-        });
+    function toggleChat() { const win = document.getElementById('chat-window'); win.style.display = win.style.display === 'none' || win.style.display === '' ? 'flex' : 'none'; }
+    async function sendMessage() {
+        const input = document.getElementById('chat-input'); const msgDiv = document.getElementById('chat-messages');
+        if(!input.value.trim()) return;
+        msgDiv.innerHTML += `<p style="color: white; margin-top: 8px;">> ${input.value.trim()}</p>`;
+        const msg = input.value.trim(); input.value = ''; msgDiv.scrollTop = msgDiv.scrollHeight;
+        try {
+            const res = await fetch('https://novasuite-1.onrender.com/api/chat/nova', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({message: msg}) });
+            const data = await res.json(); msgDiv.innerHTML += `<p style="color: #4ade80; margin-top: 8px;">NOVA: ${data.response || data.detail}</p>`;
+        } catch(e) { msgDiv.innerHTML += `<p style="color: #ef4444; margin-top: 8px;">[ERREUR] Connexion API Render échouée.</p>`; }
+        msgDiv.scrollTop = msgDiv.scrollHeight;
+    }
     </script>
-    
-    <script src="defer-gtm.js" defer></script> 
-    
-    <script src="nova.js" defer></script> 
-
-<div id="law25" style="position:fixed;bottom:0;left:0;width:100%;background:#111;border-top:1px solid #00ff41;color:#888;padding:10px;text-align:center;font-size:12px;z-index:9000">Conformité Loi 25 active. <a href="privacy.html" style="color:#00ff41">Détails</a> <button onclick="this.parentElement.style.display='none'" style="background:#00ff41;border:none;padding:2px 8px;margin-left:10px;cursor:pointer">OK</button></div>
-    <style>
-        #nova-launcher { position: fixed; bottom: 25px; right: 25px; width: 65px; height: 65px; background: radial-gradient(circle, #00ff41 10%, #004d1a 90%); border-radius: 50%; box-shadow: 0 0 20px #00ff41; cursor: pointer; z-index: 9999; display: flex; align-items: center; justify-content: center; font-size: 30px; animation: pulse 2s infinite; }
-        @keyframes pulse { 0% {box-shadow: 0 0 0 0 rgba(0,255,65, 0.7);} 70% {box-shadow: 0 0 0 15px rgba(0,255,65, 0);} 100% {box-shadow: 0 0 0 0 rgba(0,255,65, 0);} }
-        #nova-interface { display: none; position: fixed; bottom: 100px; right: 25px; width: 350px; height: 500px; background: rgba(10, 10, 10, 0.95); border: 1px solid #00ff41; border-radius: 12px; backdrop-filter: blur(10px); z-index: 9999; flex-direction: column; box-shadow: 0 10px 40px rgba(0,0,0,0.8); font-family: 'Courier New', monospace; }
-        .nova-head { padding: 15px; background: #050505; border-bottom: 1px solid #333; display: flex; justify-content: space-between; align-items: center; }
-        .nova-status { color: #00ff41; font-weight: bold; font-size: 12px; }
-        #nova-chat-log { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
-        .msg { padding: 10px; border-radius: 6px; font-size: 13px; max-width: 85%; }
-        .bot { background: #111; border-left: 2px solid #00ff41; color: #ccc; align-self: flex-start; }
-        .user { background: #004d1a; color: white; align-self: flex-end; }
-        .nova-input-zone { padding: 15px; border-top: 1px solid #333; display: flex; gap: 5px; }
-        #nova-input { flex: 1; background: #222; border: none; color: white; padding: 10px; border-radius: 4px; }
-        .typing { color: #00ff41; font-size: 10px; margin-left: 15px; display: none; margin-bottom: 5px; }
-    </style>
-    
-    
-    <style>
-        #nova-trigger { position: fixed; bottom: 20px; right: 20px; width: 65px; height: 65px; background: #00ff41; border-radius: 50%; cursor: pointer; z-index: 2147483647 !important; display: flex; align-items: center; justify-content: center; font-size: 30px; box-shadow: 0 0 20px rgba(0,255,65,0.6); border: 2px solid #000; transition: transform 0.2s; }
-        #nova-trigger:hover { transform: scale(1.1); }
-        #nova-ui { display: none; position: fixed; bottom: 100px; right: 20px; width: 350px; height: 500px; background: #0a0a0a; border: 2px solid #00ff41; z-index: 2147483647 !important; border-radius: 12px; flex-direction: column; font-family: 'Segoe UI', sans-serif; box-shadow: 0 0 60px rgba(0,0,0,0.9); }
-        .n-h { background: #000; padding: 15px; color: #00ff41; font-weight: bold; border-bottom: 1px solid #333; display: flex; justify-content: space-between; align-items: center; }
-        .n-b { flex: 1; padding: 15px; overflow-y: auto; color: #ccc; font-size: 14px; line-height: 1.5; }
-        .n-m { margin-bottom: 12px; padding: 10px; border-radius: 8px; max-width: 85%; word-wrap: break-word; }
-        .n-r { background: #1a1a1a; border-left: 3px solid #00ff41; align-self: flex-start; }
-        .n-u { background: #005500; color: white; margin-left: auto; text-align: right; }
-        .n-f { padding: 15px; border-top: 1px solid #333; display: flex; gap: 10px; }
-        .n-f input { flex: 1; background: #000; border: 1px solid #333; color: white; padding: 10px; border-radius: 4px; outline: none; }
-        .n-debug { font-size: 10px; color: #444; margin-top: 5px; font-family: monospace; }
-    </style>
-    
-    
-    
-
-    <style>
-        #nova-trigger { position: fixed; bottom: 20px; right: 20px; width: 65px; height: 65px; background: #00ff41; border-radius: 50%; cursor: pointer; z-index: 2147483647 !important; display: flex; align-items: center; justify-content: center; font-size: 30px; box-shadow: 0 0 20px rgba(0,255,65,0.6); border: 2px solid #000; }
-        #nova-ui { display: none; position: fixed; bottom: 100px; right: 20px; width: 320px; height: 450px; background: #0a0a0a; border: 2px solid #00ff41; z-index: 2147483647 !important; border-radius: 12px; flex-direction: column; font-family: sans-serif; box-shadow: 0 0 60px rgba(0,0,0,0.9); }
-        .n-h { background: #000; padding: 15px; color: #00ff41; font-weight: bold; border-bottom: 1px solid #333; display: flex; justify-content: space-between; }
-        .n-b { flex: 1; padding: 15px; overflow-y: auto; color: #ccc; font-size: 13px; }
-        .n-m { margin-bottom: 10px; padding: 8px; border-radius: 6px; }
-        .n-r { background: #1a1a1a; border-left: 3px solid #00ff41; }
-        .n-u { background: #005500; text-align: right; color: white; }
-        .n-f { padding: 10px; border-top: 1px solid #333; display: flex; }
-        .n-f input { flex: 1; background: #000; border: 1px solid #333; color: white; padding: 8px; }
-    </style>
-    
-    
-    
-
-    <style>
-        #nova-trigger { position: fixed; bottom: 20px; right: 20px; width: 65px; height: 65px; background: #00ff41; border-radius: 50%; cursor: pointer; z-index: 2147483647 !important; display: flex; align-items: center; justify-content: center; font-size: 30px; box-shadow: 0 0 20px rgba(0,255,65,0.6); border: 2px solid #000; }
-        #nova-ui { display: none; position: fixed; bottom: 100px; right: 20px; width: 320px; height: 450px; background: #0a0a0a; border: 2px solid #00ff41; z-index: 2147483647 !important; border-radius: 12px; flex-direction: column; font-family: sans-serif; box-shadow: 0 0 60px rgba(0,0,0,0.9); }
-        .n-h { background: #000; padding: 15px; color: #00ff41; font-weight: bold; border-bottom: 1px solid #333; display: flex; justify-content: space-between; }
-        .n-b { flex: 1; padding: 15px; overflow-y: auto; color: #ccc; font-size: 13px; }
-        .n-m { margin-bottom: 10px; padding: 8px; border-radius: 6px; }
-        .n-r { background: #1a1a1a; border-left: 3px solid #00ff41; }
-        .n-u { background: #005500; text-align: right; color: white; }
-        .n-f { padding: 10px; border-top: 1px solid #333; display: flex; }
-        .n-f input { flex: 1; background: #000; border: 1px solid #333; color: white; padding: 8px; }
-    </style>
-    
-    <div id="nova-trigger" onclick="toggleN()">🧠</div>
-    <div id="nova-ui">
-        <div class="n-h"><span>NOVA (NovaSuite)</span><span onclick="toggleN()" style="cursor:pointer">x</span></div>
-        <div class="n-b" id="n-log"><div class="n-m n-r">Initialisation...<br>Je suis l'Agent Nova. Posez une question sur nos Audits, le RAG ou la Loi 25.</div></div>
-        <div class="n-f"><input id="n-i" placeholder="Question..." onkeypress="if(event.key==='Enter') sendN()"><button onclick="sendN()" style="color:#00ff41;background:none;border:none;font-weight:bold;">></button></div>
-    </div>
-
-    <script>
-        // TUEUR DE BOUTON BLEU
-        window.addEventListener('load', function() {
-            setInterval(function(){
-                var all = document.querySelectorAll('div, a, button');
-                for (var i = 0; i < all.length; i++) {
-                    var el = all[i];
-                    var s = window.getComputedStyle(el);
-                    if (s.position === 'fixed' && parseInt(s.bottom) < 120 && parseInt(s.right) < 120) {
-                        if (el.id !== 'nova-trigger' && el.id !== 'nova-ui') { el.style.display = 'none'; }
-                    }
-                }
-            }, 1000);
-        });
-
-        function toggleN() { var u=document.getElementById('nova-ui'); u.style.display=u.style.display==='flex'?'none':'flex'; }
-        function sendN() {
-            var i=document.getElementById('n-i'); var t=i.value.toLowerCase(); if(!t)return;
-            document.getElementById('n-log').innerHTML += `<div class='n-m n-u'>${i.value}</div>`;
-            i.value='';
-            setTimeout(function(){
-                var r = "Je notifie l'administration.";
-                if(t.includes('bonjour')) r="Prêt pour l'audit de souveraineté.";
-                else if(t.includes('prix') || t.includes('cout')) r="<a href='mailto:yarrowmartin3@gmail.com' style='color:#00ff41'>Demander un devis audit.</a>";
-                else if(t.includes('loi')) r="Scan Loi 25 : Vérification des registres en cours.";
-                else if(t.includes('rag')) r="Nos Agents RAG sécurisent vos données en local.";
-                else if(t.includes('undrip')) r="Conformité UNDRIP : Analyse des traités ancestraux.";
-                
-                document.getElementById('n-log').innerHTML += `<div class='n-m n-r'>${r}</div>`;
-                document.getElementById('n-log').scrollTop = 9999;
-            }, 800);
-        }
-    </script>
-    
 </body>
 </html>

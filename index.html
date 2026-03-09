@@ -26,7 +26,6 @@
         .cta-msp:hover { background: #ffd700; color: #000; }
         .cta-commander { width: 100%; padding: 0.75rem 1.5rem; background: #0f172a; color: #00ff41; border: 1px solid #00ff41; }
         .cta-commander:hover { background: #00ff41; color: #000; box-shadow: 0 0 15px rgba(0,255,65,0.4); }
-        .card-hover:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,255,65,0.1); }
     </style>
 </head>
 <body class="antialiased min-h-screen flex flex-col relative">
@@ -50,7 +49,7 @@
                 <h2 class="text-5xl md:text-7xl font-black text-white mb-6 leading-tight drop-shadow-2xl">Souveraineté Numérique. <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-neon to-emerald-400 drop-shadow-none">Zéro Compromis.</span></h2>
                 <p class="text-lg md:text-xl text-gray-200 max-w-2xl mb-10 leading-relaxed drop-shadow-lg">Audits de cybersécurité express et déploiement d'Intelligence Artificielle 100% isolée du cloud pour les entreprises du Québec.</p>
                 <div class="flex flex-col sm:flex-row gap-4 w-full justify-center items-center mb-10">
-                    <a href="defi-audit.php" class="btn-audit-nova text-lg md:text-xl">Défi d'Audit 60s : POC Gratuit</a>
+                    <a href="defi-audit.html" class="cta-audit text-lg md:text-xl">Défi d'Audit 60s : POC Gratuit</a>
                     <a href="partenaires-msp.html" class="cta-msp">Accès Partenaires MSP</a>
                 </div>
                 <div class="flex flex-wrap justify-center gap-4 md:gap-8 opacity-80 mt-4">
@@ -65,8 +64,7 @@
     <section id="offres" class="w-full max-w-6xl mx-auto px-6 mb-24 z-10">
         <h2 class="text-3xl font-black text-center text-white mb-10">Nos Forfaits de Sécurité</h2>
         <div class="grid md:grid-cols-3 gap-6">
-            
-            <div class="glass rounded-2xl p-8 border-t-4 border-t-gray-500 card-hover flex flex-col">
+            <div class="glass rounded-2xl p-8 border-t-4 border-t-gray-500 flex flex-col">
                 <h3 class="text-xl font-bold text-white mb-2">Audit Express</h3>
                 <p class="text-gray-400 text-xs mb-6 flex-1">Diagnostic immédiat Loi 25 et scan de vulnérabilités (Shodan).</p>
                 <div class="text-4xl font-black text-white mb-6">499 $<span class="text-sm text-gray-500 font-normal"> CAD</span></div>
@@ -75,10 +73,10 @@
                     <li class="flex items-center gap-2"><span class="text-gray-500">✓</span> Détection transferts hors-Québec</li>
                     <li class="flex items-center gap-2"><span class="text-gray-500">✓</span> Rapport automatisé en 24h</li>
                 </ul>
-                <a href="https://buy.stripe.com/00w8wPaPMfxgcthaKW2VG05" class="cta-commander bg-gray-800 text-white border-gray-600 hover:bg-gray-700 hover:text-white mt-auto">Commander</a>
+                <a href="https://buy.stripe.com/00w8wPaPMfxgcthaKW2VG05" class="cta-commander bg-gray-800 text-white border-gray-600 hover:bg-gray-700 mt-auto">Commander</a>
             </div>
 
-            <div class="glass rounded-2xl p-8 border-t-4 border-t-neon neon-glow card-hover transform md:-translate-y-4 flex flex-col relative">
+            <div class="glass rounded-2xl p-8 border-t-4 border-t-neon neon-glow transform md:-translate-y-4 flex flex-col relative">
                 <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-neon text-black text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest">Populaire</div>
                 <h3 class="text-2xl font-bold text-white mb-2">Intégration Standard</h3>
                 <p class="text-gray-400 text-xs mb-6 flex-1">Déploiement des correctifs critiques et mise aux normes Loi 25.</p>
@@ -91,7 +89,7 @@
                 <a href="https://buy.stripe.com/9B69AT2jg84O8d19GS2VG08" class="cta-commander mt-auto">Sécuriser mon entreprise</a>
             </div>
 
-            <div class="glass rounded-2xl p-8 border-t-4 border-t-gold card-hover flex flex-col">
+            <div class="glass rounded-2xl p-8 border-t-4 border-t-gold flex flex-col">
                 <h3 class="text-xl font-bold text-white mb-2">Formule Nucleus</h3>
                 <p class="text-gray-400 text-xs mb-6 flex-1">L'arsenal complet. Infrastructure IA locale et souveraine (RAG).</p>
                 <div class="text-4xl font-black text-white mb-6">1 499 $<span class="text-sm text-gray-500 font-normal"> CAD</span></div>
@@ -100,32 +98,21 @@
                     <li class="flex items-center gap-2"><span class="text-gold">★</span> Chiffrement avancé des données</li>
                     <li class="flex items-center gap-2"><span class="text-gold">★</span> Protection anti-exfiltration</li>
                 </ul>
-                <a href="https://buy.stripe.com/fZubJ13nkbh078X9GS2VG07" class="cta-commander bg-black text-gold border-gold hover:bg-gold hover:text-black mt-auto">Déployer Nucleus</a>
-            </div>
-
-        </div>
-
-        <div class="mt-8 glass rounded-2xl p-8 flex flex-col md:flex-row items-center justify-between border-l-4 border-neon shadow-lg">
-            <div class="mb-6 md:mb-0">
-                <h3 class="text-xl font-bold text-white mb-1">Protocole Aegis Monitoring</h3>
-                <p class="text-gray-400 text-sm">Surveillance proactive, détection des menaces en temps réel et assistance prioritaire.</p>
-            </div>
-            <div class="flex items-center gap-6">
-                <div class="text-right">
-                    <div class="text-2xl font-black text-white">599 $<span class="text-sm font-normal text-gray-400"> / mois</span></div>
-                    <div class="text-[10px] text-gray-500 uppercase tracking-widest">Tarif de lancement</div>
-                </div>
-                <a href="https://buy.stripe.com/3cI6oHaPMdp81ODaKW2VG06" class="cta-commander w-auto whitespace-nowrap px-8">Activer la surveillance</a>
+                <a href="https://buy.stripe.com/fZubJ13nkbh078X9GS2VG07" class="cta-commander bg-black text-gold border-gold hover:bg-gold mt-auto">Déployer Nucleus</a>
             </div>
         </div>
     </section>
 
     <footer class="w-full border-t border-gray-800 bg-black/80 py-10 text-center text-xs text-gray-500 mt-auto z-10">
-        <p class="mb-2">© 2026 NovaSuite Technologies. Infrastructure isolée et souveraine.</p>
-        <div class="flex justify-center gap-4"><a href="mentions-legales.html" class="hover:text-neon transition">Mentions Légales</a><span>|</span><a href="politique-confidentialite.html" class="hover:text-neon transition">Confidentialité</a><span>|</span><a href="mailto:contact@novasuite.ca" class="hover:text-neon transition">contact@novasuite.ca</a></div>
+        <p>© 2026 NovaSuite Technologies. Infrastructure isolée et souveraine.</p>
+        <div class="flex justify-center gap-4 mt-2">
+            <a href="mentions-legales.html" class="hover:text-neon">Mentions Légales</a><span>|</span>
+            <a href="politique-confidentialite.html" class="hover:text-neon">Confidentialité</a><span>|</span>
+            <a href="mailto:contact@novasuite.ca" class="hover:text-neon">Contact</a>
+        </div>
     </footer>
 
-    <div style="position:fixed;top:0;left:0;width:100%;background:#dc2626;color:white;padding:8px;text-align:center;font-size:10px;font-weight:bold;z-index:99999;letter-spacing:0.1em;box-shadow:0 0 15px rgba(220,38,38,0.5);">ALERTE : CONFORMITÉ LOI 25 REQUISE. <a href="defi-audit.php" style="text-decoration:underline;color:white;">LANCEZ LE POC GRATUIT</a></div>
+    <div style="position:fixed;top:0;left:0;width:100%;background:#dc2626;color:white;padding:8px;text-align:center;font-size:10px;font-weight:bold;z-index:99999;letter-spacing:0.1em;box-shadow:0 0 15px rgba(220,38,38,0.5);">ALERTE : CONFORMITÉ LOI 25 REQUISE. <a href="defi-audit.html" style="text-decoration:underline;color:white;">LANCEZ LE POC GRATUIT</a></div>
     <div id="chat-container" style="position:fixed;bottom:20px;right:20px;width:320px;z-index:99999;font-family:monospace;"><div id="chat-window" style="display:none;flex-direction:column;background:#0a0a0a;border:1px solid #00ff41;border-bottom:none;border-radius:12px 12px 0 0;height:384px;box-shadow:0 20px 25px -5px rgba(0,0,0,0.5);"><div style="background:#16a34a;color:black;padding:12px;font-weight:bold;border-radius:12px 12px 0 0;display:flex;justify-content:space-between;"><span>🤖 AGENT NOVA v1.0</span><button type="button" onclick="toggleChat()" style="color:black;font-weight:900;background:none;border:none;cursor:pointer;">X</button></div><div id="chat-messages" style="flex:1;padding:16px;overflow-y:auto;font-size:11px;background:rgba(0,0,0,0.9);color:#22c55e;"><p>[SYS] Nova en ligne. Prêt pour l'audit.</p></div><div style="padding:8px;background:#111;display:flex;border-top:1px solid #333;"><input id="chat-input" type="text" style="flex:1;background:#000;border:1px solid #333;padding:8px;color:white;font-size:11px;outline:none;" placeholder="Entrer commande..." onkeypress="if(event.key==='Enter') sendMessage()"><button type="button" onclick="sendMessage()" style="background:#22c55e;color:black;padding:0 12px;font-weight:bold;border:none;cursor:pointer;">></button></div></div><button type="button" onclick="toggleChat()" style="width:100%;background:#000;border:1px solid #22c55e;color:#22c55e;font-weight:bold;padding:12px;border-radius:9999px;cursor:pointer;font-size:10px;letter-spacing:0.1em;margin-top:8px;">+ ASSISTANCE IA NOVA</button></div>
     <script>function toggleChat(){const w=document.getElementById('chat-window');w.style.display=w.style.display==='none'||w.style.display===''?'flex':'none';} async function sendMessage(){const i=document.getElementById('chat-input');const m=document.getElementById('chat-messages');if(!i.value.trim())return;m.innerHTML+=`<p style="color:white;margin-top:8px;">> ${i.value.trim()}</p>`;const msg=i.value.trim();i.value='';m.scrollTop=m.scrollHeight;try{const r=await fetch('https://novasuite-1.onrender.com/api/chat/nova',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg})});const d=await r.json();m.innerHTML+=`<p style="color:#4ade80;margin-top:8px;">NOVA: ${d.response||d.detail}</p>`;}catch(e){m.innerHTML+=`<p style="color:#ef4444;margin-top:8px;">[ERREUR] Connexion API Render échouée.</p>`;}m.scrollTop=m.scrollHeight;}</script>
 </body>

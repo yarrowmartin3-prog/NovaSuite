@@ -5,137 +5,146 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NovaSuite • Cybersécurité & IA Souveraine</title>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-LWHM1MVESP"></script>
-    <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-LWHM1MVESP');</script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-LWHM1MVESP');
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>tailwind.config = { theme: { extend: { colors: { neon: '#00ff41' } } } }</script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = { theme: { extend: { colors: { cyber: '#050505', neon: '#00ff41', gold: '#ffd700', panel: '#0f172a' } } } }
+    </script>
     <style>
-        body { background-color: #050505; color: white; font-family: 'Inter', sans-serif; overflow-x: hidden; }
-        .hero-gradient { background: radial-gradient(circle at center, rgba(0, 255, 65, 0.15) 0%, transparent 70%); }
-        .glass { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        body { background-color: #050505; color: #e2e8f0; font-family: 'Inter', system-ui, sans-serif; overflow-x: hidden; padding-top: 40px; }
+        .glass { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .neon-glow { box-shadow: 0 0 20px rgba(0, 255, 65, 0.15); }
+        .cta-audit, .cta-msp, .cta-commander { transition: all 0.3s ease; text-align: center; display: inline-block; font-weight: bold; border-radius: 0.5rem; }
+        .cta-audit { background: #ffffff; color: #000000; padding: 1rem 2rem; }
+        .cta-audit:hover { background: #000000; color: #00ff41; border: 1px solid #00ff41; box-shadow: 0 0 20px rgba(0,255,65,0.5); }
+        .cta-msp { background: rgba(0,0,0,0.6); color: #ffd700; border: 1px solid #ffd700; padding: 1rem 2rem; }
+        .cta-msp:hover { background: #ffd700; color: #000; }
+        .cta-commander { width: 100%; padding: 0.75rem 1.5rem; background: #0f172a; color: #00ff41; border: 1px solid #00ff41; }
+        .cta-commander:hover { background: #00ff41; color: #000; box-shadow: 0 0 15px rgba(0,255,65,0.4); }
     </style>
 </head>
-<body class="antialiased selection:bg-neon selection:text-black">
+<body class="antialiased min-h-screen flex flex-col relative pt-12 md:pt-16">
 
-    <div class="fixed inset-0 hero-gradient z-0 pointer-events-none"></div>
+    <div class="fixed top-0 left-0 w-full bg-red-600 text-white p-2 text-center text-[10px] md:text-xs font-bold z-[99999] tracking-widest shadow-[0_0_15px_rgba(220,38,38,0.5)]">
+        ALERTE : CONFORMITÉ LOI 25 REQUISE. <a href="defi-audit.html" class="underline hover:text-black transition">LANCEZ LE POC GRATUIT</a>
+    </div>
 
-    <nav class="sticky top-0 z-50 glass border-b border-white/5 px-6 py-4">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <img src="assets/logo-novasuite.webp" alt="Logo" class="w-10 h-10 rounded shadow-lg border border-white/10">
-                <span class="text-xl font-black tracking-tighter uppercase">NovaSuite</span>
-            </div>
-            <div class="hidden md:flex gap-8 text-[11px] font-bold uppercase tracking-widest text-gray-400">
-                <a href="#services" class="hover:text-neon transition">Services</a>
-                <a href="a-propos.html" class="hover:text-neon transition">Expertise</a>
-                <a href="partenaires-msp.html" class="hover:text-neon transition">Partenaires</a>
-                <a href="#contact" class="text-neon border border-neon/30 px-4 py-1 rounded-full">Contact Direct</a>
+    <header class="w-full max-w-6xl mx-auto px-4 py-4 md:px-6 md:py-8 flex items-center justify-between z-10">
+        <div class="flex items-center gap-3 md:gap-4">
+            <img src="assets/logo-novasuite.webp" alt="NovaSuite Logo" class="w-10 h-10 md:w-14 md:h-14 rounded-lg border border-gray-800 shadow-lg">
+            <div>
+                <h1 class="text-xl md:text-2xl font-black text-white tracking-tight leading-none">NovaSuite</h1>
+                <p class="text-[9px] md:text-xs text-neon uppercase tracking-widest font-bold mt-1">Infrastructure IA Locale</p>
             </div>
         </div>
-    </nav>
-
-    <header class="relative z-10 pt-20 pb-32 px-6 text-center">
-        <div class="max-w-4xl mx-auto">
-            <span class="inline-block bg-neon/10 text-neon border border-neon/20 text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-[0.2em] mb-6">Conformité Loi 25 Garantie</span>
-            <h1 class="text-5xl md:text-8xl font-900 tracking-tighter mb-8 leading-[0.9]">SOUVERAINETÉ <br><span class="text-neon">NUMÉRIQUE.</span></h1>
-            <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">Infrastructure IA locale et audits de cybersécurité isolés du cloud pour les entreprises du Québec.</p>
-            <div class="flex flex-col md:flex-row gap-4 justify-center">
-                <a href="defi-audit.html" class="bg-neon text-black font-black px-8 py-5 rounded-xl hover:bg-white transition-all transform hover:scale-105 uppercase text-sm tracking-tight shadow-[0_0_30px_rgba(0,255,65,0.3)]">Défi d'Audit 60 Secondes (Gratuit)</a>
-                <a href="#services" class="glass px-8 py-5 rounded-xl hover:bg-white/5 transition-all text-sm font-bold uppercase tracking-widest">Nos Forfaits</a>
-            </div>
-        </div>
+        <a href="a-propos.html" class="text-[10px] md:text-sm text-gray-300 border border-gray-700 px-3 py-1.5 rounded-full md:border-none md:p-0 hover:text-white transition">Notre Expertise</a>
     </header>
 
-    <section id="services" class="relative z-10 py-24 px-6 bg-black/50">
-        <div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-8">
-            <div class="glass p-10 rounded-3xl border-t-4 border-neon/50">
-                <h3 class="text-2xl font-black mb-4 uppercase">Audit Express</h3>
-                <p class="text-gray-400 text-sm mb-6 leading-relaxed">Diagnostic Loi 25 immédiat et scan de vulnérabilités Shodan.</p>
-                <div class="text-3xl font-black mb-8">499 $ <span class="text-xs text-gray-500">CAD</span></div>
-                <a href="https://buy.stripe.com/5kA9AT6zwa8W50PeUV" class="block w-full text-center py-4 rounded-xl border border-neon text-neon font-black hover:bg-neon hover:text-black transition">COMMANDER</a>
+    <main class="w-full max-w-6xl mx-auto px-4 md:px-6 mb-16 mt-2">
+        <div class="relative w-full rounded-3xl overflow-hidden border border-gray-800 shadow-[0_0_40px_rgba(0,255,65,0.05)]">
+            <div class="absolute inset-0 z-0" style="background-color: #0d1424; background-image: url('assets/banner-novasuite.webp'); background-size: cover; background-position: center; filter: brightness(0.4);"></div>
+            <div class="relative z-10 flex flex-col items-center justify-center text-center px-4 py-12 md:px-6 md:py-32">
+                <div class="inline-block mb-4 md:mb-6 px-3 py-1 md:px-4 md:py-1.5 rounded-full border border-neon/50 bg-black/60 backdrop-blur-sm text-neon text-[9px] md:text-xs font-bold uppercase tracking-wider">Conformité Loi 25 Garantie</div>
+                <h2 class="text-4xl md:text-7xl font-black text-white mb-4 md:mb-6 leading-tight drop-shadow-2xl">Souveraineté Numérique. <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-neon to-emerald-400 drop-shadow-none">Zéro Compromis.</span></h2>
+                <p class="text-sm md:text-xl text-gray-200 max-w-2xl mb-8 md:mb-10 leading-relaxed drop-shadow-lg">Audits de cybersécurité express et déploiement d'Intelligence Artificielle 100% isolée du cloud pour les entreprises du Québec.</p>
+                <div class="flex flex-col sm:flex-row gap-3 md:gap-4 w-full justify-center items-center mb-6 md:mb-10">
+                    <a href="defi-audit.html" class="cta-audit w-full sm:w-auto text-sm md:text-xl py-3 md:py-4 px-6 md:px-8 shadow-[0_0_20px_rgba(0,255,65,0.2)]">Défi d'Audit 60s : POC Gratuit</a>
+                    <a href="partenaires-msp.html" class="cta-msp w-full sm:w-auto text-sm md:text-lg py-3 md:py-4 px-6 md:px-8">Accès Partenaires MSP</a>
+                </div>
+                <div class="flex flex-wrap justify-center items-center gap-3 md:gap-6 mt-4 opacity-70">
+                    <span class="flex items-center gap-1.5 text-[10px] md:text-xs font-mono text-gray-300 border border-gray-600 bg-black/40 px-2.5 py-1 rounded"><span class="text-neon">✓</span> STANDARD SOC 2</span>
+                    <span class="flex items-center gap-1.5 text-[10px] md:text-xs font-mono text-gray-300 border border-gray-600 bg-black/40 px-2.5 py-1 rounded"><span class="text-neon">✓</span> OWASP TOP 10</span>
+                    <span class="flex items-center gap-1.5 text-[10px] md:text-xs font-mono text-gray-300 border border-gray-600 bg-black/40 px-2.5 py-1 rounded"><span class="text-neon">✓</span> GOUVERNANCE UNDRIP</span>
+                </div>
             </div>
-            <div class="glass p-10 rounded-3xl border-t-4 border-white shadow-2xl scale-105 bg-[#0f172a]">
-                <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-white text-black text-[10px] font-black px-4 py-1 rounded-full uppercase">Populaire</div>
-                <h3 class="text-2xl font-black mb-4 uppercase">Intégration</h3>
-                <p class="text-gray-300 text-sm mb-6 leading-relaxed">Mise aux normes Loi 25 et remédiation des failles critiques.</p>
-                <div class="text-3xl font-black mb-8">899 $ <span class="text-xs text-gray-500">CAD</span></div>
-                <a href="https://buy.stripe.com/9B69AT2jg84O8d19GS" class="block w-full text-center py-4 rounded-xl bg-white text-black font-black hover:bg-neon transition">SÉCURISER MON SITE</a>
+        </div>
+    </main>
+
+    <section id="offres" class="w-full max-w-6xl mx-auto px-6 mb-24 z-10 flex-1">
+        <h2 class="text-3xl font-black text-center text-white mb-10">Nos Forfaits de Sécurité</h2>
+        <div class="grid md:grid-cols-3 gap-6">
+            <div class="glass rounded-2xl p-8 border-t-4 border-t-gray-500 flex flex-col">
+                <h3 class="text-xl font-bold text-white mb-2">Audit Express</h3>
+                <p class="text-gray-400 text-xs mb-6 flex-1">Diagnostic immédiat Loi 25 et scan de vulnérabilités (Shodan).</p>
+                <div class="text-4xl font-black text-white mb-6">499 $<span class="text-sm text-gray-500 font-normal"> CAD</span></div>
+                <ul class="space-y-3 text-gray-300 text-xs mb-8">
+                    <li class="flex items-center gap-2"><span class="text-gray-500">✓</span> Scan d'URL approfondi</li>
+                    <li class="flex items-center gap-2"><span class="text-gray-500">✓</span> Détection transferts hors-Québec</li>
+                </ul>
+                <a href="https://buy.stripe.com/00w8wPaPMfxgcthaKW2VG05" class="cta-commander bg-gray-800 text-white border-gray-600 hover:bg-gray-700 mt-auto">Commander</a>
             </div>
-            <div class="glass p-10 rounded-3xl border-t-4 border-blue-500/50">
-                <h3 class="text-2xl font-black mb-4 uppercase">Nucleus IA</h3>
-                <p class="text-gray-400 text-sm mb-6 leading-relaxed">Infrastructure IA (RAG) locale isolée du cloud public.</p>
-                <div class="text-3xl font-black mb-8">1 499 $ <span class="text-xs text-gray-500">CAD</span></div>
-                <a href="https://buy.stripe.com/5kAbI11fc0CmfvafZ5" class="block w-full text-center py-4 rounded-xl border border-blue-500 text-blue-400 font-black hover:bg-blue-500 hover:text-black transition">DÉPLOYER NUCLEUS</a>
+
+            <div class="glass rounded-2xl p-8 border-t-4 border-t-neon neon-glow transform md:-translate-y-4 flex flex-col relative">
+                <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-neon text-black text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest">Populaire</div>
+                <h3 class="text-2xl font-bold text-white mb-2">Intégration Standard</h3>
+                <p class="text-gray-400 text-xs mb-6 flex-1">Déploiement des correctifs critiques et mise aux normes Loi 25.</p>
+                <div class="text-4xl font-black text-white mb-6">899 $<span class="text-sm text-gray-500 font-normal"> CAD</span></div>
+                <ul class="space-y-3 text-gray-300 text-xs mb-8">
+                    <li class="flex items-center gap-2"><span class="text-neon">✓</span> Audit Express Inclus</li>
+                    <li class="flex items-center gap-2"><span class="text-neon">✓</span> Remédiation des vulnérabilités</li>
+                </ul>
+                <a href="https://buy.stripe.com/9B69AT2jg84O8d19GS2VG08" class="cta-commander mt-auto">Sécuriser mon entreprise</a>
+            </div>
+
+            <div class="glass rounded-2xl p-8 border-t-4 border-t-gold flex flex-col">
+                <h3 class="text-xl font-bold text-white mb-2">Formule Nucleus</h3>
+                <p class="text-gray-400 text-xs mb-6 flex-1">L'arsenal complet. Infrastructure IA locale et souveraine (RAG).</p>
+                <div class="text-4xl font-black text-white mb-6">1 499 $<span class="text-sm text-gray-500 font-normal"> CAD</span></div>
+                <ul class="space-y-3 text-gray-300 text-xs mb-8">
+                    <li class="flex items-center gap-2"><span class="text-gold">★</span> Agent IA 100% hors-cloud</li>
+                    <li class="flex items-center gap-2"><span class="text-gold">★</span> Chiffrement avancé des données</li>
+                </ul>
+                <a href="https://buy.stripe.com/fZubJ13nkbh078X9GS2VG07" class="cta-commander bg-black text-gold border-gold hover:bg-gold mt-auto">Déployer Nucleus</a>
             </div>
         </div>
     </section>
 
-    <section id="contact" class="relative z-10 py-32 px-6">
-        <div class="max-w-xl mx-auto glass p-12 rounded-[40px] text-center border-t-2 border-neon">
-            <h2 class="text-4xl font-black mb-4 uppercase tracking-tighter">Contact Direct</h2>
-            <p class="text-gray-400 mb-10 text-sm italic">"L'excellence en sécurité commence par un échange direct." <br>— Monseigneur Yarrow</p>
-            
-            <form id="index-contact-form" class="space-y-4">
-                <input type="text" id="idx_nom" placeholder="Nom / Entreprise" required class="w-full p-5 bg-black/50 border border-white/10 rounded-2xl outline-none focus:border-neon transition text-white">
-                <input type="email" id="idx_email" placeholder="Courriel" required class="w-full p-5 bg-black/50 border border-white/10 rounded-2xl outline-none focus:border-neon transition text-white">
-                <textarea id="idx_message" placeholder="Votre projet..." required class="w-full p-5 bg-black/50 border border-white/10 rounded-2xl outline-none focus:border-neon transition text-white h-32"></textarea>
-                <button type="submit" id="idx_btn" class="w-full bg-neon text-black font-black py-5 rounded-2xl hover:bg-white transition-all uppercase tracking-widest text-xs">Transmettre le message</button>
-                <div id="idx_status" class="mt-4 text-[11px] font-mono hidden"></div>
-            </form>
-        </div>
-    </section>
-
-    <footer class="relative z-10 py-20 border-t border-white/5 text-center text-gray-500 text-[10px] uppercase tracking-[0.3em]">
-        <p>© 2026 NovaSuite Technologies. Infrastructure Souveraine.</p>
-        <div class="flex justify-center gap-6 mt-6">
-            <a href="mentions-legales.html" class="hover:text-white transition">Légal</a>
-            <a href="politique-confidentialite.html" class="hover:text-white transition">Confidentialité</a>
-            <a href="contact.html" class="hover:text-white transition">Contact</a>
+    <footer class="w-full border-t border-gray-800 bg-black/80 py-10 text-center text-xs text-gray-500 mt-auto z-10 relative">
+        <p>© 2026 NovaSuite Technologies. Infrastructure isolée et souveraine.</p>
+        <div class="flex flex-wrap justify-center items-center gap-4 mt-4">
+            <a href="mentions-legales.html" class="hover:text-neon transition">Mentions Légales</a><span class="text-gray-700">|</span>
+            <a href="politique-confidentialite.html" class="hover:text-neon transition">Confidentialité</a><span class="text-gray-700">|</span>
+            <button type="button" onclick="showCookieBanner()" class="hover:text-neon font-bold cursor-pointer transition">Préférences Cookies</button><span class="text-gray-700">|</span>
+            <a href="contact.html" class="text-neon font-bold hover:text-white transition">Contact</a>
         </div>
     </footer>
 
+    <div id="cookie-banner" class="fixed bottom-4 left-4 right-4 md:right-auto md:w-96 bg-[#0f172a]/95 backdrop-blur border border-white/10 p-6 rounded-xl shadow-2xl z-[90000]" style="display:none;border-left:4px solid #00ff41;">
+        <h3 class="text-white font-bold text-sm mb-2 flex items-center gap-2">🛡️ Conformité Loi 25</h3>
+        <p class="text-xs text-gray-300 mb-4 leading-relaxed">NovaSuite utilise des cookies strictement nécessaires pour la sécurité de votre navigation.</p>
+        <div class="flex gap-3">
+            <button onclick="acceptCookies()" class="flex-1 bg-neon text-black text-xs font-black py-2.5 rounded hover:bg-white transition">Accepter</button>
+            <button onclick="declineCookies()" class="flex-1 border border-gray-600 text-gray-300 text-xs font-bold py-2.5 rounded hover:bg-gray-800 transition">Refuser</button>
+        </div>
+    </div>
+    
+    <div id="chat-container" class="fixed bottom-6 right-6 z-[99999] flex flex-col items-end">
+        <div id="chat-window" class="hidden flex-col bg-[#0a0a0a] border border-neon border-b-0 rounded-t-xl h-96 w-[calc(100vw-3rem)] sm:w-80 shadow-[0_20px_25px_-5px_rgba(0,0,0,0.8)] mb-2 overflow-hidden font-mono">
+            <div class="bg-green-600 text-black p-3 font-bold flex justify-between items-center">
+                <span>🤖 AGENT NOVA v1.0</span>
+                <button type="button" onclick="toggleChat()" class="text-black hover:text-white font-black text-lg leading-none">&times;</button>
+            </div>
+            <div id="chat-messages" class="flex-1 p-4 overflow-y-auto text-[11px] bg-black/95 text-green-500">
+                <p>[SYS] Nova en ligne.</p>
+            </div>
+            <div class="p-2 bg-[#111] flex border-t border-[#333]">
+                <input id="chat-input" type="text" class="flex-1 bg-black border border-[#333] p-2 text-white text-[11px] outline-none focus:border-neon" placeholder="Entrer commande..." onkeypress="if(event.key==='Enter') sendMessage()">
+                <button type="button" onclick="sendMessage()" class="bg-green-500 hover:bg-white text-black px-3 font-bold transition">></button>
+            </div>
+        </div>
+        <button type="button" onclick="toggleChat()" class="bg-black border border-neon text-neon font-bold py-3 px-4 rounded-full shadow-[0_0_15px_rgba(0,255,65,0.4)] hover:bg-neon hover:text-black transition-all flex items-center justify-center gap-2 group">
+            <span class="text-xl leading-none">💬</span>
+            <span class="hidden md:inline text-[10px] tracking-widest group-hover:text-black">ASSISTANCE IA NOVA</span>
+        </button>
+    </div>
+
     <script>
-        document.getElementById('index-contact-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const btn = document.getElementById('idx_btn');
-            const status = document.getElementById('idx_status');
-            
-            btn.innerText = "ENVOI EN COURS...";
-            btn.disabled = true;
-            status.classList.remove('hidden');
-            status.style.color = "#00ff41";
-            status.innerText = "> Initialisation du tunnel sécurisé...";
-
-            const payload = {
-                nom: document.getElementById('idx_nom').value,
-                email: document.getElementById('idx_email').value,
-                message: document.getElementById('idx_message').value
-            };
-
-            try {
-                const response = await fetch('https://novasuite-1.onrender.com/api/contact', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                if (response.ok) {
-                    status.innerText = "> MESSAGE TRANSMIS AVEC SUCCÈS, MONSEIGNEUR.";
-                    document.getElementById('index-contact-form').reset();
-                    btn.innerText = "TRANSMIS";
-                } else {
-                    status.style.color = "#ff4444";
-                    status.innerText = "> ERREUR SERVEUR (CHECK RENDER LOGS)";
-                    btn.disabled = false;
-                    btn.innerText = "RÉESSAYER";
-                }
-            } catch (err) {
-                status.style.color = "#ff4444";
-                status.innerText = "> ÉCHEC DE CONNEXION AU SERVEUR.";
-                btn.disabled = false;
-                btn.innerText = "RÉESSAYER";
-            }
-        });
+        document.addEventListener("DOMContentLoaded",function(){if(!localStorage.getItem("novasuite_consent")){document.getElementById("cookie-banner").style.display="block";}});function acceptCookies(){localStorage.setItem("novasuite_consent","accepted");document.getElementById("cookie-banner").style.display="none";}function declineCookies(){localStorage.setItem("novasuite_consent","declined");document.getElementById("cookie-banner").style.display="none";}function showCookieBanner(){document.getElementById("cookie-banner").style.display="block";}function toggleChat(){const w=document.getElementById('chat-window');w.style.display=w.style.display==='none'||w.style.display===''?'flex':'none';}async function sendMessage(){const i=document.getElementById('chat-input');const m=document.getElementById('chat-messages');if(!i.value.trim())return;m.innerHTML+=`<p style="color:white;margin-top:8px;">> ${i.value.trim()}</p>`;const msg=i.value.trim();i.value='';m.scrollTop=m.scrollHeight;try{const r=await fetch('https://novasuite-1.onrender.com/api/chat/nova',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg})});const d=await r.json();m.innerHTML+=`<p style="color:#4ade80;margin-top:8px;">NOVA: ${d.response||d.detail}</p>`;}catch(e){m.innerHTML+=`<p style="color:#ef4444;margin-top:8px;">[ERREUR] Connexion API Render échouée.</p>`;}m.scrollTop=m.scrollHeight;}
     </script>
 </body>
 </html>

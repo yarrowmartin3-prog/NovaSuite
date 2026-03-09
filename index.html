@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NovaSuite • Cybersécurité & IA Souveraine</title>
     
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX');
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -26,10 +33,7 @@
         .gold-glow { box-shadow: 0 0 20px rgba(255, 215, 0, 0.15); }
         body { background-color: #050505; color: #e2e8f0; font-family: 'Inter', system-ui, sans-serif; }
 
-        /* =============================================
-           CTA — AUDIT PRINCIPAL (Hero + Section finale)
-           Blanc sur noir → inversion neon au hover
-        ============================================= */
+        /* CTA — AUDIT PRINCIPAL */
         .cta-audit {
             position: relative;
             display: inline-block;
@@ -42,37 +46,22 @@
             border-radius: 0.5rem;
             border: 1px solid transparent;
             text-align: center;
-            transition:
-                color 0.35s ease,
-                background 0.35s ease,
-                border-color 0.35s ease,
-                box-shadow 0.35s ease,
-                transform 0.2s ease;
+            transition: color 0.35s ease, background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease, transform 0.2s ease;
             box-shadow: 0 0 0px rgba(0, 255, 65, 0);
             letter-spacing: 0.01em;
         }
-
-        /* Scan-line sweep effect */
         .cta-audit::before {
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(
-                110deg,
-                transparent 25%,
-                rgba(0, 255, 65, 0.18) 50%,
-                transparent 75%
-            );
+            background: linear-gradient(110deg, transparent 25%, rgba(0, 255, 65, 0.18) 50%, transparent 75%);
             transform: translateX(-100%);
             transition: transform 0.55s ease;
         }
-
-        /* Neon border pulse keyframe */
         @keyframes neon-border-pulse {
             0%, 100% { box-shadow: 0 0 12px rgba(0,255,65,0.45), 0 0 28px rgba(0,255,65,0.2), inset 0 0 8px rgba(0,255,65,0.05); }
             50%       { box-shadow: 0 0 22px rgba(0,255,65,0.7), 0 0 48px rgba(0,255,65,0.3), inset 0 0 14px rgba(0,255,65,0.08); }
         }
-
         .cta-audit:hover {
             background: #000000;
             color: #00ff41;
@@ -80,17 +69,10 @@
             transform: translateY(-2px) scale(1.015);
             animation: neon-border-pulse 1.8s ease-in-out infinite;
         }
-        .cta-audit:hover::before {
-            transform: translateX(100%);
-        }
-        .cta-audit:active {
-            transform: translateY(0px) scale(0.99);
-        }
+        .cta-audit:hover::before { transform: translateX(100%); }
+        .cta-audit:active { transform: translateY(0px) scale(0.99); }
 
-        /* =============================================
-           CTA — PARTENAIRES MSP (Hero)
-           Gold border → remplissage gold + texte noir
-        ============================================= */
+        /* CTA — PARTENAIRES MSP */
         .cta-msp {
             position: relative;
             display: inline-block;
@@ -103,51 +85,31 @@
             border-radius: 0.5rem;
             border: 1px solid #ffd700;
             text-align: center;
-            transition:
-                color 0.3s ease,
-                background 0.3s ease,
-                box-shadow 0.3s ease,
-                transform 0.2s ease;
+            transition: color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
             box-shadow: 0 0 20px rgba(255, 215, 0, 0.15);
         }
-
-        /* Gold shimmer sweep */
         .cta-msp::before {
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(
-                110deg,
-                transparent 20%,
-                rgba(255, 215, 0, 0.22) 50%,
-                transparent 80%
-            );
+            background: linear-gradient(110deg, transparent 20%, rgba(255, 215, 0, 0.22) 50%, transparent 80%);
             transform: translateX(-110%);
             transition: transform 0.5s ease;
         }
-
         @keyframes gold-border-pulse {
             0%, 100% { box-shadow: 0 0 14px rgba(255,215,0,0.5), 0 0 30px rgba(255,215,0,0.2); }
             50%       { box-shadow: 0 0 26px rgba(255,215,0,0.8), 0 0 55px rgba(255,215,0,0.35); }
         }
-
         .cta-msp:hover {
             background: #ffd700;
             color: #000000;
             transform: translateY(-2px) scale(1.015);
             animation: gold-border-pulse 1.8s ease-in-out infinite;
         }
-        .cta-msp:hover::before {
-            transform: translateX(110%);
-        }
-        .cta-msp:active {
-            transform: translateY(0px) scale(0.99);
-        }
+        .cta-msp:hover::before { transform: translateX(110%); }
+        .cta-msp:active { transform: translateY(0px) scale(0.99); }
 
-        /* =============================================
-           CTA — COMMANDER (Card Audit Express)
-           Outline neon → fill neon avec texte noir
-        ============================================= */
+        /* CTA — COMMANDER */
         .cta-commander {
             position: relative;
             display: block;
@@ -160,15 +122,9 @@
             border-radius: 0.5rem;
             border: 1px solid #00ff41;
             text-align: center;
-            transition:
-                color 0.28s ease,
-                background 0.28s ease,
-                box-shadow 0.28s ease,
-                transform 0.18s ease;
+            transition: color 0.28s ease, background 0.28s ease, box-shadow 0.28s ease, transform 0.18s ease;
             box-shadow: 0 0 0px rgba(0,255,65,0);
         }
-
-        /* Vertical wipe fill */
         .cta-commander::after {
             content: '';
             position: absolute;
@@ -179,28 +135,12 @@
             transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 0;
         }
-        .cta-commander span {
-            position: relative;
-            z-index: 1;
-            transition: color 0.28s ease;
-        }
+        .cta-commander span { position: relative; z-index: 1; transition: color 0.28s ease; }
+        .cta-commander:hover { color: #000000; box-shadow: 0 0 18px rgba(0,255,65,0.4), 0 0 40px rgba(0,255,65,0.15); transform: translateY(-1px); }
+        .cta-commander:hover::after { transform: scaleY(1); }
+        .cta-commander:active { transform: translateY(0px); }
 
-        .cta-commander:hover {
-            color: #000000;
-            box-shadow: 0 0 18px rgba(0,255,65,0.4), 0 0 40px rgba(0,255,65,0.15);
-            transform: translateY(-1px);
-        }
-        .cta-commander:hover::after {
-            transform: scaleY(1);
-        }
-        .cta-commander:active {
-            transform: translateY(0px);
-        }
-
-        /* =============================================
-           CTA — ACCÉDER TERM SHEET (Card MSP)
-           Déjà gold-fill, on enrichit le hover glow
-        ============================================= */
+        /* CTA — ACCÉDER TERM SHEET */
         .cta-termsheet {
             position: relative;
             display: block;
@@ -213,14 +153,9 @@
             border-radius: 0.5rem;
             border: 1px solid transparent;
             text-align: center;
-            transition:
-                background 0.25s ease,
-                box-shadow 0.3s ease,
-                transform 0.18s ease,
-                border-color 0.25s ease;
+            transition: background 0.25s ease, box-shadow 0.3s ease, transform 0.18s ease, border-color 0.25s ease;
             box-shadow: 0 4px 24px rgba(255,215,0,0.2);
         }
-
         .cta-termsheet::before {
             content: '';
             position: absolute;
@@ -229,23 +164,11 @@
             opacity: 0;
             transition: opacity 0.3s ease;
         }
+        .cta-termsheet:hover { background: #ffe033; box-shadow: 0 0 20px rgba(255,215,0,0.6), 0 0 50px rgba(255,215,0,0.25), 0 4px 30px rgba(255,215,0,0.3); transform: translateY(-1px); }
+        .cta-termsheet:hover::before { opacity: 1; }
+        .cta-termsheet:active { transform: translateY(0px); }
 
-        .cta-termsheet:hover {
-            background: #ffe033;
-            box-shadow: 0 0 20px rgba(255,215,0,0.6), 0 0 50px rgba(255,215,0,0.25), 0 4px 30px rgba(255,215,0,0.3);
-            transform: translateY(-1px);
-        }
-        .cta-termsheet:hover::before {
-            opacity: 1;
-        }
-        .cta-termsheet:active {
-            transform: translateY(0px);
-        }
-
-        /* =============================================
-           CTA — SECTION FINALE (grand CTA centré)
-           Neon fill → inverse dark + border neon + pulse
-        ============================================= */
+        /* CTA — SECTION FINALE */
         .cta-final {
             position: relative;
             display: inline-block;
@@ -259,15 +182,9 @@
             border-radius: 0.5rem;
             border: 1px solid #00ff41;
             text-align: center;
-            transition:
-                color 0.32s ease,
-                background 0.32s ease,
-                box-shadow 0.32s ease,
-                transform 0.2s ease;
+            transition: color 0.32s ease, background 0.32s ease, box-shadow 0.32s ease, transform 0.2s ease;
             box-shadow: 0 0 20px rgba(0,255,65,0.4);
         }
-
-        /* Ripple on hover */
         .cta-final::before {
             content: '';
             position: absolute;
@@ -281,26 +198,18 @@
             transition: width 0.5s ease, height 0.5s ease, opacity 0.5s ease;
             opacity: 0;
         }
-
         @keyframes final-pulse {
             0%, 100% { box-shadow: 0 0 24px rgba(0,255,65,0.5), 0 0 60px rgba(0,255,65,0.2); }
             50%       { box-shadow: 0 0 42px rgba(0,255,65,0.8), 0 0 90px rgba(0,255,65,0.35); }
         }
-
         .cta-final:hover {
             background: #000000;
             color: #00ff41;
             transform: scale(1.04) translateY(-2px);
             animation: final-pulse 2s ease-in-out infinite;
         }
-        .cta-final:hover::before {
-            width: 300px;
-            height: 300px;
-            opacity: 1;
-        }
-        .cta-final:active {
-            transform: scale(1.01) translateY(0px);
-        }
+        .cta-final:hover::before { width: 300px; height: 300px; opacity: 1; }
+        .cta-final:active { transform: scale(1.01) translateY(0px); }
     </style>
 </head>
 <body class="antialiased min-h-screen flex flex-col relative overflow-x-hidden">
@@ -318,9 +227,7 @@
 
     <main class="w-full max-w-6xl mx-auto px-4 md:px-6 mb-24 mt-4">
         <div class="relative w-full rounded-3xl overflow-hidden border border-gray-800 shadow-[0_0_40px_rgba(0,255,65,0.05)]">
-            
-            <div class="absolute inset-0 z-0" style="background-image: url('assets/banner-novasuite.webp'); background-size: cover; background-position: center; filter: brightness(0.4);"></div>
-            
+            <div class="absolute inset-0 z-0" style="background-color: #0d1424; background-image: url('assets/banner-novasuite.webp'); background-size: cover; background-position: center; filter: brightness(0.4);"></div>
             <div class="relative z-10 flex flex-col items-center justify-center text-center px-6 py-24 md:py-32">
                 <div class="inline-block mb-6 px-4 py-1.5 rounded-full border border-neon/50 bg-black/60 backdrop-blur-sm text-neon text-xs font-bold uppercase tracking-wider">
                     Conformité Loi 25 Garantie
@@ -346,7 +253,6 @@
 
     <section id="offres" class="w-full max-w-6xl mx-auto px-6 mb-24 z-10">
         <div class="grid md:grid-cols-2 gap-8">
-            
             <div class="glass rounded-2xl p-8 border-t-4 border-t-neon neon-glow hover:-translate-y-1 transition duration-300">
                 <h3 class="text-2xl font-bold text-white mb-2">Audit Express</h3>
                 <p class="text-gray-400 text-sm mb-6">Diagnostic immédiat Loi 25 et scan de vulnérabilités.</p>
@@ -371,7 +277,6 @@
                 </ul>
                 <a href="./partenaires-msp.html" class="cta-termsheet">Accéder à la Term Sheet</a>
             </div>
-
         </div>
     </section>
 
@@ -379,9 +284,7 @@
         <div class="glass p-12 rounded-3xl border border-neon/30">
             <h3 class="text-3xl font-bold text-white mb-4">Prêt pour votre diagnostic gratuit ?</h3>
             <p class="text-gray-400 mb-8 max-w-2xl mx-auto">Lancez le POC gratuit maintenant. Obtenez une citation de règle et une commande d'exécution en moins de 60 secondes.</p>
-            <a href="defi-audit.php" class="cta-final">
-                DÉFI D'AUDIT DE 60 SECONDES
-            </a>
+            <a href="defi-audit.php" class="cta-final">DÉFI D'AUDIT DE 60 SECONDES</a>
         </div>
     </section>
 
@@ -424,38 +327,34 @@
     </div>
 
     <script>
-        // ==========================================
-        // Loi 25 - Version Forteresse (Toujours visible par défaut)
-        // ==========================================
+        // Loi 25 — Architecture Forteresse Visible
+        // La bannière est visible par défaut (HTML).
+        // Le JS ne sert QU'À la cacher si consentement déjà donné.
         function checkLoi25() {
             try {
-                // Si le client a déjà accepté, on cache la bannière
-                if(localStorage.getItem('nova_consent') === 'granted') {
-                    document.getElementById('cookie-banner').style.display = 'none';
+                if (localStorage.getItem('nova_consent') === 'granted') {
+                    document.getElementById('cookie-banner').classList.add('hidden');
                 }
-            } catch(e) {
-                // En mode ultra-sécurisé, si localStorage est bloqué, la bannière restera visible (Conformité maximale)
+                // Pas de consentement stocké → bannière reste visible, rien à faire.
+            } catch (e) {
+                // localStorage bloqué (mode incognito strict, Safari ITP, etc.)
+                // → on laisse la bannière visible, comportement sécuritaire par défaut.
             }
         }
 
         function acceptCookies() {
             try {
                 localStorage.setItem('nova_consent', 'granted');
-            } catch(e) {
-                // Ignore l'erreur de sauvegarde en navigation privée
+            } catch (e) {
+                // Écriture impossible (mode privé) → on cache quand même pour la session.
             }
-            document.getElementById('cookie-banner').style.display = 'none';
+            document.getElementById('cookie-banner').classList.add('hidden');
         }
 
-        // Exécution immédiate
-        checkLoi25();
-
-        // ==========================================
-        // Chat Nova (Intact)
-        // ==========================================
+        // Chat Nova — intact
         document.getElementById('nova-fab').addEventListener('click', () => {
             document.getElementById('nova-box').classList.toggle('hidden');
-            if(!document.getElementById('nova-box').classList.contains('hidden')) {
+            if (!document.getElementById('nova-box').classList.contains('hidden')) {
                 document.getElementById('nova-field').focus();
             }
         });
@@ -464,16 +363,16 @@
             const input = document.getElementById('nova-field');
             const log = document.getElementById('nova-log');
             const val = input.value.trim();
-            if(!val) return;
-            
+            if (!val) return;
+
             log.innerHTML += `<div class="bg-panel border-r-2 border-white text-white p-3 rounded rounded-tr-none self-end max-w-[85%]">${val}</div>`;
             input.value = '';
             log.scrollTop = log.scrollHeight;
-            
+
             setTimeout(() => {
                 let r = "Requête chiffrée. Traitement en environnement Zero-Cloud...";
-                if(val.toLowerCase().includes('hugo') || val.toLowerCase().includes('atria')) r = "Accès reconnu. Les conditions de partenariat MSP sont disponibles dans le portail.";
-                
+                if (val.toLowerCase().includes('hugo') || val.toLowerCase().includes('atria')) r = "Accès reconnu. Les conditions de partenariat MSP sont disponibles dans le portail.";
+
                 log.innerHTML += `<div class="bg-gray-800 border-l-2 border-neon text-gray-300 p-3 rounded rounded-tl-none self-start max-w-[85%]">${r}</div>`;
                 log.scrollTop = log.scrollHeight;
             }, 800);

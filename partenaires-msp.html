@@ -1,104 +1,71 @@
 <!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Portail Partenaire • NovaSuite Technologies</title>
-  <style>
-    :root { --neon: #00ff41; --bg: #050505; --card: #111111; --text: #eeeeee; --gray-logo: #888888; }
-    body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; line-height: 1.6; }
-    .wrap { max-width: 900px; margin: 0 auto; padding: 0 20px; }
-    
-    /* Navigation de retour */
-    nav { padding: 30px 0; border-bottom: 1px solid #222; margin-bottom: 50px; }
-    .back-btn { color: var(--gray-logo); text-decoration: none; font-size: 0.9rem; font-weight: bold; transition: 0.3s; }
-    .back-btn:hover { color: #fff; }
-
-    /* Header Partenaire */
-    header { text-align: left; margin-bottom: 60px; }
-    h1 { font-size: 2.5rem; color: #fff; margin-bottom: 10px; }
-    .badge { display: inline-block; padding: 5px 12px; background: #ffd700; color: #000; font-weight: 800; font-size: 0.7rem; text-transform: uppercase; border-radius: 2px; margin-bottom: 20px; }
-
-    /* Contenu Term Sheet */
-    .section-box { background: var(--card); border: 1px solid #222; padding: 40px; border-radius: 4px; margin-bottom: 30px; }
-    h2 { color: #fff; border-bottom: 1px solid #333; padding-bottom: 10px; margin-top: 0; }
-    .highlight { color: var(--neon); font-weight: bold; }
-    
-    /* Table des Prix MSP */
-    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-    th { text-align: left; color: var(--gray-logo); font-size: 0.8rem; text-transform: uppercase; padding: 10px 0; border-bottom: 1px solid #333; }
-    td { padding: 15px 0; border-bottom: 1px solid #222; font-size: 0.95rem; }
-    .price-col { text-align: right; font-weight: bold; color: #fff; }
-
-    footer { padding: 60px 0; text-align: center; color: #444; font-size: 0.8rem; }
-  </style>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Portail Partenaire • NovaSuite Technologies</title>
+    <style>
+        :root { --neon: #00ff41; --bg: #050505; --card: #111111; --text: #eeeeee; --gray-logo: #888888; }
+        body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; padding-top: 40px; line-height: 1.6; }
+        .wrap { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+        nav { padding: 30px 0; border-bottom: 1px solid #222; margin-bottom: 50px; }
+        .back-btn { color: var(--gray-logo); text-decoration: none; font-size: 0.9rem; font-weight: bold; transition: 0.3s; }
+        .back-btn:hover { color: #fff; }
+        h1, h2 { color: #fff; }
+        .badge { display: inline-block; padding: 5px 12px; background: #ffd700; color: #000; font-weight: 800; font-size: 0.7rem; border-radius: 2px; margin-bottom: 20px; text-transform: uppercase; }
+        .section-box { background: var(--card); border: 1px solid #222; padding: 40px; border-radius: 4px; margin-bottom: 30px; }
+        .highlight { color: var(--neon); font-weight: bold; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th { text-align: left; color: var(--gray-logo); font-size: 0.8rem; padding: 10px 0; border-bottom: 1px solid #333; text-transform: uppercase; }
+        td { padding: 15px 0; border-bottom: 1px solid #222; font-size: 0.95rem; }
+        .price-col { text-align: right; font-weight: bold; color: #fff; }
+        footer { padding: 60px 0; text-align: center; color: #444; font-size: 0.8rem; }
+    </style>
 </head>
 <body>
+    <nav class="wrap">
+        <a href="./index.html" class="back-btn">← RETOUR À L'INFRASTRUCTURE PUBLIQUE</a>
+    </nav>
+    <main class="wrap">
+        <header style="text-align: left; margin-bottom: 60px;">
+            <div class="badge">Accès Restreint • Partenaires MSP</div>
+            <h1 style="font-size: 2.5rem; margin-bottom: 10px;">Term Sheet Enterprise</h1>
+            <p style="color: var(--gray-logo);">Offre exclusive destinée aux collaborateurs stratégiques (ATRIA / ServLinks).</p>
+        </header>
+        
+        <div class="section-box">
+            <h2>1. Protocoles de Revenus</h2>
+            <p>NovaSuite propose une structure de revenus hybride pour les partenaires certifiés :</p>
+            <ul>
+                <li><span class="highlight">Commissions Directes :</span> 15% sur les audits initiaux.</li>
+                <li><span class="highlight">Revenus Récurrents :</span> Partage de 10% sur le Protocole Aegis Monitoring mensuel.</li>
+                <li><span class="highlight">Exclusivité :</span> Protection territoriale pour les 3 premiers clients convertis.</li>
+            </ul>
+        </div>
+        
+        <div class="section-box">
+            <h2>2. Grille Tarifaire Partenaire</h2>
+            <table>
+                <thead><tr><th>Service NovaSuite</th><th class="price-col">Prix Public (CAD)</th></tr></thead>
+                <tbody>
+                    <tr><td>Audit Express (Loi 25)</td><td class="price-col">499 $</td></tr>
+                    <tr><td>Intégration Standard</td><td class="price-col">899 $</td></tr>
+                    <tr><td>Formule Premium Nucleus</td><td class="price-col">1 499 $</td></tr>
+                    <tr><td>Abonnement Aegis (3 premiers clients)</td><td class="price-col">599 $/mois</td></tr>
+                    <tr><td>Abonnement Aegis (Tarif Standard)</td><td class="price-col">799 $/mois</td></tr>
+                </tbody>
+            </table>
+        </div>
 
-<nav class="wrap">
-    <a href="./index.html" class="back-btn">← RETOUR À L'INFRASTRUCTURE PUBLIQUE</a>
-</nav>
+        <div class="section-box" style="border-left: 4px solid #ffd700;">
+            <h2 style="color: #ffd700;">3. Note de Souveraineté</h2>
+            <p>Chaque intégration via un partenaire MSP bénéficie d'une instance <span class="highlight">Nova Nucleus</span> isolée. Les données de conformité sont traitées localement et ne transitent jamais par des serveurs tiers hors du Québec.</p>
+        </div>
+    </main>
+    <footer>© 2026 NovaSuite Technologies • Document Confidentiel • v2.1</footer>
 
-<main class="wrap">
-    <header>
-        <div class="badge">Accès Restreint • Partenaires MSP</div>
-        <h1>Term Sheet Enterprise</h1>
-        <p style="color: var(--gray-logo);">Offre exclusive destinée aux collaborateurs stratégiques (ATRIA / ServLinks).</p>
-    </header>
-
-    <div class="section-box">
-        <h2>1. Protocoles de Revenus</h2>
-        <p>NovaSuite propose une structure de revenus hybride pour les partenaires certifiés :</p>
-        <ul>
-            <li><span class="highlight">Commissions Directes :</span> 15% sur les audits initiaux.</li>
-            <li><span class="highlight">Revenus Récurrents :</span> Partage de 10% sur le Protocole Aegis Monitoring mensuel.</li>
-            <li><span class="highlight">Exclusivité :</span> Protection territoriale pour les 3 premiers clients convertis.</li>
-        </ul>
-    </div>
-
-    <div class="section-box">
-        <h2>2. Grille Tarifaire Partenaire</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Service NovaSuite</th>
-                    <th class="price-col">Prix Public (CAD)</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Audit Express (Loi 25)</td>
-                    <td class="price-col">499 $</td>
-                </tr>
-                <tr>
-                    <td>Intégration Standard</td>
-                    <td class="price-col">899 $</td>
-                </tr>
-                <tr>
-                    <td>Formule Premium Nucleus</td>
-                    <td class="price-col">1 499 $</td>
-                </tr>
-                <tr>
-                    <td>Abonnement Aegis (3 premiers clients)</td>
-                    <td class="price-col">599 $/mois</td>
-                </tr>
-                <tr>
-                    <td>Abonnement Aegis (Tarif Standard)</td>
-                    <td class="price-col">799 $/mois</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="section-box" style="border-left: 4px solid #ffd700;">
-        <h2 style="color: #ffd700;">3. Note de Souveraineté</h2>
-        <p>Chaque intégration via un partenaire MSP bénéficie d'une instance <span class="highlight">Nova Nucleus</span> isolée. Les données de conformité sont traitées localement et ne transitent jamais par des serveurs tiers hors du Québec.</p>
-    </div>
-</main>
-
-<footer>
-    © 2026 NovaSuite Technologies • Document Confidentiel • v2.1
-</footer>
-
+    <div style="position:fixed;top:0;left:0;width:100%;background:#dc2626;color:white;padding:8px;text-align:center;font-size:10px;font-weight:bold;z-index:99999;letter-spacing:0.1em;box-shadow:0 0 15px rgba(220,38,38,0.5);">ALERTE : CONFORMITÉ LOI 25 REQUISE. <a href="defi-audit.php" style="text-decoration:underline;color:white;">LANCEZ LE POC GRATUIT</a></div>
+    <div id="chat-container" style="position:fixed;bottom:20px;right:20px;width:320px;z-index:99999;font-family:monospace;"><div id="chat-window" style="display:none;flex-direction:column;background:#0a0a0a;border:1px solid #00ff41;border-bottom:none;border-radius:12px 12px 0 0;height:384px;box-shadow:0 20px 25px -5px rgba(0,0,0,0.5);"><div style="background:#16a34a;color:black;padding:12px;font-weight:bold;border-radius:12px 12px 0 0;display:flex;justify-content:space-between;"><span>🤖 AGENT NOVA v1.0</span><button type="button" onclick="toggleChat()" style="color:black;font-weight:900;background:none;border:none;cursor:pointer;">X</button></div><div id="chat-messages" style="flex:1;padding:16px;overflow-y:auto;font-size:11px;background:rgba(0,0,0,0.9);color:#22c55e;"><p>[SYS] Nova en ligne. Prêt pour l'audit.</p></div><div style="padding:8px;background:#111;display:flex;border-top:1px solid #333;"><input id="chat-input" type="text" style="flex:1;background:#000;border:1px solid #333;padding:8px;color:white;font-size:11px;outline:none;" placeholder="Entrer commande..." onkeypress="if(event.key==='Enter') sendMessage()"><button type="button" onclick="sendMessage()" style="background:#22c55e;color:black;padding:0 12px;font-weight:bold;border:none;cursor:pointer;">></button></div></div><button type="button" onclick="toggleChat()" style="width:100%;background:#000;border:1px solid #22c55e;color:#22c55e;font-weight:bold;padding:12px;border-radius:9999px;cursor:pointer;font-size:10px;letter-spacing:0.1em;margin-top:8px;">+ ASSISTANCE IA NOVA</button></div>
+    <script>function toggleChat(){const w=document.getElementById('chat-window');w.style.display=w.style.display==='none'||w.style.display===''?'flex':'none';} async function sendMessage(){const i=document.getElementById('chat-input');const m=document.getElementById('chat-messages');if(!i.value.trim())return;m.innerHTML+=`<p style="color:white;margin-top:8px;">> ${i.value.trim()}</p>`;const msg=i.value.trim();i.value='';m.scrollTop=m.scrollHeight;try{const r=await fetch('https://novasuite-1.onrender.com/api/chat/nova',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg})});const d=await r.json();m.innerHTML+=`<p style="color:#4ade80;margin-top:8px;">NOVA: ${d.response||d.detail}</p>`;}catch(e){m.innerHTML+=`<p style="color:#ef4444;margin-top:8px;">[ERREUR] Connexion API Render échouée.</p>`;}m.scrollTop=m.scrollHeight;}</script>
 </body>
 </html>

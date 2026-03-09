@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contactez NovaSuite</title>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LWHM1MVESP"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-LWHM1MVESP');
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { theme: { extend: { colors: { cyber: '#050505', neon: '#00ff41' } } } }
+    </script>
+    <style>
+        body { background-color: #050505; color: white; font-family: 'Inter', sans-serif; }
+        .glass { background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); }
+        .loader { border-top-color: #00ff41; animation: spinner 1.5s linear infinite; border-radius: 50%; border-width: 4px; border-style: solid; border-color: #111; height: 2rem; width: 2rem; display: none; }
+        @keyframes spinner { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen relative pt-10">
+    <div class="absolute inset-0 z-0" style="background-image: radial-gradient(circle at center, rgba(34,197,94,0.08) 0%, transparent 70%);"></div>
+
+    <main class="flex-1 flex flex-col items-center justify-center w-full p-4 z-10">
+        <div class="glass p-10 rounded-2xl text-center w-full max-w-md relative border-t-2 border-green-500 shadow-2xl">
+            <a href="/"><img src="assets/logo-novasuite.webp" alt="NovaSuite" class="w-16 h-16 mx-auto mb-4 rounded-lg shadow-lg border border-gray-800"></a>
+            <h2 class="text-3xl font-black text-white mb-2 tracking-tight">CONTACTEZ-NOUS</h2>
+            <p class="text-gray-400 text-sm mb-8">Un expert Loi 25 vous répondra sous 24h.</p>
+            
+            <form id="contact-form">
+                <input type="text" id="contact_nom" placeholder="Votre Nom / Entreprise" required class="w-full p-4 mb-4 bg-black border border-gray-800 rounded-lg text-white focus:border-green-500 outline-none">
+                <input type="email" id="contact_email" placeholder="Votre Courriel" required class="w-full p-4 mb-4 bg-black border border-gray-800 rounded-lg text-white focus:border-green-500 outline-none">
+                <textarea id="contact_message" placeholder="Comment pouvons-nous sécuriser votre infrastructure ?" required class="w-full p-4 mb-4 bg-black border border-gray-800 rounded-lg text-white focus:border-green-500 outline-none h-32"></textarea>
+                
+                <button type="submit" id="submit-btn" class="w-full bg-green-500 text-black font-black py-4 rounded-lg hover:bg-green-400 transition-all duration-300">
+                    ENVOYER LE MESSAGE SÉCURISÉ
+                </button>
+                <div id="loading" class="loader mx-auto mt-4"></div>
+                <div id="success-msg" class="text-green-400 font-bold mt-4 hidden">Message envoyé avec succès !</div>
+            </form>
+            <div style="margin-top: 20px;"><a href="/" style="color:#888; text-decoration: none; font-size: 12px;">← Retour à l'accueil</a></div>
+        </div>
+    </main>
+
+    <footer class="w-full border-t border-gray-800 bg-black/80 py-10 pb-48 text-center text-xs text-gray-500 mt-auto z-10 relative">
+        <p>© 2026 NovaSuite Technologies. Infrastructure isolée et souveraine.</p>
+        <div class="flex flex-wrap justify-center items-center gap-4 mt-4">
+            <a href="mentions-legales.html" class="hover:text-neon">Mentions Légales</a><span class="text-gray-700">|</span>
+            <a href="politique-confidentialite.html" class="hover:text-neon">Confidentialité</a><span class="text-gray-700">|</span>
+            <button type="button" onclick="showCookieBanner()" class="hover:text-neon font-bold cursor-pointer">Préférences Cookies</button><span class="text-gray-700">|</span>
+            <a href="contact.html" class="hover:text-neon text-neon font-bold">Contact</a>
+        </div>
+    </footer>
+
+    <div id="cookie-banner" class="fixed bottom-4 left-4 right-4 md:right-auto md:w-96 glass p-6 rounded-xl shadow-2xl z-[1000000]" style="display: none; border-left: 4px solid #00ff41;">
+        <h3 class="text-white font-bold text-sm mb-2 flex items-center gap-2">🛡️ Conformité Loi 25</h3>
+        <p class="text-xs text-gray-300 mb-4 leading-relaxed">NovaSuite utilise des cookies strictement nécessaires.</p>
+        <div class="flex gap-3">
+            <button onclick="acceptCookies()" class="flex-1 bg-neon text-black text-xs font-black py-2.5 rounded hover:bg-white transition">Accepter</button>
+            <button onclick="declineCookies()" class="flex-1 border border-gray-600 text-gray-300 text-xs font-bold py-2.5 rounded hover:bg-gray-800 transition">Refuser</button>
+        </div>
+    </div>
+    
+    <div id="chat-container" style="position:fixed;bottom:20px;right:20px;width:320px;max-width:calc(100% - 40px);z-index:99999;font-family:monospace;"><div id="chat-window" style="display:none;flex-direction:column;background:#0a0a0a;border:1px solid #00ff41;border-bottom:none;border-radius:12px 12px 0 0;height:384px;box-shadow:0 20px 25px -5px rgba(0,0,0,0.5);"><div style="background:#16a34a;color:black;padding:12px;font-weight:bold;border-radius:12px 12px 0 0;display:flex;justify-content:space-between;"><span>🤖 AGENT NOVA v1.0</span><button type="button" onclick="toggleChat()" style="color:black;font-weight:900;background:none;border:none;cursor:pointer;">X</button></div><div id="chat-messages" style="flex:1;padding:16px;overflow-y:auto;font-size:11px;background:rgba(0,0,0,0.9);color:#22c55e;"><p>[SYS] Nova en ligne. Posez vos questions.</p></div><div style="padding:8px;background:#111;display:flex;border-top:1px solid #333;"><input id="chat-input" type="text" style="flex:1;background:#000;border:1px solid #333;padding:8px;color:white;font-size:11px;outline:none;" placeholder="Entrer commande..." onkeypress="if(event.key==='Enter') sendMessage()"><button type="button" onclick="sendMessage()" style="background:#22c55e;color:black;padding:0 12px;font-weight:bold;border:none;cursor:pointer;">></button></div></div><button type="button" onclick="toggleChat()" style="width:100%;background:#000;border:1px solid #22c55e;color:#22c55e;font-weight:bold;padding:12px;border-radius:9999px;cursor:pointer;font-size:10px;letter-spacing:0.1em;margin-top:8px;">+ ASSISTANCE IA NOVA</button></div>
+
+    <script>
+        // Logique Cookie
+        document.addEventListener("DOMContentLoaded", function() { if (!localStorage.getItem("novasuite_consent")) { document.getElementById("cookie-banner").style.display = "block"; } });
+        function acceptCookies() { localStorage.setItem("novasuite_consent", "accepted"); document.getElementById("cookie-banner").style.display = "none"; window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('consent', 'update', { 'analytics_storage': 'granted' }); }
+        function declineCookies() { localStorage.setItem("novasuite_consent", "declined"); document.getElementById("cookie-banner").style.display = "none"; window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('consent', 'update', { 'analytics_storage': 'denied' }); }
+        function showCookieBanner() { document.getElementById("cookie-banner").style.display = "block"; }
+
+        // Logique Chat
+        function toggleChat(){const w=document.getElementById('chat-window');w.style.display=w.style.display==='none'||w.style.display===''?'flex':'none';} async function sendMessage(){const i=document.getElementById('chat-input');const m=document.getElementById('chat-messages');if(!i.value.trim())return;m.innerHTML+=`<p style="color:white;margin-top:8px;">> ${i.value.trim()}</p>`;const msg=i.value.trim();i.value='';m.scrollTop=m.scrollHeight;try{const r=await fetch('https://novasuite-1.onrender.com/api/chat/nova',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg})});const d=await r.json();m.innerHTML+=`<p style="color:#4ade80;margin-top:8px;">NOVA: ${d.response||d.detail}</p>`;}catch(e){m.innerHTML+=`<p style="color:#ef4444;margin-top:8px;">[ERREUR] Connexion API Render échouée.</p>`;}m.scrollTop=m.scrollHeight;}
+
+        // Logique Envoi Email
+        document.getElementById('contact-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const nom = document.getElementById('contact_nom').value;
+            const email = document.getElementById('contact_email').value;
+            const message = document.getElementById('contact_message').value;
+            const btn = document.getElementById('submit-btn');
+            const loader = document.getElementById('loading');
+            
+            btn.style.display = 'none';
+            loader.style.display = 'block';
+
+            try {
+                const response = await fetch('https://novasuite-1.onrender.com/api/contact', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ nom, email, message })
+                });
+                if (response.ok) {
+                    document.getElementById('success-msg').classList.remove('hidden');
+                    document.getElementById('contact-form').reset();
+                } else {
+                    alert("Erreur lors de l'envoi.");
+                }
+            } catch (err) {
+                alert("Erreur de connexion au serveur.");
+            } finally {
+                loader.style.display = 'none';
+                btn.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

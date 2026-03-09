@@ -5,3 +5,4 @@ pydantic
 requests
 python-dotenv
 fpdf
+sib-api-v3-sdk

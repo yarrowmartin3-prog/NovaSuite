@@ -1,24 +1,30 @@
 import os
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-import sib_api_v3_sdk
-from sib_api_v3_sdk.rest import ApiException
 
 app = FastAPI()
 
-# Configuration CORS pour permettre à votre site de parler à l'API
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Configuration Brevo (Assurez-vous que la clé est dans les variables d'environnement de Render)
-configuration = sib_api_v3_sdk.Configuration()
-configuration.api_key['api-key'] = os.getenv('BREVO_API_KEY')
-api_instance = sib_api_v3_sdk.TransactionalEmailsApi(sib_api_v3_sdk.ApiClient(configuration))
+# --- VARIABLES D'ENVIRONNEMENT (Déjà sur Render) ---
+SMTP_EMAIL = os.getenv("SMTP_EMAIL", "yarrowmartin3@gmail.com")
+SMTP_PASSWORD = os.getenv("SMTP_PASSWORD", "")
+SMTP_SERVER = "smtp-relay.brevo.com"
+SMTP_PORT = 2525
+
+# --- DESTINATAIRE ---
+# L'adresse où VOUS recevrez les formulaires de contact
+DESTINATION_EMAIL = "martin.yarrow@gmail.com" 
 
 class AuditRequest(BaseModel):
     url: str
@@ -29,52 +35,70 @@ class ContactRequest(BaseModel):
     email: str
     message: str
 
-@app.post("/api/audit")
-async def run_audit(request: AuditRequest):
-    # Logique simplifiée pour le POC (Simulation de résultat)
-    result_rule = "Loi 25 - Section 3.2 : Consentement explicite non détecté sur " + request.url
-    command = "Vérifiez l'en-tête X-Privacy-Consent dans vos requêtes HTTP."
-    
-    # Envoi du courriel via Brevo
-    subject = "⚠️ Résultat Partiel de votre Audit - NovaSuite"
-    html_content = f"""
-    <html><body>
-    <h1>NovaSuite - Rapport d'Audit 60s</h1>
-    <p>Bonjour,</p>
-    <p>Voici les résultats préliminaires pour le site : <strong>{request.url}</strong></p>
-    <p style='color:red;'><strong>Règle citée :</strong> {result_rule}</p>
-    <p><strong>Action recommandée :</strong> <code>{command}</code></p>
-    <hr>
-    <p>Pour obtenir le rapport complet de remédiation et corriger ces failles, procédez au paiement ici : <a href='https://buy.stripe.com/5kA9AT6zwa8W50PeUV'>Finaliser l'Audit Complet</a></p>
-    </body></html>
-    """
-    
-    sender = {"name": "NovaSuite Technologies", "email": "info@novasuite.ca"}
-    to = [{"email": request.email}]
-    send_smtp_email = sib_api_v3_sdk.SendSmtpEmail(to=to, html_content=html_content, sender=sender, subject=subject)
-
-    try:
-        api_instance.send_transac_email(send_smtp_email)
-        return {"rule": result_rule, "command": command}
-    except ApiException as e:
-        raise HTTPException(status_code=500, detail="Erreur Brevo: " + str(e))
-
-@app.post("/api/contact")
-async def contact_form(request: ContactRequest):
-    subject = f"Nouveau Contact : {request.nom}"
-    html_content = f"<html><body><h2>Message de {request.nom}</h2><p>Email: {request.email}</p><p>Message: {request.message}</p></body></html>"
-    
-    # On s'envoie le message à soi-même (Yarrow)
-    sender = {"name": "NovaSuite System", "email": "info@novasuite.ca"}
-    to = [{"email": "martin.yarrow@gmail.com"}] # Remplacez par votre email de réception
-    send_smtp_email = sib_api_v3_sdk.SendSmtpEmail(to=to, html_content=html_content, sender=sender, subject=subject)
-
-    try:
-        api_instance.send_transac_email(send_smtp_email)
-        return {"status": "success"}
-    except ApiException as e:
-        raise HTTPException(status_code=500, detail="Erreur d'envoi")
-
+@app.head("/")
 @app.get("/")
 async def root():
     return {"status": "NovaSuite API Online"}
+
+@app.post("/api/contact")
+async def send_contact(req: ContactRequest):
+    try:
+        msg = MIMEMultipart()
+        # L'expéditeur DOIT être l'adresse validée sur Brevo (votre SMTP_EMAIL)
+        msg['From'] = SMTP_EMAIL 
+        msg['To'] = DESTINATION_EMAIL
+        msg['Subject'] = f"Nouveau Contact Web : {req.nom}"
+        
+        body = f"Nouveau lead depuis le site NovaSuite.\n\nNom: {req.nom}\nEmail: {req.email}\n\nMessage:\n{req.message}"
+        msg.attach(MIMEText(body, 'plain', 'utf-8'))
+        
+        # Connexion et Envoi via Brevo SMTP
+        server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT, timeout=15)
+        server.starttls()
+        server.login(SMTP_EMAIL, SMTP_PASSWORD)
+        server.send_message(msg)
+        server.quit()
+        
+        return {"status": "success", "message": "Transmis"}
+    except Exception as e:
+        print(f"🚨 Erreur Contact SMTP: {e}")
+        # On renvoie l'erreur exacte au site web pour la lire
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/api/audit")
+async def run_audit(req: AuditRequest):
+    result_rule = f"Loi 25 - Section 3.2 : Consentement explicite non détecté sur {req.url}"
+    command = "Vérifiez l'en-tête X-Privacy-Consent."
+    
+    try:
+        msg = MIMEMultipart()
+        msg['From'] = SMTP_EMAIL
+        msg['To'] = req.email
+        msg['Subject'] = "⚠️ Résultat Partiel de votre Audit - NovaSuite"
+        
+        body = f"""Bonjour,
+
+L'Agent Nova a terminé l'audit préliminaire pour l'infrastructure : {req.url}
+
+🚨 Règle critique identifiée : {result_rule}
+🛠️ Commande de remédiation : {command}
+
+Des vulnérabilités supplémentaires ont été détectées en arrière-plan. 
+Pour obtenir le rapport de remédiation complet et sécuriser votre infrastructure, procédez à la mise à niveau immédiate :
+https://buy.stripe.com/5kA9AT6zwa8W50PeUV
+
+Cordialement,
+Monseigneur Yarrow | NovaSuite Technologies
+"""
+        msg.attach(MIMEText(body, 'plain', 'utf-8'))
+        
+        server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT, timeout=15)
+        server.starttls()
+        server.login(SMTP_EMAIL, SMTP_PASSWORD)
+        server.send_message(msg)
+        server.quit()
+
+        return {"rule": result_rule, "command": command}
+    except Exception as e:
+        print(f"🚨 Erreur Audit SMTP: {e}")
+        raise HTTPException(status_code=500, detail=str(e))

@@ -52,11 +52,6 @@
                     <a href="defi-audit.html" class="cta-audit text-lg md:text-xl">Défi d'Audit 60s : POC Gratuit</a>
                     <a href="partenaires-msp.html" class="cta-msp">Accès Partenaires MSP</a>
                 </div>
-                <div class="flex flex-wrap justify-center gap-4 md:gap-8 opacity-80 mt-4">
-                    <div class="flex items-center gap-2 border border-gray-700 bg-black/50 px-4 py-2 rounded-lg"><span class="text-neon font-black">✓</span> <span class="text-[10px] text-gray-300 font-mono tracking-widest">OWASP TOP 10</span></div>
-                    <div class="flex items-center gap-2 border border-gray-700 bg-black/50 px-4 py-2 rounded-lg"><span class="text-neon font-black">✓</span> <span class="text-[10px] text-gray-300 font-mono tracking-widest">SOC 2 TYPE II</span></div>
-                    <div class="flex items-center gap-2 border border-gray-700 bg-black/50 px-4 py-2 rounded-lg"><span class="text-neon font-black">✓</span> <span class="text-[10px] text-gray-300 font-mono tracking-widest">ARCHITECTURE BYTEBYTEGO</span></div>
-                </div>
             </div>
         </div>
     </main>
@@ -71,7 +66,6 @@
                 <ul class="space-y-3 text-gray-300 text-xs mb-8">
                     <li class="flex items-center gap-2"><span class="text-gray-500">✓</span> Scan d'URL approfondi</li>
                     <li class="flex items-center gap-2"><span class="text-gray-500">✓</span> Détection transferts hors-Québec</li>
-                    <li class="flex items-center gap-2"><span class="text-gray-500">✓</span> Rapport automatisé en 24h</li>
                 </ul>
                 <a href="https://buy.stripe.com/00w8wPaPMfxgcthaKW2VG05" class="cta-commander bg-gray-800 text-white border-gray-600 hover:bg-gray-700 mt-auto">Commander</a>
             </div>
@@ -84,7 +78,6 @@
                 <ul class="space-y-3 text-gray-300 text-xs mb-8">
                     <li class="flex items-center gap-2"><span class="text-neon">✓</span> Audit Express Inclus</li>
                     <li class="flex items-center gap-2"><span class="text-neon">✓</span> Remédiation des vulnérabilités</li>
-                    <li class="flex items-center gap-2"><span class="text-neon">✓</span> Renforcement des accès (OWASP)</li>
                 </ul>
                 <a href="https://buy.stripe.com/9B69AT2jg84O8d19GS2VG08" class="cta-commander mt-auto">Sécuriser mon entreprise</a>
             </div>
@@ -96,59 +89,39 @@
                 <ul class="space-y-3 text-gray-300 text-xs mb-8">
                     <li class="flex items-center gap-2"><span class="text-gold">★</span> Agent IA 100% hors-cloud</li>
                     <li class="flex items-center gap-2"><span class="text-gold">★</span> Chiffrement avancé des données</li>
-                    <li class="flex items-center gap-2"><span class="text-gold">★</span> Protection anti-exfiltration</li>
                 </ul>
                 <a href="https://buy.stripe.com/fZubJ13nkbh078X9GS2VG07" class="cta-commander bg-black text-gold border-gold hover:bg-gold mt-auto">Déployer Nucleus</a>
             </div>
         </div>
     </section>
 
-    <footer class="w-full border-t border-gray-800 bg-black/80 py-10 pb-32 text-center text-xs text-gray-500 mt-auto z-10 relative">
+    <footer class="w-full border-t border-gray-800 bg-black/80 py-10 pb-48 text-center text-xs text-gray-500 mt-auto z-10 relative">
         <p>© 2026 NovaSuite Technologies. Infrastructure isolée et souveraine.</p>
-        <div class="flex flex-wrap justify-center items-center gap-4 mt-2">
+        <div class="flex flex-wrap justify-center items-center gap-4 mt-4">
             <a href="mentions-legales.html" class="hover:text-neon">Mentions Légales</a><span class="text-gray-700">|</span>
             <a href="politique-confidentialite.html" class="hover:text-neon">Confidentialité</a><span class="text-gray-700">|</span>
             <button type="button" onclick="showCookieBanner()" class="hover:text-neon font-bold cursor-pointer">Préférences Cookies</button><span class="text-gray-700">|</span>
-            <a href="mailto:contact@novasuite.ca" class="hover:text-neon">Contact</a>
+            <a href="contact.html" class="hover:text-neon text-neon font-bold">Contact</a>
         </div>
     </footer>
 
-    <div id="cookie-banner" class="fixed bottom-4 left-4 right-4 md:right-auto md:w-96 glass p-6 rounded-xl shadow-2xl z-[99999]" style="display: none; border-left: 4px solid #00ff41;">
+    <div id="cookie-banner" class="fixed bottom-4 left-4 right-4 md:right-auto md:w-96 glass p-6 rounded-xl shadow-2xl z-[1000000]" style="display: none; border-left: 4px solid #00ff41;">
         <h3 class="text-white font-bold text-sm mb-2 flex items-center gap-2">🛡️ Conformité Loi 25</h3>
-        <p class="text-xs text-gray-300 mb-4 leading-relaxed">NovaSuite utilise des cookies strictement nécessaires pour la sécurité de votre navigation et l'analyse de nos performances. Acceptez-vous notre politique ?</p>
+        <p class="text-xs text-gray-300 mb-4 leading-relaxed">NovaSuite utilise des cookies strictement nécessaires pour la sécurité de votre navigation et l'analyse de nos performances.</p>
         <div class="flex gap-3">
-            <button onclick="acceptCookies()" class="flex-1 bg-neon text-black text-xs font-black py-2.5 rounded hover:bg-white transition shadow-[0_0_15px_rgba(0,255,65,0.3)]">Accepter</button>
+            <button onclick="acceptCookies()" class="flex-1 bg-neon text-black text-xs font-black py-2.5 rounded hover:bg-white transition">Accepter</button>
             <button onclick="declineCookies()" class="flex-1 border border-gray-600 text-gray-300 text-xs font-bold py-2.5 rounded hover:bg-gray-800 transition">Refuser</button>
         </div>
     </div>
-
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            if (!localStorage.getItem("novasuite_consent")) {
-                document.getElementById("cookie-banner").style.display = "block";
-            }
-        });
-        function acceptCookies() {
-            localStorage.setItem("novasuite_consent", "accepted");
-            document.getElementById("cookie-banner").style.display = "none";
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('consent', 'update', { 'analytics_storage': 'granted' });
-        }
-        function declineCookies() {
-            localStorage.setItem("novasuite_consent", "declined");
-            document.getElementById("cookie-banner").style.display = "none";
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('consent', 'update', { 'analytics_storage': 'denied' });
-        }
-        function showCookieBanner() {
-            document.getElementById("cookie-banner").style.display = "block";
-        }
+        document.addEventListener("DOMContentLoaded", function() { if (!localStorage.getItem("novasuite_consent")) { document.getElementById("cookie-banner").style.display = "block"; } });
+        function acceptCookies() { localStorage.setItem("novasuite_consent", "accepted"); document.getElementById("cookie-banner").style.display = "none"; window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('consent', 'update', { 'analytics_storage': 'granted' }); }
+        function declineCookies() { localStorage.setItem("novasuite_consent", "declined"); document.getElementById("cookie-banner").style.display = "none"; window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('consent', 'update', { 'analytics_storage': 'denied' }); }
+        function showCookieBanner() { document.getElementById("cookie-banner").style.display = "block"; }
     </script>
 
     <div style="position:fixed;top:0;left:0;width:100%;background:#dc2626;color:white;padding:8px;text-align:center;font-size:10px;font-weight:bold;z-index:99999;letter-spacing:0.1em;box-shadow:0 0 15px rgba(220,38,38,0.5);">ALERTE : CONFORMITÉ LOI 25 REQUISE. <a href="defi-audit.html" style="text-decoration:underline;color:white;">LANCEZ LE POC GRATUIT</a></div>
-    <div id="chat-container" style="position:fixed;bottom:20px;right:20px;width:320px;z-index:99999;font-family:monospace;"><div id="chat-window" style="display:none;flex-direction:column;background:#0a0a0a;border:1px solid #00ff41;border-bottom:none;border-radius:12px 12px 0 0;height:384px;box-shadow:0 20px 25px -5px rgba(0,0,0,0.5);"><div style="background:#16a34a;color:black;padding:12px;font-weight:bold;border-radius:12px 12px 0 0;display:flex;justify-content:space-between;"><span>🤖 AGENT NOVA v1.0</span><button type="button" onclick="toggleChat()" style="color:black;font-weight:900;background:none;border:none;cursor:pointer;">X</button></div><div id="chat-messages" style="flex:1;padding:16px;overflow-y:auto;font-size:11px;background:rgba(0,0,0,0.9);color:#22c55e;"><p>[SYS] Nova en ligne. Prêt pour l'audit.</p></div><div style="padding:8px;background:#111;display:flex;border-top:1px solid #333;"><input id="chat-input" type="text" style="flex:1;background:#000;border:1px solid #333;padding:8px;color:white;font-size:11px;outline:none;" placeholder="Entrer commande..." onkeypress="if(event.key==='Enter') sendMessage()"><button type="button" onclick="sendMessage()" style="background:#22c55e;color:black;padding:0 12px;font-weight:bold;border:none;cursor:pointer;">></button></div></div><button type="button" onclick="toggleChat()" style="width:100%;background:#000;border:1px solid #22c55e;color:#22c55e;font-weight:bold;padding:12px;border-radius:9999px;cursor:pointer;font-size:10px;letter-spacing:0.1em;margin-top:8px;">+ ASSISTANCE IA NOVA</button></div>
+    <div id="chat-container" style="position:fixed;bottom:20px;right:20px;width:320px;max-width:calc(100% - 40px);z-index:99999;font-family:monospace;"><div id="chat-window" style="display:none;flex-direction:column;background:#0a0a0a;border:1px solid #00ff41;border-bottom:none;border-radius:12px 12px 0 0;height:384px;box-shadow:0 20px 25px -5px rgba(0,0,0,0.5);"><div style="background:#16a34a;color:black;padding:12px;font-weight:bold;border-radius:12px 12px 0 0;display:flex;justify-content:space-between;"><span>🤖 AGENT NOVA v1.0</span><button type="button" onclick="toggleChat()" style="color:black;font-weight:900;background:none;border:none;cursor:pointer;">X</button></div><div id="chat-messages" style="flex:1;padding:16px;overflow-y:auto;font-size:11px;background:rgba(0,0,0,0.9);color:#22c55e;"><p>[SYS] Nova en ligne. Prêt pour l'audit.</p></div><div style="padding:8px;background:#111;display:flex;border-top:1px solid #333;"><input id="chat-input" type="text" style="flex:1;background:#000;border:1px solid #333;padding:8px;color:white;font-size:11px;outline:none;" placeholder="Entrer commande..." onkeypress="if(event.key==='Enter') sendMessage()"><button type="button" onclick="sendMessage()" style="background:#22c55e;color:black;padding:0 12px;font-weight:bold;border:none;cursor:pointer;">></button></div></div><button type="button" onclick="toggleChat()" style="width:100%;background:#000;border:1px solid #22c55e;color:#22c55e;font-weight:bold;padding:12px;border-radius:9999px;cursor:pointer;font-size:10px;letter-spacing:0.1em;margin-top:8px;">+ ASSISTANCE IA NOVA</button></div>
     <script>function toggleChat(){const w=document.getElementById('chat-window');w.style.display=w.style.display==='none'||w.style.display===''?'flex':'none';} async function sendMessage(){const i=document.getElementById('chat-input');const m=document.getElementById('chat-messages');if(!i.value.trim())return;m.innerHTML+=`<p style="color:white;margin-top:8px;">> ${i.value.trim()}</p>`;const msg=i.value.trim();i.value='';m.scrollTop=m.scrollHeight;try{const r=await fetch('https://novasuite-1.onrender.com/api/chat/nova',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg})});const d=await r.json();m.innerHTML+=`<p style="color:#4ade80;margin-top:8px;">NOVA: ${d.response||d.detail}</p>`;}catch(e){m.innerHTML+=`<p style="color:#ef4444;margin-top:8px;">[ERREUR] Connexion API Render échouée.</p>`;}m.scrollTop=m.scrollHeight;}</script>
 </body>
 </html>

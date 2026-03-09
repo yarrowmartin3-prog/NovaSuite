@@ -5,15 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paiement Confirmé - NovaSuite Technologies</title>
     <style>
-        body { background-color: #050505; color: #eee; font-family: 'Inter', sans-serif; text-align: center; padding-top: 80px; margin: 0; }
+        body { background-color: #050505; color: #eee; font-family: 'Inter', sans-serif; text-align: center; padding-top: 80px; margin: 0; display: flex; flex-direction: column; min-height: 100vh; }
         .card { max-width: 600px; margin: 0 auto; background: rgba(0, 255, 65, 0.05); padding: 40px; border-radius: 12px; border: 1px solid #00ff41; box-shadow: 0 0 30px rgba(0,255,65,0.2); }
         .btn-primary { background: #00ff41; color: #000; padding: 12px 24px; text-decoration: none; font-weight: bold; border-radius: 6px; display: inline-block; margin-top: 20px; transition: 0.3s; }
         .btn-primary:hover { background: #fff; }
+        /* Style du nouveau footer natif */
+        .nova-footer { width: 100%; border-top: 1px solid #333; background: rgba(0,0,0,0.8); padding: 40px 20px 120px 20px; text-align: center; font-size: 12px; color: #888; margin-top: auto; position: relative; z-index: 10; }
+        .nova-footer a, .nova-footer button { color: #888; text-decoration: none; transition: 0.3s; background: none; border: none; cursor: pointer; font-weight: bold; font-size: 12px; }
+        .nova-footer a:hover, .nova-footer button:hover { color: #00ff41; }
+        .footer-links { display: flex; justify-content: center; align-items: center; gap: 15px; flex-wrap: wrap; margin-top: 10px; }
     </style>
 </head>
 <body>
     <header><a href="/"><img src="assets/logo-novasuite.webp" alt="NovaSuite Logo" style="width: 80px; border-radius: 8px;"></a></header>
-    <main>
+    <main style="flex: 1; padding-bottom: 40px;">
         <section class="card">
             <h2 style="color: #00ff41; font-size: 2rem;">✅ Paiement Confirmé</h2>
             <p style="font-size: 1.2rem;">Merci pour votre confiance.</p>
@@ -25,7 +30,32 @@
         </section>
     </main>
 
-    <div id="chat-container" style="position:fixed;bottom:20px;right:20px;width:320px;z-index:99999;font-family:monospace;"><div id="chat-window" style="display:none;flex-direction:column;background:#0a0a0a;border:1px solid #00ff41;border-bottom:none;border-radius:12px 12px 0 0;height:384px;box-shadow:0 20px 25px -5px rgba(0,0,0,0.5);"><div style="background:#16a34a;color:black;padding:12px;font-weight:bold;border-radius:12px 12px 0 0;display:flex;justify-content:space-between;"><span>🤖 AGENT NOVA v1.0</span><button type="button" onclick="toggleChat()" style="color:black;font-weight:900;background:none;border:none;cursor:pointer;">X</button></div><div id="chat-messages" style="flex:1;padding:16px;overflow-y:auto;font-size:11px;background:rgba(0,0,0,0.9);color:#22c55e;"><p>[SYS] Nova en ligne. Paiement enregistré.</p></div><div style="padding:8px;background:#111;display:flex;border-top:1px solid #333;"><input id="chat-input" type="text" style="flex:1;background:#000;border:1px solid #333;padding:8px;color:white;font-size:11px;outline:none;" placeholder="Entrer commande..." onkeypress="if(event.key==='Enter') sendMessage()"><button type="button" onclick="sendMessage()" style="background:#22c55e;color:black;padding:0 12px;font-weight:bold;border:none;cursor:pointer;">></button></div></div><button type="button" onclick="toggleChat()" style="width:100%;background:#000;border:1px solid #22c55e;color:#22c55e;font-weight:bold;padding:12px;border-radius:9999px;cursor:pointer;font-size:10px;letter-spacing:0.1em;margin-top:8px;">+ ASSISTANCE IA NOVA</button></div>
+    <footer class="nova-footer">
+        <p>© 2026 NovaSuite Technologies. Infrastructure isolée et souveraine.</p>
+        <div class="footer-links">
+            <a href="mentions-legales.html">Mentions Légales</a> <span>|</span>
+            <a href="politique-confidentialite.html">Confidentialité</a> <span>|</span>
+            <button type="button" onclick="showCookieBanner()">Préférences Cookies</button> <span>|</span>
+            <a href="mailto:contact@novasuite.ca">Contact</a>
+        </div>
+    </footer>
+
+    <div id="cookie-banner" style="display: none; position: fixed; bottom: 20px; left: 20px; max-width: 350px; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(10px); padding: 20px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); border-left: 4px solid #00ff41; box-shadow: 0 10px 30px rgba(0,0,0,0.8); z-index: 99999; font-family: 'Inter', sans-serif;">
+        <h3 style="color: white; font-weight: bold; font-size: 14px; margin-top: 0; margin-bottom: 10px;">🛡️ Conformité Loi 25</h3>
+        <p style="color: #ccc; font-size: 12px; line-height: 1.5; margin-bottom: 15px;">NovaSuite utilise des cookies strictement nécessaires pour la sécurité de votre navigation et l'analyse de nos performances.</p>
+        <div style="display: flex; gap: 10px;">
+            <button onclick="acceptCookies()" style="flex: 1; background: #00ff41; color: #000; font-weight: bold; padding: 10px; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; box-shadow: 0 0 10px rgba(0,255,65,0.3);">Accepter</button>
+            <button onclick="declineCookies()" style="flex: 1; background: transparent; color: #ccc; font-weight: bold; padding: 10px; border: 1px solid #555; border-radius: 4px; cursor: pointer; font-size: 12px;">Refuser</button>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() { if (!localStorage.getItem("novasuite_consent")) { document.getElementById("cookie-banner").style.display = "block"; } });
+        function acceptCookies() { localStorage.setItem("novasuite_consent", "accepted"); document.getElementById("cookie-banner").style.display = "none"; window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('consent', 'update', { 'analytics_storage': 'granted' }); }
+        function declineCookies() { localStorage.setItem("novasuite_consent", "declined"); document.getElementById("cookie-banner").style.display = "none"; window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('consent', 'update', { 'analytics_storage': 'denied' }); }
+        function showCookieBanner() { document.getElementById("cookie-banner").style.display = "block"; }
+    </script>
+
+    <div id="chat-container" style="position:fixed;bottom:20px;right:20px;width:320px;z-index:99999;font-family:monospace;"><div id="chat-window" style="display:none;flex-direction:column;background:#0a0a0a;border:1px solid #00ff41;border-bottom:none;border-radius:12px 12px 0 0;height:384px;box-shadow:0 20px 25px -5px rgba(0,0,0,0.5);"><div style="background:#16a34a;color:black;padding:12px;font-weight:bold;border-radius:12px 12px 0 0;display:flex;justify-content:space-between;"><span>🤖 AGENT NOVA v1.0</span><button type="button" onclick="toggleChat()" style="color:black;font-weight:900;background:none;border:none;cursor:pointer;">X</button></div><div id="chat-messages" style="flex:1;padding:16px;overflow-y:auto;font-size:11px;background:rgba(0,0,0,0.9);color:#22c55e;"><p>[SYS] Nova en ligne. Prêt pour l'audit.</p></div><div style="padding:8px;background:#111;display:flex;border-top:1px solid #333;"><input id="chat-input" type="text" style="flex:1;background:#000;border:1px solid #333;padding:8px;color:white;font-size:11px;outline:none;" placeholder="Entrer commande..." onkeypress="if(event.key==='Enter') sendMessage()"><button type="button" onclick="sendMessage()" style="background:#22c55e;color:black;padding:0 12px;font-weight:bold;border:none;cursor:pointer;">></button></div></div><button type="button" onclick="toggleChat()" style="width:100%;background:#000;border:1px solid #22c55e;color:#22c55e;font-weight:bold;padding:12px;border-radius:9999px;cursor:pointer;font-size:10px;letter-spacing:0.1em;margin-top:8px;">+ ASSISTANCE IA NOVA</button></div>
     <script>function toggleChat(){const w=document.getElementById('chat-window');w.style.display=w.style.display==='none'||w.style.display===''?'flex':'none';} async function sendMessage(){const i=document.getElementById('chat-input');const m=document.getElementById('chat-messages');if(!i.value.trim())return;m.innerHTML+=`<p style="color:white;margin-top:8px;">> ${i.value.trim()}</p>`;const msg=i.value.trim();i.value='';m.scrollTop=m.scrollHeight;try{const r=await fetch('https://novasuite-1.onrender.com/api/chat/nova',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg})});const d=await r.json();m.innerHTML+=`<p style="color:#4ade80;margin-top:8px;">NOVA: ${d.response||d.detail}</p>`;}catch(e){m.innerHTML+=`<p style="color:#ef4444;margin-top:8px;">[ERREUR] Connexion API Render échouée.</p>`;}m.scrollTop=m.scrollHeight;}</script>
 </body>
 </html>

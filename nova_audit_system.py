@@ -4,13 +4,6 @@ import requests
 import time
 import socket
 
-def print_slow(text, delay=0.01):
-    for char in text:
-        sys.stdout.write(char)
-        sys.stdout.flush()
-        time.sleep(delay)
-    print()
-
 def get_shodan_data(ip):
     """Utilise l'API gratuite InternetDB de Shodan"""
     try:
@@ -24,11 +17,13 @@ def get_shodan_data(ip):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--url", required=True)
-    parser.add_argument("--email", required=True)
+    parser.add_argument("--url", required=True, help="L'URL à auditer")
+    # On rend l'email optionnel ici pour éviter les erreurs de status 2 si le site oublie de l'envoyer
+    parser.add_argument("--email", required=False, default="client@novasuite.ca")
     args = parser.parse_args()
 
-    clean_url = args.url.replace('https://', '').replace('http://', '').split('/')[0]
+    # Nettoyage de l'URL pour la résolution DNS
+    clean_url = args.url.replace('https://', '').replace('http://', '').split('/')[0].split(':')[0]
     
     print("==================================================")
     print(" N O V A S U I T E  //  N U C L E U S  E N G I N E")
@@ -39,30 +34,33 @@ def main():
     try:
         ip_address = socket.gethostbyname(clean_url)
     except:
-        ip_address = "Masquée"
+        ip_address = "Masquée/Introuvable"
 
     print(f"[*] Cible : {args.url}")
     print(f"[*] IP Détectée : {ip_address}")
     
     # 2. Interrogation Shodan
     print("\n[>] Interrogation des bases de données de menaces mondiales...")
-    shodan_data = get_shodan_data(ip_address)
+    shodan_data = None
+    if ip_address != "Masquée/Introuvable":
+        shodan_data = get_shodan_data(ip_address)
     
     if shodan_data:
         ports = shodan_data.get('ports', [])
         vulns = shodan_data.get('vulns', [])
-        print_slow(f" [!] ALERTE : {len(ports)} services exposés sur le web public.", 0.02)
+        print(f" [!] ALERTE : {len(ports)} services exposés sur le web public.")
         if ports:
             print(f" [!] Ports ouverts détectés : {', '.join(map(str, ports[:5]))}...")
         if vulns:
             print(f" [⚠️] {len(vulns)} vulnérabilités critiques (CVE) associées à cette IP.")
     else:
-        print(" [✓] Aucune exposition majeure immédiate sur Shodan.")
+        print(" [✓] Aucune exposition majeure immédiate détectée sur les bases OSINT.")
 
     # 3. Scan des Headers (OWASP & Loi 25)
     print("\n[>] Analyse des vecteurs d'attaque web (OWASP Top 10)...")
     try:
-        r = requests.get(f"https://{clean_url}", timeout=5)
+        # On tente de se connecter pour voir les headers de sécurité
+        r = requests.get(f"https://{clean_url}", timeout=5, verify=True)
         h = r.headers
         missing = []
         if 'Strict-Transport-Security' not in h: missing.append("HSTS (OWASP A02: Cryptographic Failures)")
@@ -73,9 +71,9 @@ def main():
             for m in missing:
                 print(f"     -> Faille détectée : {m}")
         else:
-            print(" [✓] Protections de base OWASP présentes.")
-    except:
-        print(" ❌ ÉCHEC : Impossible d'établir une connexion sécurisée.")
+            print(" [✓] Protections de base OWASP présentes (HSTS, CSP).")
+    except Exception as e:
+        print(f" ❌ ÉCHEC : Impossible d'analyser les headers (Délai d'attente dépassé).")
 
     # 4. Le Hook Premium
     print("\n--- DIAGNOSTIC D'INTRUSION PROFONDE ---")

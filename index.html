@@ -32,7 +32,7 @@
                 <p class="text-gray-300 max-w-2xl mx-auto mb-10 text-sm md:text-lg font-mono">Audits Loi 25 et déploiement d'IA locale 100% isolée du cloud public.</p>
                 <div class="flex flex-col md:flex-row gap-4 justify-center">
                     <a href="defi-audit.html" class="bg-white text-black font-black px-8 py-4 rounded-xl hover:bg-gray-200 transition uppercase text-sm">Défi d'Audit 60s (Gratuit)</a>
-                    <a href="contact.html" class="border border-gold text-gold font-bold px-8 py-4 rounded-xl hover:bg-gold hover:text-black transition uppercase text-sm">Contacter l'Architecte</a>
+                    <a href="partenaires-msp.html" class="border border-gold text-gold font-bold px-8 py-4 rounded-xl hover:bg-gold hover:text-black transition uppercase text-sm">Partenaires MSP</a>
                 </div>
             </div>
         </div>
@@ -112,17 +112,14 @@
                 document.getElementById("cookie-banner").classList.remove("hidden");
             }
         });
-
         function acceptCookies() {
             try { localStorage.setItem("ns_consent", "accepted"); } catch(e) {}
             document.getElementById("cookie-banner").classList.add("hidden");
         }
-
         function declineCookies() {
             try { localStorage.setItem("ns_consent", "declined"); } catch(e) {}
             document.getElementById("cookie-banner").classList.add("hidden");
         }
-
         function showCookieBanner() {
             document.getElementById("cookie-banner").classList.remove("hidden");
         }

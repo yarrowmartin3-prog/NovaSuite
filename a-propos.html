@@ -1,51 +1,78 @@
 <!DOCTYPE html>
-<html lang="fr" class="scroll-smooth">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notre Expertise - NovaSuite</title>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LWHM1MVESP"></script>
-    <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-LWHM1MVESP');</script>
+    <title>Expertise • NovaSuite</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>tailwind.config = { theme: { extend: { colors: { neon: '#00ff41' } } } }</script>
-    <style>body { background-color: #050505; color: white; font-family: 'Inter', sans-serif; }</style>
+    <script>tailwind.config = { theme: { extend: { colors: { neon: '#00ff41', gold: '#ffd700' } } } }</script>
 </head>
-<body class="antialiased min-h-screen flex flex-col relative pt-12 md:pt-16">
-    <header class="w-full max-w-6xl mx-auto px-4 py-4 md:px-6 md:py-8 flex items-center justify-between z-10">
-        <div class="flex items-center gap-3 md:gap-4"><a href="/"><img src="assets/logo-novasuite.webp" class="w-10 h-10 md:w-14 md:h-14 rounded-lg border border-gray-800 shadow-lg"></a><div><h1 class="text-xl md:text-2xl font-black tracking-tight leading-none">NovaSuite</h1><p class="text-[9px] md:text-xs text-neon uppercase tracking-widest font-bold mt-1">Infrastructure IA</p></div></div>
-        <a href="a-propos.html" class="text-[10px] md:text-sm text-neon font-bold border border-neon px-3 py-1.5 rounded-full md:border-none md:p-0 transition">Notre Expertise</a>
+<body class="bg-[#050505] text-white flex flex-col min-h-screen font-sans antialiased">
+    <header class="p-6 max-w-6xl mx-auto w-full flex justify-between items-center border-b border-gray-900 z-10">
+        <a href="index.html" class="flex items-center gap-3">
+            <img src="assets/logo-novasuite.webp" class="w-10 h-10 rounded-lg border border-gray-800" alt="NovaSuite">
+            <span class="text-xl font-black uppercase tracking-tighter">NovaSuite</span>
+        </a>
+        <a href="index.html" class="text-[10px] font-bold uppercase tracking-widest hover:text-neon transition">Accueil</a>
     </header>
 
-    <main class="w-full max-w-5xl mx-auto px-4 md:px-6 mb-16 mt-8 flex-1">
-        <h1 class="text-3xl font-black mb-10 text-center">Notre Expertise Certifiée</h1>
-        
-        <div class="text-center max-w-3xl mx-auto mb-12">
-            <h2 class="text-2xl text-blue-400 font-bold mb-4">La force derrière l'Audit IA.</h2>
-            <p class="text-gray-300">NovaSuite Technologies est née de la conviction que chaque PME mérite une sécurité de pointe sans compromettre la souveraineté de ses données (Loi 25).</p>
-        </div>
-
-        <div class="grid md:grid-cols-3 gap-6">
-            <div class="bg-gray-900/50 p-6 rounded-xl border border-gray-800 text-center">
-                <h4 class="text-neon font-bold text-lg mb-2">Intelligence Artificielle</h4>
-                <p class="font-bold mb-2">✅ Google AI Essentials</p>
-                <p class="text-xs text-gray-400">Maîtrise de l'IA pour automatiser la détection des failles complexes.</p>
-            </div>
-            <div class="bg-gray-900/50 p-6 rounded-xl border border-gray-800 text-center">
-                <h4 class="text-neon font-bold text-lg mb-2">Sécurité Offensive</h4>
-                <p class="font-bold mb-2">✅ Hacking Éthique</p>
-                <p class="text-xs text-gray-400">Expertise pour tester la résilience de votre site comme un attaquant.</p>
-            </div>
-            <div class="bg-gray-900/50 p-6 rounded-xl border border-gray-800 text-center">
-                <h4 class="text-neon font-bold text-lg mb-2">Conformité & Prog.</h4>
-                <p class="font-bold mb-2">✅ Python & Cryptographie</p>
-                <p class="text-xs text-gray-400">Développement d'outils souverains isolés du cloud.</p>
+    <main class="max-w-3xl mx-auto w-full p-6 py-20 flex-1">
+        <h2 class="text-4xl md:text-5xl font-black mb-8 uppercase italic leading-none">L'Architecte</h2>
+        <div class="space-y-6 text-gray-400 leading-relaxed text-sm md:text-base">
+            <p>NovaSuite Technologies est le fruit d'une expertise implacable en cybersécurité offensive et en intelligence artificielle souveraine.</p>
+            <p>Sous la direction de <strong class="text-white">Yarrow Martin</strong>, nous aidons les décideurs et les MSP du Québec à naviguer dans la complexité de la <span class="text-neon font-bold">Loi 25</span>. Nous utilisons des outils de diagnostic OSINT automatisés et des agents IA déployés localement, garantissant qu'aucune donnée ne fuite vers le cloud public.</p>
+            
+            <div class="grid grid-cols-2 gap-4 mt-12">
+                <div class="bg-[#0f172a]/50 p-6 rounded-2xl border border-white/5 shadow-lg">
+                    <h4 class="text-white font-bold mb-2 uppercase text-xs tracking-widest text-neon">Standards</h4>
+                    <p class="text-[10px] font-mono leading-relaxed text-gray-300">OWASP Top 10<br>Conformité SOC 2<br>Loi 25 (Québec)</p>
+                </div>
+                <div class="bg-[#0f172a]/50 p-6 rounded-2xl border border-white/5 shadow-lg">
+                    <h4 class="text-white font-bold mb-2 uppercase text-xs tracking-widest text-neon">Opérations</h4>
+                    <p class="text-[10px] font-mono leading-relaxed text-gray-300">Rivière-du-Loup<br>Bas-Saint-Laurent<br>Audits Distants</p>
+                </div>
             </div>
         </div>
     </main>
 
-    <footer class="w-full border-t border-gray-800 bg-black/80 py-10 text-center text-xs text-gray-500 mt-auto z-10 relative"><p>© 2026 NovaSuite Technologies. Infrastructure isolée et souveraine.</p><div class="flex flex-wrap justify-center items-center gap-4 mt-4"><a href="mentions-legales.html" class="hover:text-neon transition">Mentions Légales</a><span class="text-gray-700">|</span><a href="politique-confidentialite.html" class="hover:text-neon transition">Confidentialité</a><span class="text-gray-700">|</span><button type="button" onclick="showCookieBanner()" class="hover:text-neon font-bold cursor-pointer transition">Préférences Cookies</button><span class="text-gray-700">|</span><a href="contact.html" class="text-neon font-bold hover:text-white transition">Contact</a></div></footer>
-    <div id="cookie-banner" class="fixed bottom-4 left-4 right-4 md:right-auto md:w-96 bg-[#0f172a]/95 backdrop-blur border border-white/10 p-6 rounded-xl shadow-2xl z-[1000000]" style="display:none;border-left:4px solid #00ff41;"><h3 class="text-white font-bold text-sm mb-2">🛡️ Conformité Loi 25</h3><p class="text-xs text-gray-300 mb-4">NovaSuite utilise des cookies strictement nécessaires pour la sécurité.</p><div class="flex gap-3"><button onclick="acceptCookies()" class="flex-1 bg-neon text-black text-xs font-black py-2.5 rounded hover:bg-white transition">Accepter</button><button onclick="declineCookies()" class="flex-1 border border-gray-600 text-gray-300 text-xs font-bold py-2.5 rounded hover:bg-gray-800 transition">Refuser</button></div></div>
-    <div id="chat-container" class="fixed bottom-6 right-6 z-[99999] flex flex-col items-end"><div id="chat-window" class="hidden flex-col bg-[#0a0a0a] border border-neon border-b-0 rounded-t-xl h-96 w-[calc(100vw-3rem)] sm:w-80 shadow-[0_20px_25px_-5px_rgba(0,0,0,0.8)] mb-2 overflow-hidden font-mono"><div class="bg-green-600 text-black p-3 font-bold flex justify-between items-center"><span>🤖 AGENT NOVA v1.0</span><button type="button" onclick="toggleChat()" class="text-black hover:text-white font-black text-lg leading-none">&times;</button></div><div id="chat-messages" class="flex-1 p-4 overflow-y-auto text-[11px] bg-black/95 text-green-500"><p>[SYS] Nova en ligne.</p></div><div class="p-2 bg-[#111] flex border-t border-[#333]"><input id="chat-input" type="text" class="flex-1 bg-black border border-[#333] p-2 text-white text-[11px] outline-none focus:border-neon" placeholder="Entrer commande..." onkeypress="if(event.key==='Enter') sendMessage()"><button type="button" onclick="sendMessage()" class="bg-green-500 hover:bg-white text-black px-3 font-bold transition">></button></div></div><button type="button" onclick="toggleChat()" class="bg-black border border-neon text-neon font-bold py-3 px-4 rounded-full shadow-[0_0_15px_rgba(0,255,65,0.4)] hover:bg-neon hover:text-black transition-all flex items-center justify-center gap-2 group"><span class="text-xl leading-none">💬</span><span class="hidden md:inline text-[10px] tracking-widest group-hover:text-black">ASSISTANCE IA NOVA</span></button></div>
-    <script>document.addEventListener("DOMContentLoaded",()=>{"accepted"!==localStorage.getItem("novasuite_consent")&&(document.getElementById("cookie-banner").style.display="block")});function acceptCookies(){localStorage.setItem("novasuite_consent","accepted"),document.getElementById("cookie-banner").style.display="none"}function declineCookies(){localStorage.setItem("novasuite_consent","declined"),document.getElementById("cookie-banner").style.display="none"}function showCookieBanner(){document.getElementById("cookie-banner").style.display="block"}function toggleChat(){const e=document.getElementById("chat-window");e.style.display="none"===e.style.display||""===e.style.display?"flex":"none"}async function sendMessage(){const e=document.getElementById("chat-input"),t=document.getElementById("chat-messages");if(!e.value.trim())return;t.innerHTML+=`<p style="color:white;margin-top:8px;">> ${e.value.trim()}</p>`;const n=e.value.trim();e.value="",t.scrollTop=t.scrollHeight;try{const e=await fetch("https://novasuite-1.onrender.com/api/chat/nova",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({message:n})}),o=await e.json();t.innerHTML+=`<p style="color:#4ade80;margin-top:8px;">NOVA: ${o.response||o.detail}</p>`}catch(e){t.innerHTML+=`<p style="color:#ef4444;margin-top:8px;">[ERREUR] Connexion API Render échouée.</p>`}t.scrollTop=t.scrollHeight}</script>
+    <footer class="mt-auto py-10 border-t border-gray-900 text-center">
+        <button type="button" onclick="showCookieBanner()" id="btn-cookies" class="text-[9px] text-gray-600 uppercase tracking-widest font-bold hover:text-neon transition">Préférences Cookies</button>
+    </footer>
+
+    <div id="cookie-banner" class="fixed bottom-4 left-4 right-4 md:right-auto md:w-96 bg-[#0f172a]/95 backdrop-blur border-l-4 border-neon border border-white/10 p-6 rounded-2xl shadow-2xl z-[999999] hidden">
+        <h3 class="text-white font-bold text-sm mb-2 uppercase tracking-tighter">🛡️ Conformité</h3>
+        <p class="text-[10px] text-gray-400 mb-4">NovaSuite respecte votre vie privée.</p>
+        <div class="flex gap-3">
+            <button onclick="acceptCookies()" class="flex-1 bg-neon text-black text-[10px] font-black py-2.5 rounded-lg hover:bg-white transition uppercase">Accepter</button>
+            <button onclick="declineCookies()" class="flex-1 border border-gray-700 text-gray-500 text-[10px] font-bold py-2.5 rounded-lg hover:bg-gray-800 transition uppercase">Refuser</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            try {
+                const consent = localStorage.getItem("ns_consent");
+                if (consent !== "accepted" && consent !== "declined") {
+                    document.getElementById("cookie-banner").classList.remove("hidden");
+                }
+            } catch(e) {
+                document.getElementById("cookie-banner").classList.remove("hidden");
+            }
+        });
+
+        function acceptCookies() {
+            try { localStorage.setItem("ns_consent", "accepted"); } catch(e) {}
+            document.getElementById("cookie-banner").classList.add("hidden");
+        }
+
+        function declineCookies() {
+            try { localStorage.setItem("ns_consent", "declined"); } catch(e) {}
+            document.getElementById("cookie-banner").classList.add("hidden");
+        }
+
+        function showCookieBanner() {
+            document.getElementById("cookie-banner").classList.remove("hidden");
+        }
+    </script>
 </body>
 </html>

@@ -27,8 +27,8 @@ SENDER_EMAIL = os.getenv("SENDER_EMAIL", "yarrowmartin3@gmail.com")
 MY_EMAIL = "contact@novasuite.ca" 
 STRIPE_AUDIT_LINK = "https://buy.stripe.com/00w8wPaPMfxgcthaKW2VG05"
 
-# Lien direct (RAW) vers votre logo sur GitHub
-LOGO_URL = "https://raw.githubusercontent.com/yarrowmartin3-prog/NovaSuite/main/assets/apple-touch-icon.webp"
+# Lien direct (RAW) vers votre logo PNG sur GitHub
+LOGO_URL = "https://raw.githubusercontent.com/yarrowmartin3-prog/NovaSuite/main/assets/web-app-manifest-192x192.png"
 
 class AuditRequest(BaseModel):
     url: str
@@ -87,7 +87,6 @@ async def root():
 
 @app.post("/api/contact")
 async def send_contact(req: BaseModel):
-    # (Votre route de contact reste ici si vous l'avez gardée)
     pass 
 
 @app.post("/api/audit")
@@ -105,7 +104,7 @@ async def run_audit(req: AuditRequest):
     primary_vuln = audit_results["primary_vuln"]
     
     try:
-        # 1. RAPPORT CLIENT (Avec le Logo)
+        # 1. RAPPORT CLIENT (Avec le Logo PNG)
         msg_client = MIMEMultipart()
         msg_client['From'] = f"NovaSuite AI Security <{SENDER_EMAIL}>"
         msg_client['To'] = req.email

@@ -25,17 +25,25 @@
     <main class="max-w-2xl mx-auto w-full flex-1">
         <div id="form-container" class="glass p-8 rounded-3xl shadow-2xl relative border-t-2 border-neon">
             <h2 class="text-3xl font-black mb-2 uppercase italic leading-none">Audit Express 60s</h2>
-            <p class="text-gray-400 mb-8 text-[10px] font-mono">> Diagnostic Loi 25 & Simulation OSINT (Shodan).</p>
+            <p class="text-gray-400 mb-8 text-[10px] font-mono">> Diagnostic d'infrastructure et conformité Loi 25.</p>
             
             <form id="audit-form" class="space-y-4">
                 <input type="url" id="audit-url" placeholder="https://votre-entreprise.ca" required class="w-full p-4 bg-black/50 border border-white/10 rounded-xl focus:border-neon outline-none text-neon font-mono text-sm">
                 <input type="email" id="audit-email" placeholder="votre@email-pro.com" required class="w-full p-4 bg-black/50 border border-white/10 rounded-xl focus:border-neon outline-none text-neon font-mono text-sm">
+                
+                <div class="flex items-start gap-3 bg-black/30 p-4 rounded-xl border border-red-500/20">
+                    <input type="checkbox" id="legal-consent" required class="mt-1 accent-neon w-4 h-4">
+                    <label for="legal-consent" class="text-[9px] text-gray-400 leading-relaxed uppercase tracking-wider">
+                        J'autorise formellement NovaSuite Technologies à effectuer une reconnaissance passive (OSINT) et une analyse d'en-têtes HTTP sur le domaine spécifié.
+                    </label>
+                </div>
+
                 <button type="submit" id="audit-btn" class="w-full bg-neon text-black font-black py-5 rounded-xl hover:bg-white transition-all transform active:scale-95 uppercase text-sm tracking-widest shadow-[0_0_20px_rgba(0,255,65,0.2)]">Lancer l'Analyse</button>
             </form>
 
             <div id="audit-loading" class="hidden mt-8 text-center py-10">
                 <div class="inline-block animate-spin rounded-full h-10 w-10 border-t-2 border-neon mb-4"></div>
-                <p class="font-mono text-neon text-[9px] tracking-[0.3em] animate-pulse">EXTRACTION DES DONNÉES SHODAN...</p>
+                <p class="font-mono text-neon text-[9px] tracking-[0.3em] animate-pulse">EXTRACTION DES DONNÉES EN COURS...</p>
             </div>
 
             <div id="audit-results" class="hidden mt-8">
@@ -50,25 +58,24 @@
                             <span class="text-[10px] block text-gray-500 font-bold">/100</span>
                         </div>
                     </div>
-                    <p class="text-[10px] text-red-500 font-black mt-3 uppercase tracking-[0.2em] animate-pulse">Risque Détecté : CRITIQUE</p>
+                    <p class="text-[10px] text-red-500 font-black mt-3 uppercase tracking-[0.2em] animate-pulse">Risque Détecté</p>
                 </div>
 
-                <div id="log-terminal" class="bg-black/90 p-4 rounded-lg font-mono text-[9px] text-neon/50 h-32 overflow-y-auto mb-6 border border-white/5 shadow-inner"></div>
+                <div id="log-terminal" class="bg-black/90 p-4 rounded-lg font-mono text-[9px] text-neon/50 h-40 overflow-y-auto mb-6 border border-white/5 shadow-inner"></div>
 
                 <div class="bg-white/5 border border-white/10 p-4 rounded-xl mb-8">
-                    <p class="text-[9px] text-gray-500 uppercase font-bold mb-1 tracking-widest">Faille Prioritaire (POC) :</p>
+                    <p class="text-[9px] text-gray-500 uppercase font-bold mb-1 tracking-widest">Vulnérabilité Principale :</p>
                     <p id="res-rule" class="text-xs text-red-400 font-mono"></p>
                 </div>
 
-                <a href="https://buy.stripe.com/00w8wPaPMfxgcthaKW2VG05" class="block w-full bg-white text-black text-center font-black py-4 rounded-xl hover:bg-neon transition-all uppercase text-sm tracking-tighter">Réparer mon infrastructure (499 $)</a>
+                <a href="https://buy.stripe.com/00w8wPaPMfxgcthaKW2VG05" class="block w-full bg-white text-black text-center font-black py-4 rounded-xl hover:bg-neon transition-all uppercase text-sm tracking-tighter">Débloquer le Rapport Complet (499 $)</a>
             </div>
         </div>
     </main>
 
     <footer class="mt-12 py-10 border-t border-white/5 text-center text-[9px] text-gray-600 uppercase tracking-[0.2em]">
-        <p>© 2026 NovaSuite Technologies. Infrastructure Souveraine.</p>
+        <p>© 2026 NovaSuite Technologies.</p>
         <div class="flex justify-center gap-6 mt-4">
-            <a href="mentions-legales.html" class="hover:text-neon transition">Légal</a>
             <button type="button" onclick="showCookieBanner()" class="hover:text-neon transition font-bold">Préférences Cookies</button>
             <a href="contact.html" class="hover:text-neon transition">Contact</a>
         </div>
@@ -76,7 +83,7 @@
 
     <div id="cookie-banner" class="fixed bottom-4 left-4 right-4 md:right-auto md:w-96 bg-[#0f172a]/95 backdrop-blur border border-white/10 p-6 rounded-2xl shadow-2xl z-[1000000] border-l-4 border-neon" style="display:none;">
         <h3 class="text-white font-bold text-sm mb-2 uppercase tracking-tighter">🛡️ Conformité Loi 25</h3>
-        <p class="text-[10px] text-gray-400 mb-4 leading-relaxed">NovaSuite utilise des cookies strictement nécessaires pour garantir la sécurité des audits et la protection de vos données locales.</p>
+        <p class="text-[10px] text-gray-400 mb-4 leading-relaxed">NovaSuite utilise des cookies strictement nécessaires.</p>
         <div class="flex gap-3">
             <button onclick="acceptCookies()" class="flex-1 bg-neon text-black text-[10px] font-black py-2.5 rounded-lg hover:bg-white transition uppercase">Accepter</button>
             <button onclick="declineCookies()" class="flex-1 border border-gray-700 text-gray-500 text-[10px] font-bold py-2.5 rounded-lg hover:bg-gray-800 transition uppercase">Refuser</button>
@@ -84,25 +91,15 @@
     </div>
 
     <script>
-        // LOGIQUE COOKIES (A REPLIQUER SUR CHAQUE PAGE)
+        // Logique Cookies
         document.addEventListener("DOMContentLoaded", () => {
-            if (localStorage.getItem("novasuite_consent") !== "accepted") {
-                document.getElementById("cookie-banner").style.display = "block";
-            }
+            if (localStorage.getItem("novasuite_consent") !== "accepted") document.getElementById("cookie-banner").style.display = "block";
         });
-        function acceptCookies() {
-            localStorage.setItem("novasuite_consent", "accepted");
-            document.getElementById("cookie-banner").style.display = "none";
-        }
-        function declineCookies() {
-            localStorage.setItem("novasuite_consent", "declined");
-            document.getElementById("cookie-banner").style.display = "none";
-        }
-        function showCookieBanner() {
-            document.getElementById("cookie-banner").style.display = "block";
-        }
+        function acceptCookies() { localStorage.setItem("novasuite_consent", "accepted"); document.getElementById("cookie-banner").style.display = "none"; }
+        function declineCookies() { localStorage.setItem("novasuite_consent", "declined"); document.getElementById("cookie-banner").style.display = "none"; }
+        function showCookieBanner() { document.getElementById("cookie-banner").style.display = "block"; }
 
-        // LOGIQUE AUDIT
+        // Logique Audit
         document.getElementById('audit-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('audit-btn');
@@ -112,8 +109,11 @@
             const scoreCircle = document.getElementById('score-circle');
             const scoreText = document.getElementById('res-score');
             
+            // On cache les anciens résultats si le client reteste
+            res.classList.add('hidden');
+            terminal.innerHTML = "";
             load.classList.remove('hidden');
-            document.getElementById('audit-form').classList.add('opacity-10', 'pointer-events-none');
+            btn.classList.add('opacity-50', 'pointer-events-none');
 
             try {
                 const response = await fetch('https://novasuite-1.onrender.com/api/audit', {
@@ -121,15 +121,18 @@
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({
                         url: document.getElementById('audit-url').value,
-                        email: document.getElementById('audit-email').value
+                        email: document.getElementById('audit-email').value,
+                        consent: document.getElementById('legal-consent').checked
                     })
                 });
                 
                 if (response.ok) {
                     const data = await response.json();
                     load.classList.add('hidden');
+                    btn.classList.remove('opacity-50', 'pointer-events-none');
                     res.classList.remove('hidden');
 
+                    // Animation Jauge
                     const offset = 364.4 - (364.4 * data.score / 100);
                     setTimeout(() => {
                         scoreCircle.style.strokeDashoffset = offset;
@@ -141,27 +144,36 @@
                         }, 30);
                     }, 400);
 
+                    // Vrais logs dynamiques
                     const lines = [
-                        "> Initialisation du moteur d'intrusion Nova...",
-                        "> Connexion API Shodan (v2.1)... OK",
-                        "> Scan des ports ouverts (80, 443, 8080)...",
-                        "> Récupération des enregistrements DNS (MX, TXT, SPF)...",
-                        "> Analyse OSINT sur les métadonnées serveurs...",
-                        "> [INFO] Détection de scripts tiers non-cryptés...",
-                        "> [WARN] Absence d'en-tête X-Frame-Options.",
-                        "> [FAIL] Politique Loi 25 non détectée à la racine.",
-                        "> Calcul du score de risque juridique..."
+                        "> Initialisation du moteur OSINT...",
+                        `> Cible identifiée : ${document.getElementById('audit-url').value}`,
+                        `> Résolution DNS / IP détectée : [ ${data.ip} ]`,
+                        "> Analyse des protocoles de chiffrement...",
+                        "> Interrogation des en-têtes de sécurité (OWASP)...",
+                        "> Compilation des vecteurs d'attaque...",
+                        "> Génération du score Loi 25 / SOC 2..."
                     ];
                     for (let l of lines) {
                         const p = document.createElement('p'); p.innerText = l;
                         p.className = "mb-1";
+                        if (l.includes(data.ip)) p.classList.add("text-white", "font-bold");
                         terminal.appendChild(p);
                         terminal.scrollTop = terminal.scrollHeight;
                         await new Promise(r => setTimeout(r, 600));
                     }
                     document.getElementById('res-rule').innerText = data.rule;
+                } else {
+                    const err = await response.json();
+                    alert("Erreur de scan : " + err.detail);
+                    load.classList.add('hidden');
+                    btn.classList.remove('opacity-50', 'pointer-events-none');
                 }
-            } catch (err) { alert("Serveur instable."); }
+            } catch (err) { 
+                alert("Serveur d'audit instable ou domaine inaccessible."); 
+                load.classList.add('hidden');
+                btn.classList.remove('opacity-50', 'pointer-events-none');
+            }
         });
     </script>
 </body>

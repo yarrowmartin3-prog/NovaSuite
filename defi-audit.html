@@ -5,36 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Défi d'Audit 60s - NovaSuite</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>tailwind.config = { theme: { extend: { colors: { neon: '#00ff41' } } } }</script>
+    <script>tailwind.config = { theme: { extend: { colors: { neon: '#00ff41', gold: '#ffd700' } } } }</script>
     <style>
         body { background-color: #050505; color: white; font-family: 'Inter', sans-serif; overflow-x: hidden; }
-        .glass { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .glass { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
         #score-circle { transition: stroke-dashoffset 2s ease-out; }
     </style>
 </head>
 <body class="antialiased min-h-screen flex flex-col p-4 md:p-8">
     
-    <header class="max-w-4xl mx-auto w-full mb-12 flex justify-between items-center">
-        <a href="/" class="flex items-center gap-3">
-            <img src="assets/logo-novasuite.webp" class="w-12 h-12 rounded-lg border border-white/10 shadow-xl">
+    <header class="max-w-4xl mx-auto w-full mb-12 flex justify-between items-center z-10">
+        <a href="index.html" class="flex items-center gap-3">
+            <img src="assets/logo-novasuite.webp" class="w-12 h-12 rounded-lg border border-gray-800 shadow-xl" alt="NovaSuite">
             <h1 class="text-xl font-black uppercase tracking-tighter">NovaSuite</h1>
         </a>
-        <a href="a-propos.html" class="text-[10px] text-gray-400 hover:text-neon uppercase tracking-widest font-bold">Expertise</a>
+        <a href="a-propos.html" class="text-[10px] text-gray-400 hover:text-neon transition uppercase tracking-widest font-bold">Expertise</a>
     </header>
 
     <main class="max-w-2xl mx-auto w-full flex-1">
         <div id="form-container" class="glass p-8 rounded-3xl shadow-2xl relative border-t-2 border-neon">
-            <h2 class="text-3xl font-black mb-2 uppercase italic leading-none">Audit Express 60s</h2>
-            <p class="text-gray-400 mb-8 text-[10px] font-mono">> Diagnostic d'infrastructure et conformité Loi 25.</p>
+            <h2 class="text-3xl md:text-4xl font-black mb-2 uppercase italic leading-none">Audit Express 60s</h2>
+            <p class="text-gray-400 mb-8 text-[10px] md:text-xs font-mono">> Diagnostic d'infrastructure et conformité Loi 25 (OSINT).</p>
             
             <form id="audit-form" class="space-y-4">
-                <input type="url" id="audit-url" placeholder="https://votre-entreprise.ca" required class="w-full p-4 bg-black/50 border border-white/10 rounded-xl focus:border-neon outline-none text-neon font-mono text-sm">
-                <input type="email" id="audit-email" placeholder="votre@email-pro.com" required class="w-full p-4 bg-black/50 border border-white/10 rounded-xl focus:border-neon outline-none text-neon font-mono text-sm">
+                <input type="url" id="audit-url" placeholder="https://votre-entreprise.ca" required class="w-full p-4 bg-black border border-white/10 rounded-xl focus:border-neon outline-none text-neon font-mono text-sm shadow-inner">
+                <input type="email" id="audit-email" placeholder="votre@email-pro.com" required class="w-full p-4 bg-black border border-white/10 rounded-xl focus:border-neon outline-none text-neon font-mono text-sm shadow-inner">
                 
-                <div class="flex items-start gap-3 bg-black/30 p-4 rounded-xl border border-red-500/20">
-                    <input type="checkbox" id="legal-consent" required class="mt-1 accent-neon w-4 h-4">
-                    <label for="legal-consent" class="text-[9px] text-gray-400 leading-relaxed uppercase tracking-wider">
-                        J'autorise formellement NovaSuite Technologies à effectuer une reconnaissance passive (OSINT) et une analyse d'en-têtes HTTP sur le domaine spécifié.
+                <div class="flex items-start gap-3 bg-black/50 p-4 rounded-xl border border-red-500/20">
+                    <input type="checkbox" id="legal-consent" required class="mt-1 accent-neon w-4 h-4 cursor-pointer">
+                    <label for="legal-consent" class="text-[9px] text-gray-400 leading-relaxed uppercase tracking-wider cursor-pointer">
+                        J'autorise formellement NovaSuite Technologies à effectuer une reconnaissance passive (OSINT) et une analyse des en-têtes HTTP sur ce domaine.
                     </label>
                 </div>
 
@@ -61,27 +61,27 @@
                     <p class="text-[10px] text-red-500 font-black mt-3 uppercase tracking-[0.2em] animate-pulse">Risque Détecté</p>
                 </div>
 
-                <div id="log-terminal" class="bg-black/90 p-4 rounded-lg font-mono text-[9px] text-neon/50 h-40 overflow-y-auto mb-6 border border-white/5 shadow-inner"></div>
+                <div id="log-terminal" class="bg-[#050505] p-4 rounded-lg font-mono text-[9px] text-neon/60 h-40 overflow-y-auto mb-6 border border-white/10 shadow-inner"></div>
 
                 <div class="bg-white/5 border border-white/10 p-4 rounded-xl mb-8">
-                    <p class="text-[9px] text-gray-500 uppercase font-bold mb-1 tracking-widest">Vulnérabilité Principale :</p>
+                    <p class="text-[9px] text-gray-500 uppercase font-bold mb-1 tracking-widest">Vulnérabilité Prioritaire :</p>
                     <p id="res-rule" class="text-xs text-red-400 font-mono"></p>
                 </div>
 
-                <a href="https://buy.stripe.com/00w8wPaPMfxgcthaKW2VG05" class="block w-full bg-white text-black text-center font-black py-4 rounded-xl hover:bg-neon transition-all uppercase text-sm tracking-tighter">Débloquer le Rapport Complet (499 $)</a>
+                <a href="https://buy.stripe.com/00w8wPaPMfxgcthaKW2VG05" class="block w-full bg-white text-black text-center font-black py-4 rounded-xl hover:bg-neon transition-all uppercase text-sm tracking-tighter">Débloquer le Correctif de Remédiation (499 $)</a>
             </div>
         </div>
     </main>
 
-    <footer class="mt-12 py-10 border-t border-white/5 text-center text-[9px] text-gray-600 uppercase tracking-[0.2em]">
+    <footer class="mt-12 py-10 border-t border-gray-900 text-center text-[9px] text-gray-600 uppercase tracking-[0.2em]">
         <p>© 2026 NovaSuite Technologies.</p>
         <div class="flex justify-center gap-6 mt-4">
-            <button type="button" onclick="showCookieBanner()" class="hover:text-neon transition font-bold">Préférences Cookies</button>
+            <button type="button" onclick="showCookieBanner()" id="btn-cookies" class="hover:text-neon transition font-bold uppercase">Préférences Cookies</button>
             <a href="contact.html" class="hover:text-neon transition">Contact</a>
         </div>
     </footer>
 
-    <div id="cookie-banner" class="fixed bottom-4 left-4 right-4 md:right-auto md:w-96 bg-[#0f172a]/95 backdrop-blur border border-white/10 p-6 rounded-2xl shadow-2xl z-[1000000] border-l-4 border-neon" style="display:none;">
+    <div id="cookie-banner" class="fixed bottom-4 left-4 right-4 md:right-auto md:w-96 bg-[#0f172a]/95 backdrop-blur border-l-4 border-neon border border-white/10 p-6 rounded-2xl shadow-2xl z-[999999] hidden">
         <h3 class="text-white font-bold text-sm mb-2 uppercase tracking-tighter">🛡️ Conformité Loi 25</h3>
         <p class="text-[10px] text-gray-400 mb-4 leading-relaxed">NovaSuite utilise des cookies strictement nécessaires.</p>
         <div class="flex gap-3">
@@ -91,15 +91,32 @@
     </div>
 
     <script>
-        // Logique Cookies
         document.addEventListener("DOMContentLoaded", () => {
-            if (localStorage.getItem("novasuite_consent") !== "accepted") document.getElementById("cookie-banner").style.display = "block";
+            try {
+                const consent = localStorage.getItem("ns_consent");
+                if (consent !== "accepted" && consent !== "declined") {
+                    document.getElementById("cookie-banner").classList.remove("hidden");
+                }
+            } catch(e) {
+                document.getElementById("cookie-banner").classList.remove("hidden");
+            }
         });
-        function acceptCookies() { localStorage.setItem("novasuite_consent", "accepted"); document.getElementById("cookie-banner").style.display = "none"; }
-        function declineCookies() { localStorage.setItem("novasuite_consent", "declined"); document.getElementById("cookie-banner").style.display = "none"; }
-        function showCookieBanner() { document.getElementById("cookie-banner").style.display = "block"; }
 
-        // Logique Audit
+        function acceptCookies() {
+            try { localStorage.setItem("ns_consent", "accepted"); } catch(e) {}
+            document.getElementById("cookie-banner").classList.add("hidden");
+        }
+
+        function declineCookies() {
+            try { localStorage.setItem("ns_consent", "declined"); } catch(e) {}
+            document.getElementById("cookie-banner").classList.add("hidden");
+        }
+
+        function showCookieBanner() {
+            document.getElementById("cookie-banner").classList.remove("hidden");
+        }
+
+        // Script Audit
         document.getElementById('audit-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('audit-btn');
@@ -109,7 +126,6 @@
             const scoreCircle = document.getElementById('score-circle');
             const scoreText = document.getElementById('res-score');
             
-            // On cache les anciens résultats si le client reteste
             res.classList.add('hidden');
             terminal.innerHTML = "";
             load.classList.remove('hidden');
@@ -132,7 +148,6 @@
                     btn.classList.remove('opacity-50', 'pointer-events-none');
                     res.classList.remove('hidden');
 
-                    // Animation Jauge
                     const offset = 364.4 - (364.4 * data.score / 100);
                     setTimeout(() => {
                         scoreCircle.style.strokeDashoffset = offset;
@@ -144,7 +159,6 @@
                         }, 30);
                     }, 400);
 
-                    // Vrais logs dynamiques
                     const lines = [
                         "> Initialisation du moteur OSINT...",
                         `> Cible identifiée : ${document.getElementById('audit-url').value}`,
@@ -152,7 +166,7 @@
                         "> Analyse des protocoles de chiffrement...",
                         "> Interrogation des en-têtes de sécurité (OWASP)...",
                         "> Compilation des vecteurs d'attaque...",
-                        "> Génération du score Loi 25 / SOC 2..."
+                        "> Génération du score de risque Loi 25..."
                     ];
                     for (let l of lines) {
                         const p = document.createElement('p'); p.innerText = l;
@@ -165,7 +179,7 @@
                     document.getElementById('res-rule').innerText = data.rule;
                 } else {
                     const err = await response.json();
-                    alert("Erreur de scan : " + err.detail);
+                    alert("Erreur : " + err.detail);
                     load.classList.add('hidden');
                     btn.classList.remove('opacity-50', 'pointer-events-none');
                 }

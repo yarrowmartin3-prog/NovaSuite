@@ -29,7 +29,7 @@
             <div class="absolute inset-0 z-0" style="background-image: url('assets/banner-novasuite.webp'); background-size: cover; background-position: center; filter: brightness(0.3);"></div>
             <div class="relative z-10 px-4">
                 <h2 class="text-4xl md:text-7xl font-black text-white mb-6 leading-[0.9] uppercase">Souveraineté <br><span class="text-neon">Numérique.</span></h2>
-                <p class="text-gray-300 max-w-2xl mx-auto mb-10 text-sm md:text-lg">Audits Loi 25 et déploiement d'IA locale 100% isolée du cloud public.</p>
+                <p class="text-gray-300 max-w-2xl mx-auto mb-10 text-sm md:text-lg font-mono">Audits Loi 25 et déploiement d'IA locale 100% isolée du cloud public.</p>
                 <div class="flex flex-col md:flex-row gap-4 justify-center">
                     <a href="defi-audit.html" class="bg-white text-black font-black px-8 py-4 rounded-xl hover:bg-neon transition uppercase text-sm">Défi d'Audit 60s (Gratuit)</a>
                     <a href="contact.html" class="border border-gold text-gold font-bold px-8 py-4 rounded-xl hover:bg-gold hover:text-black transition uppercase text-sm">Contacter l'Architecte</a>
@@ -40,7 +40,7 @@
         <section class="mb-20">
             <div class="text-center mb-12">
                 <h2 class="text-3xl font-black text-white uppercase tracking-tighter">Nos Formules</h2>
-                <p class="text-gray-500 text-sm mt-2">Sécurité et conformité adaptées à votre PME.</p>
+                <p class="text-gray-500 text-sm mt-2 font-mono">> Sécurité et conformité adaptées à votre PME.</p>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -52,10 +52,10 @@
                         <li>> Diagnostic Loi 25 de surface</li>
                         <li>> Rapport de remédiation prioritaire</li>
                     </ul>
-                    <a href="defi-audit.html" class="block w-full text-center bg-white/10 text-white font-bold py-3 rounded-xl hover:bg-neon hover:text-black transition uppercase text-xs tracking-widest">Démarrer</a>
+                    <a href="defi-audit.html" class="block w-full text-center bg-neon text-black font-black py-3 rounded-xl hover:bg-white transition uppercase text-xs tracking-widest">Démarrer</a>
                 </div>
 
-                <div class="bg-black p-8 rounded-2xl border border-neon shadow-[0_0_30px_rgba(0,255,65,0.1)] flex flex-col relative transform md:-translate-y-4">
+                <div class="bg-black p-8 rounded-2xl border border-neon shadow-[0_0_30px_rgba(0,255,65,0.15)] flex flex-col relative transform md:-translate-y-4">
                     <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-neon text-black text-[10px] font-black px-4 py-1 rounded-full uppercase tracking-widest">Recommandé</div>
                     <h3 class="text-xl font-black text-white uppercase mb-2">Intégration Standard</h3>
                     <div class="text-3xl font-black text-neon mb-6">899 $ <span class="text-sm text-gray-500">CAD</span></div>
@@ -74,10 +74,10 @@
                     <ul class="text-sm text-gray-400 space-y-3 mb-8 flex-1">
                         <li>> Architecture Cybersécurité Complète</li>
                         <li>> Déploiement IA Avancé + Automatisation</li>
-                        <li>> Accès exclusif Protocole Aegis Monitoring</li>
+                        <li>> Accès exclusif Protocole Aegis</li>
                         <li>> Support prioritaire direct</li>
                     </ul>
-                    <a href="contact.html" class="block w-full text-center bg-white/10 text-white font-bold py-3 rounded-xl hover:bg-gold hover:text-black transition uppercase text-xs tracking-widest">Contact Direct</a>
+                    <a href="contact.html" class="block w-full text-center bg-neon text-black font-black py-3 rounded-xl hover:bg-white transition uppercase text-xs tracking-widest">Contact Direct</a>
                 </div>
             </div>
         </section>
@@ -86,9 +86,9 @@
     <footer class="w-full border-t border-gray-800 bg-black/80 py-10 text-center text-[9px] text-gray-500 uppercase tracking-widest mt-auto">
         <p>© 2026 NovaSuite Technologies. Infrastructure isolée.</p>
         <div class="flex justify-center gap-6 mt-4">
-            <a href="mentions-legales.html" class="hover:text-neon">Légal</a>
-            <button type="button" onclick="showCookieBanner()" id="btn-cookies" class="hover:text-neon font-bold">Préférences Cookies</button>
-            <a href="contact.html" class="hover:text-neon">Contact</a>
+            <a href="mentions-legales.html" class="hover:text-neon transition">Légal</a>
+            <button type="button" onclick="showCookieBanner()" id="btn-cookies" class="hover:text-neon transition font-bold uppercase">Préférences Cookies</button>
+            <a href="contact.html" class="hover:text-neon transition">Contact</a>
         </div>
     </footer>
 
@@ -109,7 +109,6 @@
                     document.getElementById("cookie-banner").classList.remove("hidden");
                 }
             } catch(e) {
-                // localStorage bloqué (mode privé) → bannière visible par défaut
                 document.getElementById("cookie-banner").classList.remove("hidden");
             }
         });

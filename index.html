@@ -83,7 +83,7 @@
         </section>
     </main>
 
-    <footer class="w-full border-t border-gray-800 bg-black/80 py-10 text-center text-[9px] text-gray-500 uppercase tracking-widest mt-auto z-10 relative">
+    <footer class="w-full border-t border-gray-800 bg-black/80 py-10 text-center text-[9px] text-gray-500 uppercase tracking-widest mt-auto">
         <p>© 2026 NovaSuite Technologies. Infrastructure isolée.</p>
         <div class="flex justify-center gap-6 mt-4">
             <a href="mentions-legales.html" class="hover:text-neon">Légal</a>
@@ -92,7 +92,7 @@
         </div>
     </footer>
 
-    <div id="cookie-banner" class="fixed bottom-4 left-4 right-4 md:right-auto md:w-96 bg-[#0f172a]/95 backdrop-blur border border-white/10 p-6 rounded-2xl shadow-2xl z-[100000] border-l-4 border-neon" style="display:none;">
+    <div id="cookie-banner" class="fixed bottom-4 left-4 right-4 md:right-auto md:w-96 bg-[#0f172a]/95 backdrop-blur border-l-4 border-neon border border-white/10 p-6 rounded-2xl shadow-2xl z-[999999] hidden">
         <h3 class="text-white font-bold text-sm mb-2 uppercase tracking-tighter">🛡️ Conformité Loi 25</h3>
         <p class="text-[10px] text-gray-400 mb-4 leading-relaxed">NovaSuite utilise des cookies strictement nécessaires pour garantir la sécurité des sessions et l'intégrité de nos audits.</p>
         <div class="flex gap-3">
@@ -103,28 +103,29 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const consent = localStorage.getItem("ns_consent");
-            if (consent !== "accepted" && consent !== "declined") {
-                document.getElementById("cookie-banner").style.display = "block";
+            try {
+                const consent = localStorage.getItem("ns_consent");
+                if (consent !== "accepted" && consent !== "declined") {
+                    document.getElementById("cookie-banner").classList.remove("hidden");
+                }
+            } catch(e) {
+                // localStorage bloqué (mode privé) → bannière visible par défaut
+                document.getElementById("cookie-banner").classList.remove("hidden");
             }
         });
 
-        function acceptCookies() { 
-            localStorage.setItem("ns_consent", "accepted"); 
-            document.getElementById("cookie-banner").style.display = "none"; 
+        function acceptCookies() {
+            try { localStorage.setItem("ns_consent", "accepted"); } catch(e) {}
+            document.getElementById("cookie-banner").classList.add("hidden");
         }
-        
-        function declineCookies() { 
-            localStorage.setItem("ns_consent", "declined"); 
-            document.getElementById("cookie-banner").style.display = "none"; 
+
+        function declineCookies() {
+            try { localStorage.setItem("ns_consent", "declined"); } catch(e) {}
+            document.getElementById("cookie-banner").classList.add("hidden");
         }
-        
+
         function showCookieBanner() {
-            const banner = document.getElementById("cookie-banner");
-            if(banner) {
-                banner.style.display = "block";
-                banner.style.zIndex = "999999";
-            }
+            document.getElementById("cookie-banner").classList.remove("hidden");
         }
     </script>
 </body>

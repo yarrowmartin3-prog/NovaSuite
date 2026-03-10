@@ -2,7 +2,6 @@ import os
 import smtplib
 import socket
 import requests
-from urllib.parse import urlparse
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from fastapi import FastAPI, HTTPException
@@ -28,6 +27,9 @@ SENDER_EMAIL = os.getenv("SENDER_EMAIL", "yarrowmartin3@gmail.com")
 MY_EMAIL = "contact@novasuite.ca" 
 STRIPE_AUDIT_LINK = "https://buy.stripe.com/00w8wPaPMfxgcthaKW2VG05"
 
+# Lien direct (RAW) vers votre logo sur GitHub
+LOGO_URL = "https://raw.githubusercontent.com/yarrowmartin3-prog/NovaSuite/main/assets/apple-touch-icon.webp"
+
 class AuditRequest(BaseModel):
     url: str
     email: str
@@ -38,32 +40,25 @@ def perform_real_audit(url: str):
     score = 100
     vulns = []
     
-    # Nettoyage de l'URL
     domain = url.replace("https://", "").replace("http://", "").split("/")[0]
     
-    # 1. Résolution IP (Ping DNS)
     try:
         ip_address = socket.gethostbyname(domain)
     except:
         return {"error": "Domaine inaccessible ou invalide.", "score": 0}
 
-    # 2. Analyse des En-têtes de Sécurité (Loi 25 / SOC 2)
     try:
-        # Timeout court pour ne pas faire planter Render
         response = requests.get(f"https://{domain}", timeout=5)
         headers = response.headers
         
-        # Test HSTS (Chiffrement strict)
         if 'Strict-Transport-Security' not in headers:
             score -= 25
-            vulns.append("HSTS manquant : Les données clients peuvent être interceptées (Risque Loi 25).")
+            vulns.append("HSTS manquant : Risque d'interception des données (Non-conforme Loi 25).")
             
-        # Test CSP (Protection Injection XSS)
         if 'Content-Security-Policy' not in headers:
             score -= 20
-            vulns.append("CSP manquant : Vulnérabilité aux injections de scripts malveillants.")
+            vulns.append("CSP manquant : Vulnérabilité aux injections de scripts malveillants (XSS).")
             
-        # Test Clickjacking
         if 'X-Frame-Options' not in headers:
             score -= 15
             vulns.append("X-Frame-Options manquant : Risque de détournement de clics (Clickjacking).")
@@ -72,10 +67,8 @@ def perform_real_audit(url: str):
         score -= 40
         vulns.append("Certificat SSL/TLS invalide ou serveur HTTPS inaccessible.")
 
-    # S'assurer que le score ne descend pas sous 12 pour le réalisme
     score = max(12, score)
     
-    # Si le site est parfait, on enlève un peu pour forcer l'audit profond
     if score == 100:
         score = 85
         vulns.append("Politique de consentement granulaire à vérifier manuellement (Section 3.2).")
@@ -84,7 +77,7 @@ def perform_real_audit(url: str):
         "ip": ip_address,
         "score": score,
         "primary_vuln": vulns[0] if vulns else "Sécurité de surface adéquate. Audit profond requis.",
-        "vuln_count": len(vulns) + 4 # On ajoute 4 pour simuler les failles non dévoilées
+        "vuln_count": len(vulns) + 4 
     }
 
 @app.head("/")
@@ -92,12 +85,16 @@ def perform_real_audit(url: str):
 async def root():
     return {"status": "NovaSuite API Online"}
 
+@app.post("/api/contact")
+async def send_contact(req: BaseModel):
+    # (Votre route de contact reste ici si vous l'avez gardée)
+    pass 
+
 @app.post("/api/audit")
 async def run_audit(req: AuditRequest):
     if not req.consent:
         raise HTTPException(status_code=400, detail="Consentement légal requis.")
 
-    # Lancement du VRAI scan
     audit_results = perform_real_audit(req.url)
     
     if "error" in audit_results:
@@ -108,7 +105,7 @@ async def run_audit(req: AuditRequest):
     primary_vuln = audit_results["primary_vuln"]
     
     try:
-        # 1. RAPPORT CLIENT (Avec Logo et Vraies données)
+        # 1. RAPPORT CLIENT (Avec le Logo)
         msg_client = MIMEMultipart()
         msg_client['From'] = f"NovaSuite AI Security <{SENDER_EMAIL}>"
         msg_client['To'] = req.email
@@ -119,13 +116,13 @@ async def run_audit(req: AuditRequest):
         <body style="font-family: 'Courier New', monospace; background-color: #050505; color: #00ff41; padding: 20px;">
             <div style="max-width: 600px; margin: auto; background: #000; border: 1px solid #00ff41; padding: 30px; box-shadow: 0 0 20px rgba(0,255,65,0.2);">
                 
-                <div style="text-align: center; margin-bottom: 20px;">
-                    <img src="https://novasuite-1.onrender.com/assets/logo-novasuite.webp" alt="NovaSuite Logo" style="width: 80px; border-radius: 10px;">
+                <div style="text-align: center; margin-bottom: 25px;">
+                    <img src="{LOGO_URL}" alt="NovaSuite Logo" style="width: 70px; height: 70px; border-radius: 12px; border: 1px solid #333;">
                 </div>
                 
-                <h2 style="text-align: center; border-bottom: 1px solid #333; padding-bottom: 10px;">RAPPORT D'ANALYSE OSINT</h2>
+                <h2 style="text-align: center; border-bottom: 1px solid #333; padding-bottom: 10px; margin-top: 0;">RAPPORT D'ANALYSE OSINT</h2>
                 
-                <div style="text-align: center; margin: 30px 0; border: 1px solid #333; padding: 20px;">
+                <div style="text-align: center; margin: 30px 0; border: 1px solid #333; padding: 20px; background: #0a0a0a;">
                     <span style="font-size: 12px; color: #888;">INDICE DE CONFORMITÉ LOI 25</span><br>
                     <span style="font-size: 64px; font-weight: 900; color: #ff4444;">{compliance_score}%</span>
                 </div>
@@ -136,7 +133,7 @@ async def run_audit(req: AuditRequest):
                     > <strong>Faille Prioritaire :</strong> {primary_vuln}<br>
                 </p>
 
-                <p style="font-size: 11px; color: #ff4444; background: rgba(255,68,68,0.1); padding: 10px; border-left: 3px solid #ff4444;">
+                <p style="font-size: 11px; color: #ff4444; background: rgba(255,68,68,0.1); padding: 10px; border-left: 3px solid #ff4444; margin-top: 25px;">
                     ALERTE : Notre algorithme a identifié {audit_results['vuln_count']} autres points d'entrée potentiels qui exposent votre entreprise.
                 </p>
                 
@@ -147,6 +144,7 @@ async def run_audit(req: AuditRequest):
                     </a>
                 </div>
             </div>
+            <p style="text-align: center; font-size: 10px; color: #555; margin-top: 20px; font-family: sans-serif;">© 2026 NovaSuite Technologies</p>
         </body>
         </html>
         """

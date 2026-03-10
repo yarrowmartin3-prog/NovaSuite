@@ -32,11 +32,6 @@
         <button type="button" onclick="showCookieBanner()" id="btn-cookies" class="hover:text-neon transition font-bold uppercase">Préférences Cookies</button>
     </footer>
 
-    <a href="#" class="fixed bottom-6 right-6 z-[90000] flex items-center justify-center bg-neon text-black hover:bg-white transition-all shadow-[0_0_20px_rgba(0,255,65,0.4)] rounded-full h-14 w-14 md:h-auto md:w-auto md:px-6 md:py-3 cursor-pointer transform hover:scale-105">
-        <svg class="w-6 h-6 md:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
-        <span class="hidden md:block font-black uppercase tracking-widest text-xs">Chatbot IA</span>
-    </a>
-
     <div id="cookie-banner" class="fixed bottom-4 left-4 right-4 md:right-auto md:w-96 bg-[#0f172a]/95 backdrop-blur border-l-4 border-neon border border-white/10 p-6 rounded-2xl shadow-2xl z-[999999] hidden">
         <h3 class="text-white font-bold text-sm mb-2 uppercase tracking-tighter">🛡️ Conformité</h3>
         <p class="text-[10px] text-gray-400 mb-4">Logique de consentement actif requise.</p>
@@ -46,27 +41,42 @@
         </div>
     </div>
 
+    <div id="chatbot-modal" class="fixed bottom-24 right-4 md:right-6 w-80 md:w-96 bg-[#0f172a] border border-neon rounded-2xl shadow-[0_0_30px_rgba(0,255,65,0.2)] z-[99999] hidden flex-col overflow-hidden">
+        <div class="bg-black p-4 border-b border-white/10 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <div class="w-2 h-2 rounded-full bg-neon animate-pulse"></div>
+                <span class="font-black text-white uppercase tracking-widest text-sm">NovaSuite IA</span>
+            </div>
+            <button onclick="toggleChat()" class="text-gray-500 hover:text-neon transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+        </div>
+        <div class="h-80 p-4 overflow-y-auto flex flex-col gap-3 text-sm font-mono text-gray-300" id="chat-messages">
+            <div class="bg-black/50 p-3 rounded-xl border border-white/5 w-10/12">
+                > Initialisation des protocoles souverains...<br><br>Bonjour. Je suis l'agent IA de NovaSuite. Comment puis-je vous assister aujourd'hui ?
+            </div>
+        </div>
+        <div class="p-4 bg-black border-t border-white/10 flex gap-2">
+            <input type="text" id="chat-input" placeholder="Tapez votre message..." class="flex-1 bg-[#050505] border border-gray-800 rounded-lg px-3 py-2 text-neon outline-none focus:border-neon text-xs">
+            <button class="bg-neon text-black px-4 py-2 rounded-lg font-black hover:bg-white transition">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+            </button>
+        </div>
+    </div>
+
+    <button onclick="toggleChat()" class="fixed bottom-6 right-6 z-[90000] flex items-center justify-center bg-neon text-black hover:bg-white transition-all shadow-[0_0_20px_rgba(0,255,65,0.4)] rounded-full h-14 w-14 md:h-auto md:w-auto md:px-6 md:py-3 cursor-pointer transform hover:scale-105">
+        <svg class="w-6 h-6 md:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
+        <span class="hidden md:block font-black uppercase tracking-widest text-xs">Chatbot IA</span>
+    </button>
+
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            try {
-                const consent = localStorage.getItem("ns_consent");
-                if (consent !== "accepted" && consent !== "declined") {
-                    document.getElementById("cookie-banner").classList.remove("hidden");
-                }
-            } catch(e) {
-                document.getElementById("cookie-banner").classList.remove("hidden");
-            }
-        });
-        function acceptCookies() {
-            try { localStorage.setItem("ns_consent", "accepted"); } catch(e) {}
-            document.getElementById("cookie-banner").classList.add("hidden");
-        }
-        function declineCookies() {
-            try { localStorage.setItem("ns_consent", "declined"); } catch(e) {}
-            document.getElementById("cookie-banner").classList.add("hidden");
-        }
-        function showCookieBanner() {
-            document.getElementById("cookie-banner").classList.remove("hidden");
+        document.addEventListener("DOMContentLoaded", () => { try { if (localStorage.getItem("ns_consent") !== "accepted" && localStorage.getItem("ns_consent") !== "declined") { document.getElementById("cookie-banner").classList.remove("hidden"); } } catch(e) { document.getElementById("cookie-banner").classList.remove("hidden"); } });
+        function acceptCookies() { try { localStorage.setItem("ns_consent", "accepted"); } catch(e) {} document.getElementById("cookie-banner").classList.add("hidden"); }
+        function declineCookies() { try { localStorage.setItem("ns_consent", "declined"); } catch(e) {} document.getElementById("cookie-banner").classList.add("hidden"); }
+        function showCookieBanner() { document.getElementById("cookie-banner").classList.remove("hidden"); }
+        function toggleChat() {
+            const modal = document.getElementById("chatbot-modal");
+            if (modal.classList.contains("hidden")) { modal.classList.remove("hidden"); modal.classList.add("flex"); } else { modal.classList.add("hidden"); modal.classList.remove("flex"); }
         }
     </script>
 </body>

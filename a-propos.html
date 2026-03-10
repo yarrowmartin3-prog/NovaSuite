@@ -3,40 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expertise • NovaSuite</title>
+    <title>Expertise & Certifications • NovaSuite</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>tailwind.config = { theme: { extend: { colors: { neon: '#00ff41', gold: '#ffd700' } } } }</script>
 </head>
-<body class="bg-[#050505] text-white flex flex-col min-h-screen font-sans antialiased">
+<body class="bg-[#050505] text-[#e2e8f0] flex flex-col min-h-screen font-sans antialiased">
+    
     <header class="p-6 max-w-6xl mx-auto w-full flex justify-between items-center border-b border-gray-900 z-10">
         <a href="index.html" class="flex items-center gap-3">
-            <img src="assets/logo-novasuite.webp" class="w-10 h-10 rounded-lg border border-gray-800" alt="NovaSuite">
-            <span class="text-xl font-black uppercase tracking-tighter">NovaSuite</span>
+            <img src="assets/logo-novasuite.webp" class="w-10 h-10 rounded-lg border border-gray-800 shadow-lg" alt="NovaSuite">
+            <span class="text-xl font-black uppercase tracking-tighter text-white">NovaSuite</span>
         </a>
-        <a href="index.html" class="text-[10px] font-bold uppercase tracking-widest hover:text-neon transition">Accueil</a>
+        <a href="index.html" class="text-[10px] border border-gray-700 px-4 py-2 rounded-full uppercase font-bold hover:text-white transition">Retour à l'Accueil</a>
     </header>
 
-    <main class="max-w-3xl mx-auto w-full p-6 py-20 flex-1">
-        <h2 class="text-4xl md:text-5xl font-black mb-8 uppercase italic leading-none">L'Architecte</h2>
-        <div class="space-y-6 text-gray-400 leading-relaxed text-sm md:text-base">
-            <p>NovaSuite Technologies est le fruit d'une expertise implacable en cybersécurité offensive et en intelligence artificielle souveraine.</p>
-            <p>Sous la direction de <strong class="text-white">Yarrow Martin</strong>, nous aidons les décideurs et les MSP du Québec à naviguer dans la complexité de la <span class="text-neon font-bold">Loi 25</span>. Nous utilisons des outils de diagnostic OSINT automatisés et des agents IA déployés localement, garantissant qu'aucune donnée ne fuite vers le cloud public.</p>
+    <main class="max-w-4xl mx-auto w-full p-6 py-16 flex-1">
+        <div class="mb-16">
+            <h2 class="text-4xl md:text-5xl font-black mb-4 uppercase leading-none text-white">L'Architecte</h2>
+            <p class="text-neon font-mono text-sm">> Yarrow Martin | Ingénierie Cyber & IA Locale</p>
+        </div>
+
+        <div class="space-y-8 text-gray-400 leading-relaxed text-sm md:text-base mb-16">
+            <p>
+                NovaSuite Technologies est née d'une nécessité absolue : protéger les PME québécoises contre l'espionnage industriel et les pénalités dévastatrices de la <strong class="text-white">Loi 25</strong>.
+            </p>
+            <p>
+                En tant que dirigeant et architecte technique basé à <strong class="text-white">Rivière-du-Loup</strong>, je déploie des systèmes de défense offensifs (OSINT) et des agents d'intelligence artificielle totalement isolés. Vos données ne touchent jamais le cloud public.
+            </p>
+        </div>
+        
+        <h3 class="text-2xl font-black text-white uppercase mb-8 border-b border-gray-800 pb-4">Certifications & Standards</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             
-            <div class="grid grid-cols-2 gap-4 mt-12">
-                <div class="bg-[#0f172a]/50 p-6 rounded-2xl border border-white/5 shadow-lg">
-                    <h4 class="text-white font-bold mb-2 uppercase text-xs tracking-widest text-neon">Standards</h4>
-                    <p class="text-[10px] font-mono leading-relaxed text-gray-300">OWASP Top 10<br>Conformité SOC 2<br>Loi 25 (Québec)</p>
+            <div class="bg-[#0f172a]/50 p-6 rounded-2xl border border-white/5 hover:border-neon transition shadow-lg">
+                <div class="text-neon mb-4">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
                 </div>
-                <div class="bg-[#0f172a]/50 p-6 rounded-2xl border border-white/5 shadow-lg">
-                    <h4 class="text-white font-bold mb-2 uppercase text-xs tracking-widest text-neon">Opérations</h4>
-                    <p class="text-[10px] font-mono leading-relaxed text-gray-300">Rivière-du-Loup<br>Bas-Saint-Laurent<br>Audits Distants</p>
-                </div>
+                <h4 class="text-white font-bold mb-2 uppercase text-sm tracking-widest">Conformité Loi 25</h4>
+                <p class="text-[11px] font-mono leading-relaxed text-gray-400">Expertise intégrale en sécurisation des données personnelles et en architectures de consentement (HSTS, CSP, Chiffrement AES-256).</p>
             </div>
+
+            <div class="bg-[#0f172a]/50 p-6 rounded-2xl border border-white/5 hover:border-gold transition shadow-lg">
+                <div class="text-gold mb-4">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                </div>
+                <h4 class="text-white font-bold mb-2 uppercase text-sm tracking-widest">OWASP Top 10 & OSINT</h4>
+                <p class="text-[11px] font-mono leading-relaxed text-gray-400">Diagnostic des vulnérabilités critiques via l'Open Source Intelligence et protection active contre les vecteurs d'attaque web.</p>
+            </div>
+
         </div>
     </main>
 
-    <footer class="mt-auto py-10 border-t border-gray-900 text-center">
-        <button type="button" onclick="showCookieBanner()" id="btn-cookies" class="text-[9px] text-gray-600 uppercase tracking-widest font-bold hover:text-neon transition">Préférences Cookies</button>
+    <footer class="mt-auto py-10 border-t border-gray-900 bg-black/80 text-center">
+        <button type="button" onclick="showCookieBanner()" id="btn-cookies" class="text-[9px] text-gray-500 uppercase tracking-widest font-bold hover:text-neon transition">Préférences Cookies</button>
     </footer>
 
     <div id="cookie-banner" class="fixed bottom-4 left-4 right-4 md:right-auto md:w-96 bg-[#0f172a]/95 backdrop-blur border-l-4 border-neon border border-white/10 p-6 rounded-2xl shadow-2xl z-[999999] hidden">
@@ -59,17 +78,14 @@
                 document.getElementById("cookie-banner").classList.remove("hidden");
             }
         });
-
         function acceptCookies() {
             try { localStorage.setItem("ns_consent", "accepted"); } catch(e) {}
             document.getElementById("cookie-banner").classList.add("hidden");
         }
-
         function declineCookies() {
             try { localStorage.setItem("ns_consent", "declined"); } catch(e) {}
             document.getElementById("cookie-banner").classList.add("hidden");
         }
-
         function showCookieBanner() {
             document.getElementById("cookie-banner").classList.remove("hidden");
         }

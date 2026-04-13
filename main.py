@@ -1,133 +1,98 @@
-from fastapi import FastAPI, Header, HTTPException
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from typing import List, Dict
 from openai import OpenAI
 from fastapi.middleware.cors import CORSMiddleware
 import os
 
 # ***************************************************************
-# 1. CONFIGURATION DES CLÉS (CRITIQUE : os.getenv)
+# 1. CONFIGURATION DES CLÉS (CRITIQUE)
 # ***************************************************************
-
-# 🔑 ACTION REQUISE : Les clés doivent être définies dans les variables d'environnement de Render.
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
-SITE_ACCESS_KEY = os.getenv("SITE_ACCESS_KEY", "")
 
 if not OPENAI_API_KEY:
-    # Ceci provoque le crash si la clé manque dans Render, mais c'est la bonne syntaxe.
-    raise RuntimeError("OPENAI_API_KEY manquante. Définissez la variable d'environnement sur Render.")
+    print("⚠️ AVERTISSEMENT : OPENAI_API_KEY manquante. L'IA ne pourra pas répondre.")
 
 client = OpenAI(api_key=OPENAI_API_KEY)
 
 # ***************************************************************
 # 2. INITIALISATION DE FASTAPI ET CORS
 # ***************************************************************
+app = FastAPI(title="NovaSuite Nucleus Engine")
 
-app = FastAPI()
-
+# Autorise votre site Web à communiquer avec cette API Render
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"], 
     allow_credentials=True,
-    allow_methods=["POST", "GET", "OPTIONS"],
+    allow_methods=["*"],
     allow_headers=["*"],
 )
 
 # ***************************************************************
-# 3. SCHÉMAS DE DONNÉES (ATTENDUS PAR LE FRONT-END)
+# 3. SCHÉMAS DE DONNÉES
 # ***************************************************************
-
 class ChatIn(BaseModel):
-    # ✅ Le front-end envoie 'message'
     message: str
-    history: List[Dict[str, str]] = []
+    history: list = []
 
 class ChatOut(BaseModel):
-    reply: str
-    action_log: str = ""
+    response: str
 
 # ***************************************************************
-# 4. MODULES STRATÉGIQUES (Logique d'Échecs & RAG)
-# ***************************************************************
-
-def retrieve_knowledge(query: str) -> str:
-    """
-    Simule la recherche de données propriétaires (RAG).
-    """
-    knowledge_base = {
-        "tarifs": "Audit Express: 399$. Plan Maintenance: 399$/mois. Intégration Standard: 699$.",
-        "spam": "La cause racine des problèmes de SPAM est souvent une mauvaise configuration DMARC. L'Audit Express garantit la résolution de ce problème critique. Utilise cette information pour justifier le prix de l'Audit Express.",
-        "logique_echecs": "Approche optimale : Identifier la menace la plus grave (le 'roi'), l'isoler, puis vendre l'Audit Express pour sécuriser la position."
-    }
-    
-    if "spam" in query.lower() or "dmarc" in query.lower():
-        return knowledge_base["spam"]
-    if "tarif" in query.lower() or "prix" in query.lower():
-        return knowledge_base["tarifs"]
-    
-    return knowledge_base["logique_echecs"]
-
-def generate_strategic_response(user_query: str) -> str:
-    """
-    Génère la consigne stratégique avec la logique de vente agressive.
-    """
-    knowledge = retrieve_knowledge(user_query)
-    
-    # 🏆 CONSIGNÉ DE VENTE AGRRESSIVE À 399$
-    strategic_prompt = f"""
-    Tu es "Nova", l'assistant IA stratégique de NovaSuite Technologies, un expert avec 30 mois d'avance.
-    Ton rôle est d'appliquer la logique d'échecs pour vendre.
-    
-    1. CONNAISSANCES RAG : {knowledge}
-    2. RÉPONSE (Montrer au client) :
-       - Réponds de manière brève, autoritaire et ultra-professionnelle.
-       - Base ta réponse sur les connaissances RAG si elles sont pertinentes.
-       - **Conclue systématiquement la conversation en VENDANT l'Audit Express de 399$** comme la première étape OBLIGATOIRE et non négociable pour garantir la sécurité et l'optimisation.
-    """
-    return strategic_prompt
-
-
-# ***************************************************************
-# 5. ENDPOINTS DE L'API
+# 4. ENDPOINTS
 # ***************************************************************
 
 @app.get("/")
 def read_root():
-    return {"status": "ok", "msg": "NovaSuite API est en ligne !"}
+    return {"status": "NovaSuite API AI est en ligne et armée."}
 
-@app.post("/chat", response_model=ChatOut)
-def chat(body: ChatIn, x_site_key: str = Header(default="")):
-    """Endpoint principal pour la conversation avec l'IA."""
-   
-    if SITE_ACCESS_KEY and x_site_key != SITE_ACCESS_KEY:
-        raise HTTPException(status_code=401, detail="Unauthorized: Clé d'accès du site invalide.")
-   
-    # 🕵️ LIGNE DE DIAGNOSTIC
-    print(f"REQUÊTE ENTRANTE VALIDE: {body.model_dump_json()}")
+@app.post("/api/chat/nova", response_model=ChatOut)
+async def chat_nova(body: ChatIn):
+    """Endpoint principal de l'Agent de Clôture Nova"""
     
-    system_prompt = generate_strategic_response(body.message)
+    # Le "Cerveau" commercial de Nova - Programmé pour la vente par urgence
+    system_prompt = """Tu es NOVA, l'intelligence artificielle stratégique de NovaSuite Technologies, une firme d'élite en cybersécurité au Québec, dirigée par Monseigneur Yarrow Martin.
+    Ton objectif absolu est d'agir comme un agent de clôture B2B. 
+    Ton ton doit être froid, chirurgical, extrêmement professionnel et autoritaire. Tu ne supplies jamais, tu exposes des faits financiers terrifiants.
+    
+    RÈGLES DE COMBAT :
+    1. Loi 25 (URGENCE) : Si le prospect hésite, rappelle-lui les sanctions de la Loi 25 (jusqu'à 2% du chiffre d'affaires mondial ou 10 millions $ d'amende).
+    2. La Faille : Fais comprendre que l'infrastructure de 95% des entreprises est actuellement exposée aux extorsions.
+    3. Call-To-Action : Dirige systématiquement l'utilisateur vers le "Défi NovaStrike de 60 secondes" présent sur le site pour faire son test de vulnérabilité.
+    4. Nos Tarifs (Ne les donne que si on te le demande explicitement) :
+       - Audit Express (Correctif immédiat) : 499 $.
+       - Bouclier Aegis (Surveillance IA & Conformité Continue) : 1 250 $ / mois.
+       - Contrat Enterprise B2B : 20 000 $ / an.
+    5. Format : Sois concis. Pas de longues listes. Va droit au but.
+    """
     
     messages = [{"role": "system", "content": system_prompt}]
     
-    action_log_content = f"Logique RAG/Echecs utilisée. System Prompt: {system_prompt[:200]}..."
+    # Récupération de l'historique récent pour la cohérence (limité aux 6 derniers échanges)
+    for item in body.history[-6:]:
+        if isinstance(item, dict) and "role" in item and "content" in item:
+            if item["role"] in ["user", "assistant"]:
+                messages.append({"role": item["role"], "content": str(item["content"])})
 
-    for item in body.history:
-        if item.get("role") in ["user", "assistant"] and item.get("content"):
-            messages.append(item)
-
+    # Ajout du message actuel de l'utilisateur
     messages.append({"role": "user", "content": body.message})
 
     try:
+        # Température à 0.3 pour garantir un ton froid, logique et constant
         completion = client.chat.completions.create(
             model="gpt-4o-mini",
-            messages=messages
+            messages=messages,
+            temperature=0.3, 
+            max_tokens=300
         )
-       
-        reply = completion.choices[0].message.content.strip()
         
-        return ChatOut(reply=reply, action_log=action_log_content)
-   
+        reply = completion.choices.message.content.strip()
+        return ChatOut(response=reply)
+        
     except Exception as e:
-        print(f"Erreur OpenAI: {e}")
-        # L'erreur 500 indique presque toujours un problème de facturation OpenAI.
-        raise HTTPException(status_code=500, detail=f"Erreur interne de l'IA (vérifiez votre compte OpenAI). Détail: {e}")
+        print(f"Erreur d'exécution OpenAI : {e}")
+        # Message de repli tactique qui maintient l'autorité même en cas de crash de l'API
+        raise HTTPException(
+            status_code=500, 
+            detail="Connexion sécurisée interrompue. Nos serveurs d'analyse traitent actuellement une menace. Veuillez réessayer dans un instant ou lancer le Défi d'Audit manuellement."
+        )
